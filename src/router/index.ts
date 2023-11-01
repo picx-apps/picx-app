@@ -9,12 +9,12 @@ const routes: Array<RouteRecordRaw> = [
   {
     name: "home",
     path: "/",
-    component: () => import("~/pages/Home.vue"),
+    component: () => import("../pages/Home.vue"),
   },
   {
     name: "Login",
     path: "/login",
-    component: import("~/pages/Login.vue"),
+    component: import("../pages/Login.vue"),
     meta: {
       public: true,
     },
@@ -22,7 +22,7 @@ const routes: Array<RouteRecordRaw> = [
   {
     name: "Callback",
     path: "/callback",
-    component: () => import("~/pages/Callback.vue"),
+    component: () => import("../pages/Callback.vue"),
     meta: {
       public: true,
     },
