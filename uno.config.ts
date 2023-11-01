@@ -13,4 +13,5 @@ export default defineConfig({
     presetUno(),
     presetWebFonts({}),
   ],
+  rules: [["me-color-black", { color: "#1b153b" }]],
 });

@@ -27,8 +27,9 @@ const isActive = computed(() => route.name === props.name);
   justify-content: space-between;
   border-radius: 100%;
   padding: 8px;
-  color: var(--color-primary);
+  color: white;
   transform: scale(1);
+  cursor: pointer;
   &:active {
     transform: scale(0.95, 0.95);
   }

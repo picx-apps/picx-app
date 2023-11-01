@@ -24,7 +24,7 @@ import { Icon } from "@iconify/vue";
   transform: translateX(-50%);
   max-width: 600px;
   min-width: 300px;
-  background-color: white;
+  background-color: var(--color-primary);
   padding: 14px 20px;
   border-radius: 18px;
   display: flex;

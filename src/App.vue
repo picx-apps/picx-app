@@ -22,7 +22,6 @@ import { themeOverrides } from "./theme";
           </Transition>
         </template>
       </RouterView>
-      <Tabbar />
     </n-theme-editor>
   </n-config-provider>
 </template>

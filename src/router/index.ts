@@ -7,15 +7,28 @@ import { userStore } from "../pinia/auth";
 
 const routes: Array<RouteRecordRaw> = [
   {
-    name: "Home",
+    name: "Index",
     path: "/",
-    component: () => import("../pages/Home.vue"),
+    component: () => import("../components/Layout.vue"),
+    children: [
+      {
+        name: "Home",
+        path: "/home",
+        component: () => import("../pages/Home.vue"),
+      },
+      {
+        name: "Upload",
+        path: "/upload",
+        component: () => import("../pages/Upload.vue"),
+      },
+      {
+        name: "User",
+        path: "/user",
+        component: () => import("../pages/User.vue"),
+      },
+    ],
   },
-  {
-    name: "User",
-    path: "/user",
-    component: () => import("../pages/User.vue"),
-  },
+
   {
     name: "Login",
     path: "/login",
@@ -41,14 +54,13 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
   const auth = userStore().getAuth;
-  next();
-  // if (to.meta.public) {
-  //   next();
-  // } else if (!auth || !auth.access_token) {
-  //   next("/login");
-  // } else {
-  //   next();
-  // }
+  if (to.meta.public) {
+    next();
+  } else if (!auth || !auth.access_token) {
+    next("/login");
+  } else {
+    next();
+  }
 });
 
 export default router;

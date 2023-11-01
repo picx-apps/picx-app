@@ -36,10 +36,10 @@
     "windows": [
       {
         "fullscreen": false,
-        "resizable": false,
+        "resizable": true,
         "title": "PicX",
-        "width": 414,
-        "height": 896
+        "width": 1200,
+        "height": 800
       }
     ]
   }

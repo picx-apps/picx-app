@@ -16,12 +16,14 @@
   --color-primary: #1b153b;
 }
 
-html {
-  background-image: url("./assets/images/background.jpg");
-  background-size: inherit;
-}
-#app {
-  padding: 10px;
+body {
+  /* background: rgb(178, 172, 227);
+  background: linear-gradient(
+    18deg,
+    rgba(178, 172, 227, 1) 0%,
+    rgba(244, 240, 231, 1) 39%,
+    rgba(208, 219, 252, 1) 100%
+  ); */
 }
 
 div {
