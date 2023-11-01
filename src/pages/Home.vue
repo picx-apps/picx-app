@@ -1,14 +1,10 @@
-<script lang="ts" setup>
-import { invoke } from "@tauri-apps/api";
-
-async function handleClick() {
-  const state = await invoke("get_user_state");
-  console.log("user state", state);
-}
-</script>
+<script lang="ts" setup></script>
 
 <template>
-  <n-button @click="handleClick">userState</n-button>
+  <div>
+    <n-input type="text" size="large" placeholder="请输入搜索内容" />
+    <h1 class="text-20px">Latest</h1>
+  </div>
 </template>
 
 <style lang="less" scoped></style>

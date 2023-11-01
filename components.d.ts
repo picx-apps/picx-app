@@ -9,9 +9,12 @@ declare module 'vue' {
   export interface GlobalComponents {
     NButton: typeof import('naive-ui')['NButton']
     NConfigProvider: typeof import('naive-ui')['NConfigProvider']
+    NDropdown: typeof import("naive-ui")["NDropdown"]
     NInput: typeof import('naive-ui')['NInput']
     NThemeEditor: typeof import('naive-ui')['NThemeEditor']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    Tabbar: typeof import('./src/components/tabbar/Tabbar.vue')['default']
+    TabbarItem: typeof import('./src/components/tabbar/TabbarItem.vue')['default']
   }
 }

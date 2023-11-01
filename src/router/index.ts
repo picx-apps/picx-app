@@ -7,9 +7,14 @@ import { userStore } from "../pinia/auth";
 
 const routes: Array<RouteRecordRaw> = [
   {
-    name: "home",
+    name: "Home",
     path: "/",
     component: () => import("../pages/Home.vue"),
+  },
+  {
+    name: "User",
+    path: "/user",
+    component: () => import("../pages/User.vue"),
   },
   {
     name: "Login",
@@ -36,13 +41,14 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
   const auth = userStore().getAuth;
-  if (to.meta.public) {
-    next();
-  } else if (!auth || !auth.access_token) {
-    next("/login");
-  } else {
-    next();
-  }
+  next();
+  // if (to.meta.public) {
+  //   next();
+  // } else if (!auth || !auth.access_token) {
+  //   next("/login");
+  // } else {
+  //   next();
+  // }
 });
 
 export default router;

@@ -5,13 +5,23 @@
   font-weight: 400;
 
   color: #0f0f0f;
-  background-color: #f6f6f6;
+  background-color: #fff;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
+
+  --color-primary: #1b153b;
+}
+
+html {
+  background-image: url("./assets/images/background.jpg");
+  background-size: inherit;
+}
+#app {
+  padding: 10px;
 }
 
 div {
