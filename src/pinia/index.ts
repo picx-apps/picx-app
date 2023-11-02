@@ -24,9 +24,9 @@ export const picxStore = defineStore("picx", {
     getPicxConfig: (state) => {
       console.log("getter", state.picxConfig);
       if (state.picxConfig.repo === "" || state.picxConfig.branch === "") {
-        state.picxConfig = JSON.parse(
-          localStorage.getItem(PICX_CONFIG) || "null"
-        );
+        const config = JSON.parse(localStorage.getItem(PICX_CONFIG) || "null");
+        state.picxConfig.repo = config?.repo;
+        state.picxConfig.branch = config?.branch;
       }
       return state.picxConfig;
     },

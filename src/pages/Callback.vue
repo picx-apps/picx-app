@@ -11,7 +11,7 @@ const { setAuth } = userStore();
 onMounted(async () => {
   const config: UserConfig = await invoke("get_access_token", { code });
   setAuth(config.token);
-  router.push({ name: "Home" });
+  router.push({ name: "Lead" });
 });
 </script>
 

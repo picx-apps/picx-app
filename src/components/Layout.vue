@@ -1,4 +1,6 @@
 <template>
-  <RouterView></RouterView>
-  <Tabbar />
+  <div>
+    <RouterView></RouterView>
+    <Tabbar />
+  </div>
 </template>
