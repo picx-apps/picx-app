@@ -25,7 +25,9 @@ meta:
       px-40px
     >
       <div class="mb-30px">
-        <div class="my-4px text-2rem font-bold lh-38px color-#545454 title">
+        <div
+          class="my-4px text-2rem font-bold lh-38px color-#545454 base-text-color"
+        >
           Welcome Picx
         </div>
         <p class="my-0 color-gray">Welcome back! Please enter your details.</p>
@@ -63,12 +65,6 @@ meta:
   align-items: center;
   justify-content: center;
   transform: translateY(-80px);
-  .title {
-    background: linear-gradient(120deg, #b047ff 16%, #9499ff, #9499ff);
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
 }
 .image {
   background-image: url("../assets/images/login-banner.png");

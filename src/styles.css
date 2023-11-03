@@ -1,5 +1,15 @@
+@font-face {
+  font-family: "阿里妈妈方圆体 VF Regular";
+  src: url("//at.alicdn.com/wf/webfont/2kaSkBuGZ94D/23QQuccbAC50.woff2")
+      format("woff2"),
+    url("//at.alicdn.com/wf/webfont/2kaSkBuGZ94D/ydhGCR7WABHP.woff")
+      format("woff");
+  font-display: swap;
+}
+
 :root {
-  font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
+  font-family: "阿里妈妈方圆体 VF Regular", Inter, Avenir, Helvetica, Arial,
+    sans-serif;
   font-size: 16px;
   line-height: 24px;
   font-weight: 400;

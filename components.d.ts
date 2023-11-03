@@ -22,6 +22,7 @@ declare module 'vue' {
     RepoSettings: typeof import('./src/components/RepoSettings.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    Step1: typeof import('./src/components/lead/Step1.vue')['default']
     Tabbar: typeof import('./src/components/tabbar/Tabbar.vue')['default']
     TabbarItem: typeof import('./src/components/tabbar/TabbarItem.vue')['default']
   }
