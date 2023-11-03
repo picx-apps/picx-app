@@ -1,5 +1,9 @@
 <script lang="ts" setup></script>
 
+<route lang="yaml">
+name: home
+</route>
+
 <template>
   <div>
     <n-input type="text" size="large" placeholder="请输入搜索内容" />

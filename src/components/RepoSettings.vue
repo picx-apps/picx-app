@@ -4,7 +4,7 @@ import { UserConfig } from "../types/auth";
 import { Icon } from "@iconify/vue";
 import { Octokit } from "octokit";
 import { components } from "@octokit/openapi-types";
-import { picxStore } from "../pinia";
+import { useGlobalState } from "../store";
 
 type Repo = components["schemas"]["repo-search-result-item"];
 type Branch = components["schemas"]["short-branch"];
@@ -17,7 +17,7 @@ const user = computed(() => state.user);
 const octokit = new Octokit({ auth: state.token.access_token });
 const repos = ref<Repo[]>([]);
 const branchs = ref<Branch[]>([]);
-const { getPicxConfig, setPicxConfig } = picxStore();
+const { repo_name, branch_name, set_repository } = useGlobalState();
 
 async function searchRepositories() {
   const { data } = await octokit.request("GET /search/repositories", {
@@ -28,12 +28,12 @@ async function searchRepositories() {
   repos.value = data.items;
 }
 async function searchBranches() {
-  if (getPicxConfig?.repo) {
+  if (repo_name.value) {
     const { data } = await octokit.request(
       "GET /repos/{owner}/{repo}/branches",
       {
         owner: user.value.login!,
-        repo: getPicxConfig.repo,
+        repo: repo_name.value,
       }
     );
     branchs.value = data;
@@ -45,18 +45,18 @@ async function init() {
 }
 function handleClickRepo(item: Repo) {
   branchs.value = [];
-  setPicxConfig({
-    repo: item.name,
+  set_repository({
+    repo_name: item.name,
   });
-  setPicxConfig({
-    branch: "",
+  set_repository({
+    branch_name: "",
   });
   searchBranches();
   active.value = false;
 }
 function handleClickBranch(item: Branch) {
-  setPicxConfig({
-    branch: item.name,
+  set_repository({
+    branch_name: item.name,
   });
   active1.value = false;
 }
@@ -134,7 +134,7 @@ onMounted(() => {
         <div class="ml-10px lh-34px">当前仓库</div>
       </div>
       <div class="flex items-center">
-        <div class="lh-34px">{{ getPicxConfig?.repo }}</div>
+        <div class="lh-34px">{{ repo_name }}</div>
         <Icon icon="ri:arrow-right-s-line" class="text-25px" />
       </div>
     </div>
@@ -148,7 +148,7 @@ onMounted(() => {
         <div class="ml-10px lh-34px">当前分支</div>
       </div>
       <div class="flex items-center">
-        <div class="lh-34px">{{ getPicxConfig?.branch }}</div>
+        <div class="lh-34px">{{ branch_name }}</div>
         <Icon icon="ri:arrow-right-s-line" class="text-25px" />
       </div>
     </div>
@@ -160,7 +160,7 @@ onMounted(() => {
   box-shadow: 0 0 8px 8px #f3f3f3;
   padding: 12px 16px;
   background-color: white;
-  color: var(--color-primary);
+  color: var(--text-primary);
   border-radius: 10px;
   cursor: pointer;
 }
@@ -169,7 +169,7 @@ onMounted(() => {
   // box-shadow: 0 0 8px 8px #f3f3f3;
   padding: 12px 16px;
   background-color: #f5f9ff;
-  color: var(--color-primary);
+  color: var(--text-primary);
   border-radius: 10px;
   cursor: pointer;
   margin-bottom: 10px;

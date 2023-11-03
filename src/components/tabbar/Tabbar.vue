@@ -4,13 +4,13 @@ import { Icon } from "@iconify/vue";
 
 <template>
   <div class="tabbar">
-    <TabbarItem name="Home">
+    <TabbarItem name="home">
       <Icon icon="ri:home-3-line" class="text-20px select-none"></Icon>
     </TabbarItem>
-    <TabbarItem name="Upload">
+    <TabbarItem name="upload">
       <Icon icon="ri:upload-cloud-2-line" class="text-20px select-none"></Icon>
     </TabbarItem>
-    <TabbarItem name="User">
+    <TabbarItem name="user">
       <Icon icon="ri:user-smile-line" class="text-20px select-none"></Icon>
     </TabbarItem>
   </div>
@@ -24,7 +24,7 @@ import { Icon } from "@iconify/vue";
   transform: translateX(-50%);
   max-width: 600px;
   min-width: 300px;
-  background-color: var(--color-primary);
+  background: var(--color-primary);
   padding: 14px 20px;
   border-radius: 18px;
   display: flex;

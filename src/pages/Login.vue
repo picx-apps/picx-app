@@ -1,7 +1,6 @@
 <script lang="ts" setup>
 import { Icon } from "@iconify/vue";
 import { invoke } from "@tauri-apps/api";
-import { userStore } from "../pinia/auth";
 
 const token = ref("");
 
@@ -9,18 +8,25 @@ async function handleLogin() {
   const uri: string = await invoke("login_uri");
   location.href = uri;
 }
-function handleSignToken() {
-  userStore().setGithubToken(token.value);
-}
+function handleSignToken() {}
 </script>
 
+<route lang="yaml">
+name: login
+meta:
+  public: true
+</route>
+
 <template>
-  <div flex h-100vh>
-    <div class="flex-1 image"></div>
-    <div class="w-400px flex items-start justify-center flex-col" px-40px>
+  <div flex h-100vh class="login-container">
+    <!-- <div class="flex-1 image max-sm:hidden"></div> -->
+    <div
+      class="max-w-600px min-w-400px flex items-start justify-center flex-col"
+      px-40px
+    >
       <div class="mb-30px">
-        <div class="my-4px text-2rem font-bold lh-38px color-#545454">
-          Welcome Back
+        <div class="my-4px text-2rem font-bold lh-38px color-#545454 title">
+          Welcome Picx
         </div>
         <p class="my-0 color-gray">Welcome back! Please enter your details.</p>
       </div>
@@ -46,16 +52,24 @@ function handleSignToken() {
         <Icon icon="mdi:github" class="text-20px mr-10px" />
         <span class="w-120px"> Continue with Github </span>
       </n-button>
-
-      <n-button type="primary" ghost @click="handleLogin" class="w-100%">
-        <Icon icon="simple-icons:gitee" class="text-18px mr-10px" />
-        <span class="w-120px"> Continue with Gitee </span>
-      </n-button>
     </div>
   </div>
 </template>
 
 <style lang="less" scoped>
+.login-container {
+  background: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: translateY(-80px);
+  .title {
+    background: linear-gradient(120deg, #b047ff 16%, #9499ff, #9499ff);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+}
 .image {
   background-image: url("../assets/images/login-banner.png");
   background-position: center;

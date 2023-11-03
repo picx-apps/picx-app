@@ -7,6 +7,10 @@ const state: UserConfig = await invoke("get_user_state");
 const user = computed(() => state.user);
 </script>
 
+<route lang="yaml">
+name: user
+</route>
+
 <template>
   <div class="user-container">
     <div class="m-10px card-white">
@@ -49,7 +53,7 @@ const user = computed(() => state.user);
   box-shadow: 0 0 8px 8px #f3f3f3;
   padding: 12px 16px;
   background-color: white;
-  color: var(--color-primary);
+  color: var(--text-primary);
   border-radius: 10px;
   cursor: pointer;
 }

@@ -1,66 +1,15 @@
-import {
-  createRouter,
-  createWebHistory,
-  type RouteRecordRaw,
-} from "vue-router";
-import { userStore } from "../pinia/auth";
+//https://github.com/hannoeru/vite-plugin-pages
+import routes from "~pages";
+import { createRouter, createWebHistory } from "vue-router";
+import { useGlobalState } from "../store";
 
-const routes: Array<RouteRecordRaw> = [
-  {
-    name: "Index",
-    path: "/",
-    component: () => import("../components/Layout.vue"),
-    children: [
-      {
-        name: "Home",
-        path: "/home",
-        component: () => import("../pages/Home.vue"),
-      },
-      {
-        name: "Upload",
-        path: "/upload",
-        component: () => import("../pages/Upload.vue"),
-      },
-      {
-        name: "User",
-        path: "/user",
-        component: () => import("../pages/User.vue"),
-      },
-    ],
-  },
-  {
-    name: "Lead",
-    path: "/lead",
-    component: () => import("../pages/Lead.vue"),
-  },
-  {
-    name: "Login",
-    path: "/login",
-    component: import("../pages/Login.vue"),
-    meta: {
-      public: true,
-    },
-  },
-  {
-    name: "Callback",
-    path: "/callback",
-    component: () => import("../pages/Callback.vue"),
-    meta: {
-      public: true,
-    },
-  },
-];
-
-const router = createRouter({
-  history: createWebHistory(),
-  routes: routes,
-});
+const router = createRouter({ routes: routes, history: createWebHistory() });
 
 router.beforeEach((to, from, next) => {
-  const auth = userStore().getAuth;
+  const { access_token } = useGlobalState();
   if (to.meta.public) {
     next();
-  } else if (!auth || !auth.access_token) {
+  } else if (!access_token.value) {
     next("/login");
   } else {
     next();

@@ -5,11 +5,13 @@ import Components from "unplugin-vue-components/vite";
 import AutoImport from "unplugin-auto-import/vite";
 import { NaiveUiResolver } from "unplugin-vue-components/resolvers";
 import Icons from "unplugin-icons/vite";
+import Pages from "vite-plugin-pages";
 
 // https://vitejs.dev/config/
 export default defineConfig(() => ({
   plugins: [
     vue(),
+    Pages(),
     UnoCSS(),
     AutoImport({
       vueTemplate: true,
@@ -17,6 +19,7 @@ export default defineConfig(() => ({
       imports: [
         "vue",
         "vue-router",
+        "@vueuse/core",
         {
           "naive-ui": [
             "useDialog",

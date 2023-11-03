@@ -13,17 +13,13 @@
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
 
-  --color-primary: #1b153b;
+  --text-primary: #1b153b;
+  --color-primary: rgba(151, 154, 196, 0.22);
+  --base-color-primary: linear-gradient(120deg, #b047ff 16%, #9499ff, #9499ff);
 }
 
 body {
-  /* background: rgb(178, 172, 227);
-  background: linear-gradient(
-    18deg,
-    rgba(178, 172, 227, 1) 0%,
-    rgba(244, 240, 231, 1) 39%,
-    rgba(208, 219, 252, 1) 100%
-  ); */
+  margin: 0;
 }
 
 div {
