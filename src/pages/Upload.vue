@@ -4,6 +4,10 @@
 name: upload
 </route>
 
-<template>Hello upload</template>
+<template>
+  <div>
+    <Tabbar />
+  </div>
+</template>
 
 <style lang="less" scoped></style>

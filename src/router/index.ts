@@ -4,6 +4,7 @@ import { createRouter, createWebHistory } from "vue-router";
 import { useGlobalState } from "../store";
 
 const router = createRouter({ routes: routes, history: createWebHistory() });
+console.log(router.getRoutes());
 
 router.beforeEach((to, from, next) => {
   const { access_token } = useGlobalState();

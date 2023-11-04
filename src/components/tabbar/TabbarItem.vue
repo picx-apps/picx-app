@@ -36,7 +36,7 @@ const isActive = computed(() => route.name === props.name);
 }
 .tabbar-item.current {
   transform: scale(1.1, 1.1);
-  color: rgb(142, 176, 255);
+  color: rgb(72, 122, 239);
 }
 
 .tabbar-item:last-child {

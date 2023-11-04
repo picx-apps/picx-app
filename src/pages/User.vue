@@ -1,11 +1,4 @@
-<script lang="ts" setup>
-import { invoke } from "@tauri-apps/api";
-import { UserConfig } from "../types/auth";
-import { Icon } from "@iconify/vue";
-
-const state: UserConfig = await invoke("get_user_state");
-const user = computed(() => state.user);
-</script>
+<script lang="ts" setup></script>
 
 <route lang="yaml">
 name: user
@@ -13,38 +6,7 @@ name: user
 
 <template>
   <div class="user-container">
-    <div class="m-10px card-white">
-      <div class="flex items-center">
-        <div class="flex-1 flex items-center">
-          <n-image width="50" :src="user.avatar_url" class="rounded-100%" />
-          <div class="ml-16px">
-            <div class="font-bold">{{ user.name || user.login }}</div>
-            <div class="text-12px">简介: {{ user.bio }}</div>
-          </div>
-        </div>
-        <div class="">
-          <Icon icon="ri:settings-3-fill" class="text-20px" />
-        </div>
-      </div>
-
-      <div class="grid grid-cols-3 mt-20px">
-        <div class="text-center">
-          <div class="text-14px">{{ user.public_repos }}</div>
-          <div class="text-12px">仓库</div>
-        </div>
-
-        <div class="text-center">
-          <div class="text-14px">{{ user.following }}</div>
-          <div class="text-12px">关注</div>
-        </div>
-
-        <div class="text-center">
-          <div class="text-14px">{{ user.followers }}</div>
-          <div class="text-12px">被关注</div>
-        </div>
-      </div>
-    </div>
-    <RepoSettings />
+    <Tabbar />
   </div>
 </template>
 
