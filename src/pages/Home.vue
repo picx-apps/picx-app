@@ -21,6 +21,7 @@ const octokit = new Octokit({
 });
 const [dirs, files] = useRepoContent(repoContent);
 const latest = computed(() => files.value.slice(0, 5));
+const latestDebounced = refDebounced(latest, 300);
 const showLatest = ref(false);
 const showDirs = ref(false);
 const showImages = ref(false);
@@ -106,7 +107,11 @@ name: home
       <n-collapse-transition :show="showLatest">
         <n-scrollbar x-scrollable>
           <div class="scroll-content">
-            <div v-for="item in latest" :key="item.sha" class="image-container">
+            <div
+              v-for="item in latestDebounced"
+              :key="item.sha"
+              class="image-container"
+            >
               <n-image
                 width="260"
                 height="160"
