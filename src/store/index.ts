@@ -1,10 +1,6 @@
 import { merge } from "lodash-es";
-
-export interface UserToken {
-  access_token: string;
-  scope: string;
-  token_type: string;
-}
+import type { UserToken, User } from "../types";
+import { Octokit } from "octokit";
 
 export interface Repository {
   repo_name: string;
@@ -22,6 +18,14 @@ export const useGlobalState = createGlobalState(() => {
     },
     localStorage
   );
+  const userinfo = useStorage<User | null>("picx-userinfo", null, undefined, {
+    serializer: {
+      read: (v) => {
+        return v ? JSON.parse(v) : null;
+      },
+      write: (v) => JSON.stringify(v),
+    },
+  });
   const repository = useStorage<Repository>(
     "picx-repository",
     {
@@ -37,10 +41,26 @@ export const useGlobalState = createGlobalState(() => {
   const token_type = computed(() => authorize.value.token_type);
   const repo_name = computed(() => repository.value.repo_name);
   const branch_name = computed(() => repository.value.branch_name);
+  const user = computed(() => userinfo.value);
+
+  watch([authorize, userinfo], async ([authorize, userinfo]) => {
+    if (authorize.access_token && !userinfo) {
+      const octokit = new Octokit({
+        auth: authorize.access_token,
+      });
+      const res = await octokit.request("GET /user");
+      if (res.status === 200) {
+        set_userinfo(res.data);
+      }
+    }
+  });
 
   // actions
   function set_authorize(value: UserToken) {
     authorize.value = value;
+  }
+  function set_userinfo(value: User) {
+    userinfo.value = value;
   }
   function set_repository(value: Partial<Repository>) {
     repository.value = merge(repository.value, value);
@@ -50,9 +70,11 @@ export const useGlobalState = createGlobalState(() => {
     access_token,
     scope,
     token_type,
+    user,
     repo_name,
     branch_name,
     set_authorize,
+    set_userinfo,
     set_repository,
   };
 });

@@ -1,8 +1,7 @@
 <script lang="ts" setup>
-import type { LeadConfig, UserConfig } from "../../types";
+import type { LeadConfig } from "../../types";
 import { Octokit } from "octokit";
 import { useGlobalState } from "../../store";
-import { invoke } from "@tauri-apps/api";
 import { components } from "@octokit/openapi-types";
 
 type Repo = components["schemas"]["repo-search-result-item"];
@@ -17,17 +16,16 @@ const props = defineProps<{
 }>();
 const emit = defineEmits(["update:modelValue"]);
 const modelValue = useVModel(props, "modelValue", emit);
-const { access_token } = useGlobalState();
+const { access_token, user } = useGlobalState();
 const repoOptions = ref<Repo[]>([]);
 const branchOptions = ref<Branch[]>([]);
 const octokit = new Octokit({ auth: access_token.value });
-const { user }: UserConfig = await invoke("get_user_state");
 const repoVisible = ref(false);
 const branchVisible = ref(false);
 
 async function initRepo() {
   const { data } = await octokit.request("GET /search/repositories", {
-    q: `user:${user.login}+`,
+    q: `user:${user.value?.login}+`,
     sort: "stars",
     per_page: 100,
   });
@@ -38,7 +36,7 @@ async function initBranches() {
     const { data } = await octokit.request(
       "GET /repos/{owner}/{repo}/branches",
       {
-        owner: user.login!,
+        owner: user.value?.login!,
         repo: modelValue.value.repoName,
       }
     );

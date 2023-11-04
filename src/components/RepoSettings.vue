@@ -1,6 +1,4 @@
 <script lang="ts" setup>
-import { invoke } from "@tauri-apps/api";
-import { UserConfig } from "../types/auth";
 import { Icon } from "@iconify/vue";
 import { Octokit } from "octokit";
 import { components } from "@octokit/openapi-types";
@@ -12,16 +10,15 @@ type Branch = components["schemas"]["short-branch"];
 const active = ref(false);
 const active1 = ref(false);
 const searchRepo = ref("");
-const state: UserConfig = await invoke("get_user_state");
-const user = computed(() => state.user);
-const octokit = new Octokit({ auth: state.token.access_token });
 const repos = ref<Repo[]>([]);
 const branchs = ref<Branch[]>([]);
-const { repo_name, branch_name, set_repository } = useGlobalState();
+const { repo_name, branch_name, user, access_token, set_repository } =
+  useGlobalState();
+const octokit = new Octokit({ auth: access_token.value });
 
 async function searchRepositories() {
   const { data } = await octokit.request("GET /search/repositories", {
-    q: `user:${user.value.login}+${searchRepo.value}`,
+    q: `user:${user.value?.login}+${searchRepo.value}`,
     sort: "stars",
     per_page: 100,
   });
@@ -32,7 +29,7 @@ async function searchBranches() {
     const { data } = await octokit.request(
       "GET /repos/{owner}/{repo}/branches",
       {
-        owner: user.value.login!,
+        owner: user.value?.login!,
         repo: repo_name.value,
       }
     );

@@ -1,13 +1,11 @@
 use reqwest::Client;
 use std::env;
-use tauri::State;
 use url::Url;
 
-use crate::model::{AuthConfig, User, UserConfig, UserState, UserToken};
+use crate::model::{AuthConfig, UserToken};
 
 const BASE_LOGIN_URL: &str = "https://github.com/login/oauth/authorize";
 const BASE_AUTHORIZE: &str = "https://github.com/login/oauth/access_token";
-const BASE_USER: &str = "https://api.github.com/user";
 
 fn read_auth_env() -> AuthConfig {
     let mut auth_config = AuthConfig::default();
@@ -21,8 +19,7 @@ fn read_auth_env() -> AuthConfig {
 
 #[tokio::main]
 #[tauri::command]
-pub async fn get_access_token(code: String, state: tauri::State<UserState>) -> UserConfig {
-    let mut user_state = state.lock().unwrap();
+pub async fn get_access_token(code: String) -> UserToken {
     let mut config = read_auth_env();
     config.code = code;
 
@@ -44,35 +41,8 @@ pub async fn get_access_token(code: String, state: tauri::State<UserState>) -> U
         .json::<UserToken>()
         .await
         .unwrap();
-    user_state.set(Some(user_token.clone()), None);
-    // let mut user_token = UserToken::new();
-    // user_token.set(res);
 
-    if let Some(token) = user_state.token.access_token.as_ref().clone() {
-        let token = format!("Bearer {}", token);
-        let user = client
-            .get(BASE_USER)
-            .header("Accept", "application/json")
-            .header("Authorization", token)
-            .header("User-Agent", "picx-app")
-            .send()
-            .await
-            .unwrap()
-            .json::<User>()
-            .await
-            .unwrap();
-
-        user_state.set(Some(user_token), Some(user));
-
-        return UserConfig {
-            token: user_state.token.clone(),
-            user: user_state.user.clone(),
-        };
-    }
-    UserConfig {
-        token: user_state.token.clone(),
-        user: user_state.user.clone(),
-    }
+    user_token
 }
 
 #[tauri::command]
@@ -88,10 +58,4 @@ pub fn login_uri() -> String {
         .to_string();
 
     uri
-}
-
-#[tauri::command]
-pub fn get_user_state(state: State<UserState>) -> UserConfig {
-    let user_state = state.lock().unwrap();
-    user_state.clone()
 }
