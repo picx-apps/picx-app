@@ -7,6 +7,8 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
+    Cell: typeof import('./src/components/cell/index.vue')['default']
+    CellGroup: typeof import('./src/components/cell/CellGroup.vue')['default']
     Layout: typeof import('./src/components/Layout.vue')['default']
     NAvatar: typeof import('naive-ui')['NAvatar']
     NButton: typeof import('naive-ui')['NButton']
@@ -18,11 +20,14 @@ declare module 'vue' {
     NImage: typeof import('naive-ui')['NImage']
     NInput: typeof import('naive-ui')['NInput']
     NModal: typeof import('naive-ui')['NModal']
+    NNotificationProvider: typeof import('naive-ui')['NNotificationProvider']
+    NSelect: typeof import('naive-ui')['NSelect']
     NThemeEditor: typeof import('naive-ui')['NThemeEditor']
     RepoSettings: typeof import('./src/components/RepoSettings.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     Step1: typeof import('./src/components/lead/Step1.vue')['default']
+    Step2: typeof import('./src/components/lead/Step2.vue')['default']
     Tabbar: typeof import('./src/components/tabbar/Tabbar.vue')['default']
     TabbarItem: typeof import('./src/components/tabbar/TabbarItem.vue')['default']
   }

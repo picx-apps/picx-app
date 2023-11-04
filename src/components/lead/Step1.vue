@@ -6,12 +6,27 @@ const props = defineProps<{
 }>();
 const emit = defineEmits(["update:modelValue"]);
 const modelValue = useVModel(props, "modelValue", emit);
-
+const notification = useNotification();
 const [DefineOption, ReuseOption] = createReusableTemplate<{
   icon: string;
   label: string;
   value: boolean;
 }>();
+
+function validate() {
+  if (modelValue.value === undefined) {
+    notification.warning({
+      content: "Please select an option",
+      duration: 1000,
+    });
+    return false;
+  }
+  return true;
+}
+
+defineExpose({
+  validate,
+});
 </script>
 
 <template>
@@ -30,33 +45,22 @@ const [DefineOption, ReuseOption] = createReusableTemplate<{
     </div>
   </DefineOption>
 
-  <div class="lead-container">
-    <div>
-      <div
-        class="my-4px text-2rem font-bold lh-38px color-#545454 base-text-color"
-      >
-        欢迎来到 PICX
-      </div>
-      <p class="my-0 color-gray">我们来一起初始化您的个性图库</p>
-    </div>
+  <div class="flex flex-col items-center justify-center mt-20px">
+    <div class="my-20px color-#aaaaaa">你准备好仓库了吗?</div>
+    <div class="flex items-center justify-center">
+      <!-- yes -->
+      <ReuseOption
+        icon="icon-park-solid:grinning-face-with-squinting-eyes"
+        label="Yes"
+        :value="true"
+      />
 
-    <div class="flex flex-col items-center justify-center mt-20px">
-      <div class="my-20px color-#aaaaaa">你准备好仓库了吗?</div>
-      <div class="flex items-center justify-center">
-        <!-- yes -->
-        <ReuseOption
-          icon="icon-park-solid:grinning-face-with-squinting-eyes"
-          label="Yes"
-          :value="true"
-        />
-
-        <!-- no -->
-        <ReuseOption
-          icon="icon-park-solid:grinning-face-with-tightly-closed-eyes-open-mouth"
-          label="No"
-          :value="false"
-        />
-      </div>
+      <!-- no -->
+      <ReuseOption
+        icon="icon-park-solid:grinning-face-with-tightly-closed-eyes-open-mouth"
+        label="No"
+        :value="false"
+      />
     </div>
   </div>
 </template>

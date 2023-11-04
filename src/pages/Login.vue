@@ -41,7 +41,12 @@ meta:
         class="mb-20px"
       ></n-input>
 
-      <n-button type="primary" class="w-100% mb-20px" @click="handleSignToken">
+      <n-button
+        type="primary"
+        ghost
+        class="w-100% mb-20px"
+        @click="handleSignToken"
+      >
         Sign in
       </n-button>
 
