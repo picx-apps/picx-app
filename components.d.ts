@@ -17,6 +17,8 @@ declare module 'vue' {
     NDrawer: typeof import('naive-ui')['NDrawer']
     NDrawerContent: typeof import('naive-ui')['NDrawerContent']
     NDropdown: typeof import("naive-ui")["NDropdown"]
+    NForm: typeof import('naive-ui')['NForm']
+    NFormItem: typeof import('naive-ui')['NFormItem']
     NImage: typeof import('naive-ui')['NImage']
     NInput: typeof import('naive-ui')['NInput']
     NModal: typeof import('naive-ui')['NModal']
@@ -28,6 +30,7 @@ declare module 'vue' {
     RouterView: typeof import('vue-router')['RouterView']
     Step1: typeof import('./src/components/lead/Step1.vue')['default']
     Step2: typeof import('./src/components/lead/Step2.vue')['default']
+    Step2Create: typeof import('./src/components/lead/Step2Create.vue')['default']
     Tabbar: typeof import('./src/components/tabbar/Tabbar.vue')['default']
     TabbarItem: typeof import('./src/components/tabbar/TabbarItem.vue')['default']
   }

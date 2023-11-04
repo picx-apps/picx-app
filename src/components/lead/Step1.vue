@@ -6,27 +6,11 @@ const props = defineProps<{
 }>();
 const emit = defineEmits(["update:modelValue"]);
 const modelValue = useVModel(props, "modelValue", emit);
-const notification = useNotification();
 const [DefineOption, ReuseOption] = createReusableTemplate<{
   icon: string;
   label: string;
   value: boolean;
 }>();
-
-function validate() {
-  if (modelValue.value === undefined) {
-    notification.warning({
-      content: "Please select an option",
-      duration: 1000,
-    });
-    return false;
-  }
-  return true;
-}
-
-defineExpose({
-  validate,
-});
 </script>
 
 <template>

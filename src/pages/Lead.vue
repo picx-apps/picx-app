@@ -1,27 +1,75 @@
 <script lang="ts" setup>
-import Step1 from "../components/lead/Step1.vue";
-import Step2 from "../components/lead/Step2.vue";
+import Step2Create from "../components/lead/Step2Create.vue";
+import { useGlobalState } from "../store";
 import type { LeadConfig } from "../types";
+
 const step = ref(1);
-const stepInstance1 = ref<InstanceType<typeof Step1>>();
-const stepInstance2 = ref<InstanceType<typeof Step2>>();
+const router = useRouter();
+const stepCreateInstance = ref<InstanceType<typeof Step2Create>>();
+const notification = useNotification();
 const config = ref<LeadConfig>({
   isNewRepo: undefined,
   repoName: undefined,
   branchName: undefined,
 });
+const { set_repository } = useGlobalState();
 
 function handlePrev() {
   if (step.value === 1) return;
   step.value--;
 }
-function handleNext() {
-  if (step.value === 3) return;
-  if (step.value === 1 && !stepInstance1.value?.validate()) {
-    return;
+function setRepo() {
+  set_repository({
+    repo_name: config.value.repoName,
+    branch_name: config.value.branchName,
+  });
+}
+async function handleNext() {
+  const { isNewRepo, repoName, branchName } = config.value;
+  if (step.value === 1 && isNewRepo === undefined) {
+    return notification.warning({
+      content: "Please select an option",
+      duration: 1000,
+    });
   }
-  if (step.value === 2 && !stepInstance2.value?.validate()) {
-    return;
+  if (step.value === 2) {
+    if (isNewRepo === true) {
+      if (!repoName && !branchName)
+        return notification.warning({
+          content: "请选择仓库和分支",
+          duration: 1000,
+        });
+      setRepo();
+      return router.push({ name: "home" });
+    }
+    if (isNewRepo === false) {
+      const res = await stepCreateInstance.value?.createRepo();
+      if (res?.status === 201) {
+        notification.success({
+          content: "创建成功",
+          duration: 1000,
+        });
+        config.value.repoName = res.data.name;
+        config.value.branchName = res.data.default_branch;
+        setRepo();
+        return router.push({ name: "home" });
+      } else if (res?.status === 422) {
+        return notification.error({
+          content: "仓库名已存在",
+          duration: 1000,
+        });
+      } else if (res?.status === 403) {
+        return notification.error({
+          content: "您没有创建仓库的权限,请联系作者",
+          duration: 1000,
+        });
+      } else {
+        return notification.error({
+          content: "其他错误",
+          duration: 1000,
+        });
+      }
+    }
   }
   step.value++;
 }
@@ -29,8 +77,6 @@ function handleNext() {
 
 <route lang="yaml">
 name: lead
-meta:
-  public: true
 </route>
 
 <template>
@@ -45,10 +91,11 @@ meta:
     </div>
 
     <div v-show="step === 1">
-      <Step1 v-model="config.isNewRepo" ref="stepInstance1" />
+      <Step1 v-model="config.isNewRepo" />
     </div>
     <div v-show="step === 2" class="max-w-400px w-90%">
-      <Step2 v-model="config" ref="stepInstance2" />
+      <Step2 v-if="config.isNewRepo === true" v-model="config" />
+      <Step2Create v-else ref="stepCreateInstance" />
     </div>
 
     <div

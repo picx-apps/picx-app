@@ -24,7 +24,7 @@
   -webkit-text-size-adjust: 100%;
 
   --text-primary: #1b153b;
-  --color-primary: rgba(151, 154, 196, 0.22);
+  --color-primary: rgba(202, 202, 202, 0.22);
   --base-color-primary: linear-gradient(120deg, #b047ff 16%, #9499ff, #9499ff);
 }
 

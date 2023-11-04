@@ -24,7 +24,6 @@ const octokit = new Octokit({ auth: access_token.value });
 const { user }: UserConfig = await invoke("get_user_state");
 const repoVisible = ref(false);
 const branchVisible = ref(false);
-const notification = useNotification();
 
 async function initRepo() {
   const { data } = await octokit.request("GET /search/repositories", {
@@ -56,24 +55,9 @@ function handleClickBranch(item: Branch) {
   modelValue.value.branchName = item.name;
   branchVisible.value = false;
 }
-function validate() {
-  if (!modelValue.value.repoName || !modelValue.value.branchName) {
-    debugger;
-    notification.warning({
-      content: "请选择仓库和分支",
-      duration: 1000,
-    });
-    return false;
-  }
-  return true;
-}
 
 onMounted(() => {
   initRepo();
-});
-
-defineExpose({
-  validate,
 });
 </script>
 
