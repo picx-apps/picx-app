@@ -34,7 +34,7 @@ export const useGlobalState = createGlobalState(() => {
     },
     localStorage
   );
-  const imagePath = ref<string[]>([]);
+  const imagePath = useStorage<string[]>("picx-image-path", [], localStorage);
 
   // getters
   const access_token = computed(() => authorize.value.access_token);
