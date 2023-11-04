@@ -1,11 +1,7 @@
 <script lang="ts" setup>
-import type { LeadConfig } from "../../types";
+import type { BranchInfo, LeadConfig, RepoInfo } from "../../types";
 import { Octokit } from "octokit";
 import { useGlobalState } from "../../store";
-import { components } from "@octokit/openapi-types";
-
-type Repo = components["schemas"]["repo-search-result-item"];
-type Branch = components["schemas"]["short-branch"];
 
 const icon = {
   yes: "icon-park-solid:grinning-face-with-squinting-eyes",
@@ -17,8 +13,8 @@ const props = defineProps<{
 const emit = defineEmits(["update:modelValue"]);
 const modelValue = useVModel(props, "modelValue", emit);
 const { access_token, user } = useGlobalState();
-const repoOptions = ref<Repo[]>([]);
-const branchOptions = ref<Branch[]>([]);
+const repoOptions = ref<RepoInfo[]>([]);
+const branchOptions = ref<BranchInfo[]>([]);
 const octokit = new Octokit({ auth: access_token.value });
 const repoVisible = ref(false);
 const branchVisible = ref(false);
@@ -43,13 +39,13 @@ async function initBranches() {
     branchOptions.value = data;
   }
 }
-function handleClickRepo(item: Repo) {
+function handleClickRepo(item: RepoInfo) {
   modelValue.value.repoName = item.name;
   modelValue.value.branchName = item.default_branch;
   repoVisible.value = false;
   initBranches();
 }
-function handleClickBranch(item: Branch) {
+function handleClickBranch(item: BranchInfo) {
   modelValue.value.branchName = item.name;
   branchVisible.value = false;
 }

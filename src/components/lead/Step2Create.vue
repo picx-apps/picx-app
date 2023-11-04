@@ -1,17 +1,14 @@
 <script lang="ts" setup>
 import { Octokit } from "octokit";
 import { useGlobalState } from "../../store";
-import { operations } from "@octokit/openapi-types";
-
-type RepoContent =
-  operations["repos/create-for-authenticated-user"]["requestBody"]["content"]["application/json"];
+import { CreateRepoContents } from "../../types";
 
 const { access_token } = useGlobalState();
 const octokit = new Octokit({
   auth: access_token.value,
 });
 
-const form = reactive<RepoContent>({
+const form = reactive<CreateRepoContents>({
   name: "Picx-app",
   description: "Hello, Welcome to Picx!",
 });

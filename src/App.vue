@@ -3,27 +3,27 @@ import { themeOverrides } from "./theme";
 </script>
 
 <template>
-  <n-config-provider :theme-overrides="themeOverrides">
-    <n-notification-provider>
-      <!-- <n-theme-editor> -->
-      <RouterView v-slot="{ Component }">
-        <template v-if="Component">
-          <Transition mode="out-in">
-            <KeepAlive>
-              <Suspense>
-                <transition name="fade">
+  <RouterView v-slot="{ Component }">
+    <template v-if="Component">
+      <Transition mode="out-in">
+        <KeepAlive>
+          <Suspense>
+            <transition name="fade">
+              <n-config-provider :theme-overrides="themeOverrides">
+                <n-notification-provider>
+                  <!-- <n-theme-editor> -->
                   <!-- 主要内容 -->
                   <component :is="Component"></component>
-                </transition>
+                  <!-- </n-theme-editor> -->
+                </n-notification-provider>
+              </n-config-provider>
+            </transition>
 
-                <!-- 加载中状态 -->
-                <template #fallback> 正在加载... </template>
-              </Suspense>
-            </KeepAlive>
-          </Transition>
-        </template>
-      </RouterView>
-      <!-- </n-theme-editor> -->
-    </n-notification-provider>
-  </n-config-provider>
+            <!-- 加载中状态 -->
+            <template #fallback> 正在加载... </template>
+          </Suspense>
+        </KeepAlive>
+      </Transition>
+    </template>
+  </RouterView>
 </template>

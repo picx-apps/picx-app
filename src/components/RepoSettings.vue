@@ -1,17 +1,14 @@
 <script lang="ts" setup>
 import { Icon } from "@iconify/vue";
 import { Octokit } from "octokit";
-import { components } from "@octokit/openapi-types";
 import { useGlobalState } from "../store";
-
-type Repo = components["schemas"]["repo-search-result-item"];
-type Branch = components["schemas"]["short-branch"];
+import { RepoInfo, BranchInfo } from "../types";
 
 const active = ref(false);
 const active1 = ref(false);
 const searchRepo = ref("");
-const repos = ref<Repo[]>([]);
-const branchs = ref<Branch[]>([]);
+const repos = ref<RepoInfo[]>([]);
+const branchs = ref<BranchInfo[]>([]);
 const { repo_name, branch_name, user, access_token, set_repository } =
   useGlobalState();
 const octokit = new Octokit({ auth: access_token.value });
@@ -40,7 +37,7 @@ async function init() {
   await searchRepositories();
   await searchBranches();
 }
-function handleClickRepo(item: Repo) {
+function handleClickRepo(item: RepoInfo) {
   branchs.value = [];
   set_repository({
     repo_name: item.name,
@@ -51,7 +48,7 @@ function handleClickRepo(item: Repo) {
   searchBranches();
   active.value = false;
 }
-function handleClickBranch(item: Branch) {
+function handleClickBranch(item: BranchInfo) {
   set_repository({
     branch_name: item.name,
   });

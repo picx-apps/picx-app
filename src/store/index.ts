@@ -34,6 +34,7 @@ export const useGlobalState = createGlobalState(() => {
     },
     localStorage
   );
+  const imagePath = ref<string[]>([]);
 
   // getters
   const access_token = computed(() => authorize.value.access_token);
@@ -42,6 +43,7 @@ export const useGlobalState = createGlobalState(() => {
   const repo_name = computed(() => repository.value.repo_name);
   const branch_name = computed(() => repository.value.branch_name);
   const user = computed(() => userinfo.value);
+  const imagePaths = computed(() => imagePath.value);
 
   watch([authorize, userinfo], async ([authorize, userinfo]) => {
     if (authorize.access_token && !userinfo) {
@@ -65,6 +67,15 @@ export const useGlobalState = createGlobalState(() => {
   function set_repository(value: Partial<Repository>) {
     repository.value = merge(repository.value, value);
   }
+  function addImagePath(value: string) {
+    imagePath.value.push(value);
+  }
+  function removeImagePath(value: string) {
+    const index = imagePath.value.indexOf(value);
+    if (index !== -1) {
+      imagePath.value.splice(index, 1);
+    }
+  }
 
   return {
     access_token,
@@ -73,8 +84,11 @@ export const useGlobalState = createGlobalState(() => {
     user,
     repo_name,
     branch_name,
+    imagePaths,
     set_authorize,
     set_userinfo,
     set_repository,
+    addImagePath,
+    removeImagePath,
   };
 });

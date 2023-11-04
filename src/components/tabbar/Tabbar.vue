@@ -4,22 +4,25 @@ import { Icon } from "@iconify/vue";
 
 <template>
   <div class="tabbar">
-    <TabbarItem name="home">
-      <Icon icon="ri:home-3-line" class="text-20px select-none"></Icon>
+    <TabbarItem name="home" text="首页">
+      <Icon
+        icon="material-symbols:home-rounded"
+        class="text-22px select-none"
+      ></Icon>
     </TabbarItem>
-    <TabbarItem name="upload">
-      <Icon icon="ri:upload-cloud-2-line" class="text-20px select-none"></Icon>
+    <TabbarItem name="upload" text="上传">
+      <Icon icon="ri:upload-cloud-2-line" class="text-22px select-none"></Icon>
     </TabbarItem>
-    <TabbarItem name="user">
-      <Icon icon="ri:user-smile-line" class="text-20px select-none"></Icon>
+    <TabbarItem name="user" text="我的">
+      <Icon icon="ri:user-smile-line" class="text-22px select-none"></Icon>
     </TabbarItem>
   </div>
 </template>
 
 <style lang="less" scoped>
 .tabbar {
-  position: absolute;
-  bottom: 20px;
+  position: fixed;
+  bottom: 14px;
   left: 50%;
   transform: translateX(-50%);
   max-width: 600px;
