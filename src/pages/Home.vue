@@ -144,25 +144,11 @@ name: home
 
 <template>
   <n-scrollbar style="height: 100vh">
-    <div class="header p-10px px-16px flex items-center">
-      <div flex-1 class="flex items-center">
-        <img
-          :src="user?.avatar_url"
-          :alt="user?.login"
-          class="w-50px h-50px rounded-full mr-16px"
-        />
-        <div>
-          <div class="text-18px lh-20px font-bold">
-            {{ user?.name || user?.login }}
-          </div>
-          <div class="bio">晚上好，欢迎回来~</div>
-        </div>
-      </div>
-
-      <div class="optional">
+    <Header>
+      <template #optional>
         <Icon icon="prime:inbox" class="text-26px" />
-      </div>
-    </div>
+      </template>
+    </Header>
 
     <!-- 最近添加 -->
     <div class="latest px-16px">

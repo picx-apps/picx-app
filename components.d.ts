@@ -9,6 +9,7 @@ declare module 'vue' {
   export interface GlobalComponents {
     Cell: typeof import('./src/components/cell/index.vue')['default']
     CellGroup: typeof import('./src/components/cell/CellGroup.vue')['default']
+    Header: typeof import('./src/components/Header.vue')['default']
     ImagePreview: typeof import('./src/components/image-preview/index.vue')['default']
     Layout: typeof import('./src/components/Layout.vue')['default']
     NButton: typeof import('naive-ui')['NButton']
