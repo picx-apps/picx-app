@@ -35,6 +35,7 @@ export const useGlobalState = createGlobalState(() => {
     localStorage
   );
   const imagePath = useStorage<string[]>("picx-image-path", [], localStorage);
+  const octokit = ref<Octokit | null>(null);
 
   // getters
   const access_token = computed(() => authorize.value.access_token);
@@ -45,17 +46,23 @@ export const useGlobalState = createGlobalState(() => {
   const user = computed(() => userinfo.value);
   const imagePaths = computed(() => imagePath.value);
 
-  watch([authorize, userinfo], async ([authorize, userinfo]) => {
-    if (authorize.access_token && !userinfo) {
-      const octokit = new Octokit({
-        auth: authorize.access_token,
-      });
-      const res = await octokit.request("GET /user");
-      if (res.status === 200) {
-        set_userinfo(res.data);
+  watch(
+    [authorize, userinfo],
+    async ([authorize, userinfo]) => {
+      if (authorize.access_token) {
+        octokit.value = new Octokit({
+          auth: authorize.access_token,
+        });
       }
-    }
-  });
+      if (authorize.access_token && !userinfo) {
+        const res = await octokit.value!.request("GET /user");
+        if (res.status === 200) {
+          set_userinfo(res.data);
+        }
+      }
+    },
+    { immediate: true }
+  );
 
   // actions
   function set_authorize(value: UserToken) {
@@ -85,6 +92,7 @@ export const useGlobalState = createGlobalState(() => {
     repo_name,
     branch_name,
     imagePaths,
+    octokit,
     set_authorize,
     set_userinfo,
     set_repository,

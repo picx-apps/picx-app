@@ -5,6 +5,8 @@ import { Octokit } from "octokit";
 import { isArray } from "lodash-es";
 import { RepoContents } from "../types";
 import dirSvg from "../assets/images/dir.png?url";
+import { HomeImageDropDownOptions } from "../constant";
+import { writeText } from "@tauri-apps/api/clipboard";
 
 const {
   user,
@@ -25,11 +27,19 @@ const latestDebounced = refDebounced(latest, 300);
 const showLatest = ref(false);
 const showDirs = ref(false);
 const showImages = ref(false);
+const showDropdown = ref(false);
+const dropDownPosition = reactive({
+  x: 0,
+  y: 0,
+});
+const message = useMessage();
 const path = computed(() =>
   imagePaths.value.length > 0
     ? imagePaths.value[imagePaths.value.length - 1]
     : ""
 );
+const currentImage = ref<(typeof repoContent.value)[0] | null>(null);
+const activeImageDelete = ref(false);
 
 watchEffect(() => {
   console.log(dirs.value);
@@ -60,6 +70,67 @@ function handleClickDir(item: (typeof repoContent.value)[0]) {
 function handleClickBackUp() {
   removeImagePath(path.value);
   contents();
+}
+function handleClickImage(
+  event: MouseEvent,
+  item: (typeof repoContent.value)[0]
+) {
+  event.preventDefault();
+  currentImage.value = item;
+  showDropdown.value = false;
+  nextTick().then(() => {
+    showDropdown.value = true;
+    dropDownPosition.x = event.clientX;
+    dropDownPosition.y = event.clientY;
+  });
+}
+async function handleImageDropDownSelect(key: string) {
+  showDropdown.value = false;
+  const { download_url, name } = currentImage.value!;
+  if (key === "copy" && download_url) {
+    await writeText(download_url);
+    message.warning("复制成功", {
+      icon: () =>
+        h(Icon, { icon: "icon-park-solid:grinning-face-with-squinting-eyes" }),
+    });
+  }
+  if (key === "download" && download_url) {
+    const data = await useImageToBinary(download_url);
+    const success = await useWriteBinaryFile(data, name);
+    success &&
+      message.warning("下载成功", {
+        icon: () =>
+          h(Icon, {
+            icon: "icon-park-solid:grinning-face-with-squinting-eyes",
+          }),
+      });
+  }
+  if (key === "delete") {
+    activeImageDelete.value = true;
+  }
+}
+async function handleDeleteImage() {
+  activeImageDelete.value = false;
+  const { name, path, sha } = currentImage.value!;
+  const res = await octokit.request(
+    "DELETE /repos/{owner}/{repo}/contents/{path}",
+    {
+      owner: user.value!.login,
+      repo: repo_name.value,
+      path,
+      sha,
+      message: "picx delete file " + name,
+    }
+  );
+  if (res.status === 200) {
+    message.warning("删除成功", {
+      icon: () =>
+        h(Icon, {
+          icon: "icon-park-solid:grinning-face-with-squinting-eyes",
+        }),
+    });
+    contents();
+  }
 }
 
 onMounted(() => {
@@ -207,7 +278,11 @@ name: home
         <div
           class="image-list-container grid grid-gap-10px grid-cols-3 sm:grid-cols-5 md:grid-cols-6 lg:grid-cols-7 xl:grid-cols-8"
         >
-          <div class="w-100px h-100px" v-for="item in files">
+          <div
+            class="w-100px h-100px"
+            v-for="item in files"
+            @contextmenu="handleClickImage($event, item)"
+          >
             <n-image
               :src="item.download_url!"
               lazy
@@ -221,6 +296,51 @@ name: home
         </div>
       </n-collapse-transition>
     </div>
+
+    <n-dropdown
+      placement="bottom-start"
+      trigger="manual"
+      :x="dropDownPosition.x"
+      :y="dropDownPosition.y"
+      :options="HomeImageDropDownOptions"
+      :show="showDropdown"
+      @select="handleImageDropDownSelect"
+      @clickoutside="
+        () => {
+          showDropdown = false;
+          currentImage = null;
+        }
+      "
+    />
+
+    <n-drawer
+      v-model:show="activeImageDelete"
+      placement="bottom"
+      height="200"
+      :drawer-style="{ borderRadius: '18px 18px 0 0' }"
+    >
+      <n-drawer-content>
+        <div class="text-14px color-#aaaaaa text-center mt-10px">
+          确定删除吗?
+        </div>
+        <n-button
+          type="error"
+          ghost
+          class="w-100% my-20px"
+          @click="handleDeleteImage"
+        >
+          删除
+        </n-button>
+        <n-button
+          type="primary"
+          ghost
+          class="w-100%"
+          @click="activeImageDelete = false"
+        >
+          取消
+        </n-button>
+      </n-drawer-content>
+    </n-drawer>
 
     <Tabbar />
   </n-scrollbar>

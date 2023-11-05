@@ -11,10 +11,12 @@ import { themeOverrides } from "./theme";
             <transition name="fade">
               <n-config-provider :theme-overrides="themeOverrides">
                 <n-notification-provider>
-                  <!-- <n-theme-editor> -->
-                  <!-- 主要内容 -->
-                  <component :is="Component"></component>
-                  <!-- </n-theme-editor> -->
+                  <n-message-provider>
+                    <!-- <n-theme-editor> -->
+                    <!-- 主要内容 -->
+                    <component :is="Component"></component>
+                    <!-- </n-theme-editor> -->
+                  </n-message-provider>
                 </n-notification-provider>
               </n-config-provider>
             </transition>

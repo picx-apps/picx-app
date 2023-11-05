@@ -16,6 +16,20 @@
       "shell": {
         "all": false,
         "open": true
+      },
+      "clipboard": {
+        "writeText": true,
+        "readText": true
+      },
+      "path": {
+        "all": true
+      },
+      "fs": {
+        "all": true,
+        "scope": ["$HOME/*", "$DOWNLOAD/*"]
+      },
+      "dialog": {
+        "save": true
       }
     },
     "bundle": {
