@@ -204,16 +204,20 @@ name: home
       </div>
 
       <n-collapse-transition :show="showImages">
-        <div class="image-list-container">
-          <n-image
-            v-for="item in files"
-            width="80"
-            height="100"
-            :src="item.download_url!"
-            lazy
-            object-fit="cover"
-            class="rounded-lg m-4px"
-          />
+        <div
+          class="image-list-container grid grid-gap-10px grid-cols-3 sm:grid-cols-5 md:grid-cols-6 lg:grid-cols-7 xl:grid-cols-8"
+        >
+          <div class="w-100px h-100px" v-for="item in files">
+            <n-image
+              :src="item.download_url!"
+              lazy
+              object-fit="cover"
+              class="rounded-lg w-100% h-100%"
+              :intersection-observer-options="{
+                root: '#app',
+              }"
+            />
+          </div>
         </div>
       </n-collapse-transition>
     </div>
@@ -223,9 +227,6 @@ name: home
 </template>
 
 <style lang="less" scoped>
-.aa {
-  color: #959595;
-}
 .text-overlay {
   position: absolute;
   top: 0;
@@ -276,6 +277,14 @@ name: home
     -webkit-line-clamp: 2; /* 控制文本行数 */
     white-space: normal; /* 多余的文本换行 */
   }
+}
+.image-list-container {
+  display: grid;
+}
+:deep(.image-list-container) .n-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .scroll-content {

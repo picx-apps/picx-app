@@ -1,7 +1,4 @@
 use serde::{Deserialize, Serialize};
-use std::sync::{Arc, Mutex};
-
-pub type UserState = Arc<Mutex<UserConfig>>;
 
 #[derive(Debug, Deserialize, Serialize, Clone)]
 pub struct User {
@@ -68,31 +65,4 @@ pub struct UserToken {
     pub access_token: Option<String>,
     pub scope: Option<String>,
     pub token_type: Option<String>,
-}
-
-impl UserToken {
-    pub fn new() -> Self {
-        Self {
-            access_token: None,
-            scope: None,
-            token_type: None,
-        }
-    }
-}
-
-#[derive(Deserialize, Serialize, Debug, Clone)]
-pub struct UserConfig {
-    pub token: UserToken,
-    pub user: Option<User>,
-}
-
-impl UserConfig {
-    pub fn set(&mut self, token: Option<UserToken>, user: Option<User>) {
-        if let Some(token) = token {
-            self.token = token
-        }
-        if let Some(user) = user {
-            self.user = Some(user)
-        }
-    }
 }
