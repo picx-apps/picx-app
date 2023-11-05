@@ -75,12 +75,13 @@ function handleClickImage(
 ) {
   event.preventDefault();
   currentImage.value = item;
+  showDropdown.value = true;
+  dropDownPosition.x = event.clientX;
+  dropDownPosition.y = event.clientY;
+}
+function handleImageOutside() {
   showDropdown.value = false;
-  nextTick().then(() => {
-    showDropdown.value = true;
-    dropDownPosition.x = event.clientX;
-    dropDownPosition.y = event.clientY;
-  });
+  currentImage.value = null;
 }
 async function handleImageDropDownSelect(key: string) {
   showDropdown.value = false;
@@ -291,12 +292,7 @@ name: home
       :options="HomeImageDropDownOptions"
       :show="showDropdown"
       @select="handleImageDropDownSelect"
-      @clickoutside="
-        () => {
-          showDropdown = false;
-          currentImage = null;
-        }
-      "
+      @clickoutside="handleImageOutside"
     />
 
     <n-drawer

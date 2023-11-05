@@ -12,7 +12,7 @@ const { user } = useGlobalState();
       <img
         :src="user?.avatar_url"
         :alt="user?.login"
-        class="w-50px h-50px rounded-full mr-16px"
+        class="w-46px h-46px rounded-full mr-8px avatar"
       />
       <div>
         <div class="text-18px lh-20px font-bold">
@@ -28,4 +28,15 @@ const { user } = useGlobalState();
   </div>
 </template>
 
-<style lang="less" scoped></style>
+<style lang="less" scoped>
+.avatar {
+  border: 4px solid rgba(127, 151, 208, 0.33);
+}
+.bio {
+  margin-top: 4px;
+  font-size: 11px;
+  line-height: 16px;
+  color: #959595;
+  border-radius: 10px;
+}
+</style>

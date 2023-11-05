@@ -7,14 +7,14 @@ import { Icon } from "@iconify/vue";
     <TabbarItem name="home" text="首页">
       <Icon
         icon="material-symbols:home-rounded"
-        class="text-22px select-none"
+        class="text-26px select-none"
       ></Icon>
     </TabbarItem>
     <TabbarItem name="upload" text="上传">
-      <Icon icon="ri:upload-cloud-2-line" class="text-22px select-none"></Icon>
+      <Icon icon="ri:upload-cloud-2-line" class="text-26px select-none"></Icon>
     </TabbarItem>
     <TabbarItem name="user" text="我的">
-      <Icon icon="ri:user-smile-line" class="text-22px select-none"></Icon>
+      <Icon icon="ri:user-smile-line" class="text-26px select-none"></Icon>
     </TabbarItem>
   </div>
 </template>
@@ -27,7 +27,7 @@ import { Icon } from "@iconify/vue";
   transform: translateX(-50%);
   max-width: 600px;
   min-width: 300px;
-  background: var(--color-primary);
+  background: var(--tabbar-background);
   padding: 14px 20px;
   border-radius: 18px;
   display: flex;

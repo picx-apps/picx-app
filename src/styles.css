@@ -26,7 +26,8 @@
   --text-primary: #1b153b;
   --color-primary: rgba(202, 202, 202, 0.5);
   --base-color-primary: linear-gradient(120deg, #b047ff 16%, #9499ff, #9499ff);
-  --color-purple: rgb(72, 122, 239);
+  --tabbar-background: linear-gradient(120deg, #cdf2ff, #e2e4ff, #ece1ff);
+  --color-purple: #487aef;
 }
 
 body {
