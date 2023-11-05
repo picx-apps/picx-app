@@ -40,10 +40,8 @@ const path = computed(() =>
 );
 const currentImage = ref<(typeof repoContent.value)[0] | null>(null);
 const activeImageDelete = ref(false);
-
-watchEffect(() => {
-  console.log(dirs.value);
-});
+const { width } = useWindowSize();
+const maxRowNumber = computed(() => Math.floor(width.value / 110));
 
 async function contents() {
   const res = await octokit.request(
@@ -146,7 +144,8 @@ name: home
   <n-scrollbar style="height: 100vh">
     <Header>
       <template #optional>
-        <Icon icon="prime:inbox" class="text-26px" />
+        <Icon icon="ic:baseline-plus" class="text-26px mr-6px cursor-pointer" />
+        <Icon icon="prime:inbox" class="text-26px cursor-pointer" />
       </template>
     </Header>
 
@@ -261,11 +260,9 @@ name: home
       </div>
 
       <n-collapse-transition :show="showImages">
-        <div
-          class="image-list-container grid grid-gap-10px grid-cols-3 sm:grid-cols-5 md:grid-cols-6 lg:grid-cols-7 xl:grid-cols-8"
-        >
+        <div class="image-list-container grid grid-gap-10px">
           <div
-            class="w-100px h-100px"
+            class="w-100px h-100px relative"
             v-for="item in files"
             @contextmenu="handleClickImage($event, item)"
           >
@@ -278,6 +275,9 @@ name: home
                 root: '#app',
               }"
             />
+            <div class="image-list__filename">
+              {{ item.name }}
+            </div>
           </div>
         </div>
       </n-collapse-transition>
@@ -333,6 +333,18 @@ name: home
 </template>
 
 <style lang="less" scoped>
+.image-list__filename {
+  width: 80px;
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  color: white;
+  font-weight: bold;
+  font-size: 11px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
 .text-overlay {
   position: absolute;
   top: 0;
@@ -386,6 +398,7 @@ name: home
 }
 .image-list-container {
   display: grid;
+  grid-template-columns: repeat(v-bind(maxRowNumber), minmax(0, 1fr));
 }
 :deep(.image-list-container) .n-image img {
   width: 100%;
@@ -413,10 +426,6 @@ name: home
   line-height: 20px;
   font-weight: bold;
   color: var(--text-primary);
-}
-.bio {
-  font-size: 11px;
-  color: #959595;
 }
 .optional {
   height: 26px;
