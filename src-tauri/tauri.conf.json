@@ -29,7 +29,8 @@
         "scope": ["$HOME/*", "$DOWNLOAD/*"]
       },
       "dialog": {
-        "save": true
+        "save": true,
+        "open": true
       }
     },
     "bundle": {

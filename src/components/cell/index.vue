@@ -8,21 +8,28 @@ defineProps<{
   value?: string | null;
   linkIcon?: string | null;
 }>();
+defineSlots<{ prefix: void; suffix: void }>();
 </script>
 
 <template>
   <div class="cell">
-    <Icon class="cell__icon" v-if="icon" :icon="icon" />
+    <slot name="prefix">
+      <Icon class="cell__icon" v-if="icon" :icon="icon" />
+    </slot>
     <div class="cell__title">
       <span>{{ title }}</span>
       <div class="cell__label">{{ label }}</div>
     </div>
     <div class="cell__value">{{ value }}</div>
-    <Icon
-      class="cell__link"
-      v-if="isLink"
-      :icon="linkIcon ? linkIcon : 'material-symbols:arrow-forward-ios-rounded'"
-    />
+    <slot name="suffix">
+      <Icon
+        class="cell__link"
+        v-if="isLink"
+        :icon="
+          linkIcon ? linkIcon : 'material-symbols:arrow-forward-ios-rounded'
+        "
+      />
+    </slot>
   </div>
 </template>
 
@@ -40,10 +47,12 @@ defineProps<{
   --cell-value-size: 16px;
   --cell-title-size: 14px;
   --cell-icon-size: 30px;
+  --cell-padding-x: 16px;
+  --cell-padding-y: 10px;
   display: flex;
   align-items: center;
   width: 100%;
-  padding: 10px 16px;
+  padding: var(--cell-padding-y) var(--cell-padding-x);
   background: var(--cell-bg);
   cursor: pointer;
   & + & {

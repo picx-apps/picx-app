@@ -12,6 +12,7 @@ declare module 'vue' {
     Header: typeof import('./src/components/Header.vue')['default']
     ImagePreview: typeof import('./src/components/image-preview/index.vue')['default']
     Layout: typeof import('./src/components/Layout.vue')['default']
+    NAffix: typeof import('naive-ui')['NAffix']
     NButton: typeof import('naive-ui')['NButton']
     NCollapseTransition: typeof import('naive-ui')['NCollapseTransition']
     NConfigProvider: typeof import('naive-ui')['NConfigProvider']

@@ -8,3 +8,6 @@ export type BranchInfo = components["schemas"]["short-branch"];
 
 export type CreateRepoContents =
   operations["repos/create-for-authenticated-user"]["requestBody"]["content"]["application/json"];
+
+export type Tree =
+  operations["git/create-tree"]["requestBody"]["content"]["application/json"]["tree"];

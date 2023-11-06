@@ -51,6 +51,7 @@ async function contents() {
       repo: repo_name.value,
       ref: branch_name.value,
       path: path.value,
+      t: Date.now(),
     }
   );
   if (res.status === 200) {
