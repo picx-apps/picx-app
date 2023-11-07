@@ -7,6 +7,7 @@ const { octokit, user, repo_name, branch_name } = useGlobalState();
 export const useUploadState = createGlobalState(() => {
   const uploadPath = useStorage<string[]>("picx-upload-path", [], localStorage);
   const currentDirs = ref<RepoContents>([]);
+  const t = useStorage("picx-update-key", Date.now()); //缓存更新时间
 
   const currentPath = computed(() =>
     uploadPath.value.length > 0
@@ -34,6 +35,7 @@ export const useUploadState = createGlobalState(() => {
         repo: repo_name.value,
         ref: branch_name.value,
         path: path,
+        t: t.value,
       }
     );
     if (res.status === 200) {

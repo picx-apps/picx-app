@@ -21,6 +21,7 @@ reqwest = { version = "0.11", features = ["json"] }
 url = { version = "2", features = ["serde"] }
 dotenv = "0.15"
 image-base64 = "0.1"
+base64 = "0.21.5"
 
 [features]
 # this feature is used for production builds or when `devPath` points to the filesystem

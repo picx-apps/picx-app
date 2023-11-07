@@ -33,6 +33,7 @@ const dropDownPosition = reactive({
   y: 0,
 });
 const message = useMessage();
+const t = useStorage("picx-update-key", Date.now()); //缓存更新时间
 const path = computed(() =>
   imagePaths.value.length > 0
     ? imagePaths.value[imagePaths.value.length - 1]
@@ -51,7 +52,7 @@ async function contents() {
       repo: repo_name.value,
       ref: branch_name.value,
       path: path.value,
-      t: Date.now(),
+      t: t.value,
     }
   );
   if (res.status === 200) {
@@ -146,6 +147,16 @@ name: home
   <n-scrollbar style="height: 100vh">
     <Header>
       <template #optional>
+        <Icon
+          icon="ic:round-refresh"
+          class="text-26px mr-6px cursor-pointer"
+          @click="
+            () => {
+              t = Date.now();
+              contents();
+            }
+          "
+        />
         <Icon icon="ic:baseline-plus" class="text-26px mr-6px cursor-pointer" />
         <Icon icon="prime:inbox" class="text-26px cursor-pointer" />
       </template>

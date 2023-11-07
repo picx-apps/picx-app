@@ -2247,6 +2247,7 @@ dependencies = [
 name = "picx-app"
 version = "0.0.0"
 dependencies = [
+ "base64 0.21.5",
  "dotenv",
  "image-base64",
  "reqwest",
