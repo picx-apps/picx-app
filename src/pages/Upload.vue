@@ -34,6 +34,13 @@ async function handleImages(paths: string[]) {
     const base64: string = await invoke("binary_to_base64", {
       binary: [...binary],
     });
+    const compression: Uint8Array = await invoke("compression_image", {
+      path,
+      quality: 80,
+    });
+    console.log("origin", binary.length);
+    console.log("compression", compression.length);
+    debugger;
     const filename = path.split("/").pop() as string;
     tempContents.value.push({
       path: filename,
