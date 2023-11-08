@@ -28,6 +28,7 @@
   --base-color-primary: linear-gradient(120deg, #b047ff 16%, #9499ff, #9499ff);
   --tabbar-background: linear-gradient(120deg, #cdf2ff, #e2e4ff, #ece1ff);
   --color-purple: #487aef;
+  color: #505050;
 }
 
 body {

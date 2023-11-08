@@ -113,50 +113,46 @@ name: upload
 </route>
 
 <template>
-  <n-scrollbar class="px-16px" style="height: 100vh">
-    <!-- <Header>
+  <n-scrollbar style="height: 100vh">
+    <Header>
+      Node
       <template #optional>
         <Icon
           @click="handleClickUpload"
           icon="majesticons:camera"
-          class="text-1.6rem cursor-pointer color-#5448ee"
+          class="text-1.6rem cursor-pointer"
         />
       </template>
-    </Header> -->
-    <div class="flex py-10px">
-      <div class="flex-1"></div>
-      <div>
-        <Icon
-          @click="handleClickUpload"
-          icon="majesticons:camera"
-          class="text-1.6rem cursor-pointer color-#5448ee select-none"
-        />
-      </div>
-    </div>
+    </Header>
 
-    <div v-if="!waitContents.length">
-      <div class="text-center mt-0px">
-        <n-image
-          src="src/assets/images/camera.png"
-          width="200"
-          preview-disabled
-        />
-        <div class="text-1.2rem font-bold color-#525252">
-          上传你的第一张照片
+    <div class="px-16px pt-16px">
+      <div v-if="!waitContents.length">
+        <div class="text-center mt-0px">
+          <n-image
+            src="src/assets/images/node.png"
+            width="400"
+            preview-disabled
+          />
+          <div class="text-1.2rem font-bold color-#525252">
+            上传你的第一张照片
+          </div>
         </div>
       </div>
-    </div>
 
-    <div v-else>
-      <div class="text-1.1rem font-bold color-#5448ee mb-20px">
-        <Icon icon="ph:circle-notch-bold" /> 待上传 {{ waitContents.length }} 张
+      <div v-else>
+        <div
+          class="text-1.1rem font-bold color-#252525 mb-20px flex items-center"
+        >
+          <Icon icon="ph:circle-notch-bold" />
+          <span class="ml-10px"> 待上传 {{ waitContents.length }} 张</span>
+        </div>
+        <ImageCard
+          v-for="(item, index) in waitContents"
+          :key="item.path"
+          v-bind="item"
+          @delete="() => waitContents.splice(index, 1)"
+        />
       </div>
-      <ImageCard
-        v-for="(item, index) in waitContents"
-        :key="item.path"
-        v-bind="item"
-        @delete="() => waitContents.splice(index, 1)"
-      />
     </div>
 
     <n-drawer

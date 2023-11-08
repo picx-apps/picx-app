@@ -29,34 +29,32 @@ const compression_size = computed(() =>
       object-fit="cover"
       class="rounded-lg"
     />
-    <div class="h-80px ml-20px flex-1 flex flex-col justify-around">
+    <div class="h-80px ml-20px flex-1 flex flex-col justify-between">
       <div
-        class="lh-24px text-1.1rem color-#707070 font-bold truncate max-w-200px"
+        class="lh-24px text-1.1rem color-#505050 font-bold truncate max-w-200px"
       >
         {{ path }}
       </div>
+
       <div
-        class="text-12px color-#707070 font-bold truncate max-w-200px mb-3px flex items-center"
+        class="text-10px color-#707070 truncate max-w-200px mb-3px flex items-center"
       >
-        <Icon icon="octicon:file-directory-fill-24" class="mr-4px text-16px" />
-        <span class="color-#8c8c8c">{{ dir ? dir : "/" }}</span>
+        <Icon
+          icon="material-symbols:attach-file-rounded"
+          class="mr-4px text-16px"
+        />
+        <span>{{ dir ? dir : "root" }}</span>
       </div>
+
       <div>
         <div class="flex items-center">
-          <span
-            class="color-#487aef text-10px bg-#dddeff px-4px py-2px rounded-4px"
-          >
-            {{ compression_size }}
-          </span>
-          <Icon
-            icon="material-symbols:arrow-right-alt"
-            class="mx-4px"
-            :rotate="90"
-          />
-          <span
-            class="color-#5c5c5c text-10px bg-#f4f4f4 px-4px py-2px rounded-4px"
-          >
+          <Icon icon="iconoir:compress" class="mr-4px text-16px" />
+          <span class="color-#5c5c5c text-10px">
             {{ size }}
+          </span>
+          <Icon icon="material-symbols:arrow-right-alt" class="mx-4px" />
+          <span class="color-#5c5c5c text-10px">
+            {{ compression_size }}
           </span>
         </div>
       </div>

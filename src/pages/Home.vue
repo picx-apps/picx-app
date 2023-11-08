@@ -157,7 +157,7 @@ name: home
       <template #optional>
         <Icon
           icon="ic:round-refresh"
-          class="text-26px mr-6px cursor-pointer"
+          class="text-26px ml-6px cursor-pointer"
           @click="
             () => {
               t = Date.now();
@@ -165,7 +165,7 @@ name: home
             }
           "
         />
-        <Icon icon="ic:baseline-plus" class="text-26px mr-6px cursor-pointer" />
+        <Icon icon="ic:baseline-plus" class="text-26px ml-6px cursor-pointer" />
         <!-- <Icon icon="prime:inbox" class="text-26px cursor-pointer" /> -->
       </template>
     </Header>
@@ -278,7 +278,7 @@ name: home
         <div class="image-list-container">
           <n-image-group>
             <div
-              class="w-100px h-100px relative"
+              class="w-100px h-130px relative"
               v-for="item in files"
               @contextmenu="handleClickImage($event, item)"
             >
