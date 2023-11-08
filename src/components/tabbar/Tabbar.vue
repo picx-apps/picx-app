@@ -4,16 +4,16 @@ import { Icon } from "@iconify/vue";
 
 <template>
   <div class="tabbar">
-    <TabbarItem name="home" text="首页">
+    <TabbarItem name="home" text="Home">
       <Icon
         icon="material-symbols:home-rounded"
         class="text-26px select-none"
       ></Icon>
     </TabbarItem>
-    <TabbarItem name="upload" text="上传">
+    <TabbarItem name="upload" text="Upload">
       <Icon icon="ri:upload-cloud-2-line" class="text-26px select-none"></Icon>
     </TabbarItem>
-    <TabbarItem name="user" text="我的">
+    <TabbarItem name="user" text="User">
       <Icon icon="ri:user-smile-line" class="text-26px select-none"></Icon>
     </TabbarItem>
   </div>

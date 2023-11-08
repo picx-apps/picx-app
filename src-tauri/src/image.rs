@@ -5,12 +5,14 @@ use crate::utils::binary_to_base64;
 use image::codecs::jpeg::JpegEncoder;
 use image::codecs::png::{CompressionType, FilterType, PngEncoder};
 use image::ImageFormat;
-use serde::Deserialize;
+use serde::{Deserialize, Serialize};
 
-#[tauri::command]
-pub fn image_to_base64(path: &str) -> String {
-    let image_data = read_image(path).expect("Failed to read image");
-    binary_to_base64(image_data)
+#[derive(Deserialize, Serialize, Debug)]
+pub struct CompressionImage {
+    buffer: Vec<u8>,
+    base64: String,
+    compression_buffer: Vec<u8>,
+    compression_base64: String,
 }
 
 #[derive(Deserialize, Debug)]
@@ -21,7 +23,7 @@ pub enum CompressionQuality {
 }
 
 #[tauri::command]
-pub fn compression_image(path: &str, compression_quality: CompressionQuality) -> Vec<u8> {
+pub fn compression_image(path: &str, compression_quality: CompressionQuality) -> CompressionImage {
     let image_data = read_image(path).expect("Failed to read image");
     let image = image::load_from_memory(&image_data).expect("Failed to load image");
     // 创建一个空的字节数组作为输出缓冲区
@@ -44,7 +46,12 @@ pub fn compression_image(path: &str, compression_quality: CompressionQuality) ->
             image
                 .write_with_encoder(encoder)
                 .expect("Failed to compression image");
-            compressed_image_data
+            CompressionImage {
+                buffer: image_data.clone(),
+                base64: binary_to_base64(image_data),
+                compression_buffer: compressed_image_data.clone(),
+                compression_base64: binary_to_base64(compressed_image_data),
+            }
         }
         ImageFormat::Png => {
             let encoder = PngEncoder::new_with_quality(
@@ -55,9 +62,19 @@ pub fn compression_image(path: &str, compression_quality: CompressionQuality) ->
             image
                 .write_with_encoder(encoder)
                 .expect("Failed to compression image");
-            compressed_image_data
+            CompressionImage {
+                buffer: image_data.clone(),
+                base64: binary_to_base64(image_data),
+                compression_buffer: compressed_image_data.clone(),
+                compression_base64: binary_to_base64(compressed_image_data),
+            }
         }
-        _ => image_data,
+        _ => CompressionImage {
+            buffer: image_data.clone(),
+            base64: binary_to_base64(image_data.clone()),
+            compression_buffer: image_data.clone(),
+            compression_base64: binary_to_base64(image_data),
+        },
     }
 }
 

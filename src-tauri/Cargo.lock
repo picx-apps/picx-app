@@ -2175,6 +2175,7 @@ dependencies = [
  "base64 0.21.5",
  "dotenv",
  "image",
+ "rand 0.8.5",
  "reqwest",
  "serde",
  "serde_json",

@@ -1,15 +1,23 @@
 <script lang="ts" setup>
 import { Icon } from "@iconify/vue";
+import { UploadContent } from "../../types/upload";
 
-const props = defineProps<{
-  dir?: string;
-  path: string;
-  content: string;
-  size: number;
+const props = defineProps<UploadContent>();
+const emit = defineEmits<{
+  (e: "delete"): void;
 }>();
 
 const src = computed(() => "data:image/png;base64," + props.content);
-const size = computed(() => Math.floor(props.size / 1024));
+const size = computed(() =>
+  props.size >= 1024 * 1024
+    ? `${(props.size / 1024 / 1024).toFixed(2)} mb`
+    : `${(props.size / 1024).toFixed(0)} kb`
+);
+const compression_size = computed(() =>
+  props.compression_size >= 1024 * 1024
+    ? `${(props.compression_size / 1024 / 1024).toFixed(2)} mb`
+    : `${(props.compression_size / 1024).toFixed(0)} kb`
+);
 </script>
 
 <template>
@@ -38,7 +46,7 @@ const size = computed(() => Math.floor(props.size / 1024));
           <span
             class="color-#487aef text-10px bg-#dddeff px-4px py-2px rounded-4px"
           >
-            {{ size }} kb
+            {{ compression_size }}
           </span>
           <Icon
             icon="material-symbols:arrow-right-alt"
@@ -48,7 +56,7 @@ const size = computed(() => Math.floor(props.size / 1024));
           <span
             class="color-#5c5c5c text-10px bg-#f4f4f4 px-4px py-2px rounded-4px"
           >
-            {{ size }} kb
+            {{ size }}
           </span>
         </div>
       </div>
@@ -58,6 +66,7 @@ const size = computed(() => Math.floor(props.size / 1024));
       <Icon
         icon="material-symbols:delete"
         class="text-1.5rem color-#8c8c8c hover:color-#487aef cursor-pointer"
+        @click="emit('delete')"
       />
     </div>
   </div>

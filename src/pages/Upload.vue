@@ -5,14 +5,15 @@ import { useUploadState } from "../store/upload";
 import dirSvg from "../assets/images/dir.png?url";
 import { cloneDeepWith } from "lodash-es";
 import type { UploadContent } from "../types/upload";
-import { readBinaryFile } from "@tauri-apps/api/fs";
 import { invoke } from "@tauri-apps/api";
+import { CompressionQuality } from "../enum";
 
 const tempContents = ref<UploadContent[]>([]);
 const waitContents = ref<UploadContent[]>([]);
 const { currentPath, currentDirs, addUploadPath, removeUploadPath } =
   useUploadState();
 const showSelectDir = ref(false);
+const message = useMessage();
 
 async function handleClickUpload() {
   const selected = (await open({
@@ -30,28 +31,41 @@ async function handleClickUpload() {
 }
 async function handleImages(paths: string[]) {
   for (const path of paths) {
-    const binary = await readBinaryFile(path);
-    const base64: string = await invoke("binary_to_base64", {
-      binary: [...binary],
-    });
-    const compression: Uint8Array = await invoke("compression_image", {
+    console.time("bbb");
+    const {
+      buffer,
+      base64,
+      compression_buffer,
+      compression_base64,
+    }: {
+      buffer: Uint8Array;
+      base64: string;
+      compression_buffer: Uint8Array;
+      compression_base64: string;
+    } = await invoke("compression_image", {
       path,
-      quality: 80,
+      compressionQuality: CompressionQuality.Default,
     });
-    console.log("origin", binary.length);
-    console.log("compression", compression.length);
-    debugger;
-    const filename = path.split("/").pop() as string;
+    console.timeEnd("bbb");
+    let filename = path.split("/").pop() as string;
+    const random: string = await invoke("rand_string");
+    const _filename = filename.split(".");
+    filename =
+      _filename.length > 1
+        ? `${_filename[0]}_${random}.${_filename[1]}`
+        : filename + random;
+
     tempContents.value.push({
       path: filename,
       content: base64,
-      size: binary.length,
+      size: buffer.length,
+      compression_size: compression_buffer.length,
+      compression_content: compression_base64,
     });
   }
 }
 async function handleAfterLeave() {
   tempContents.value = [];
-  // const data = await uploadFilesToGitHub(contents.value);
 }
 //加入上传队列
 function handleQueue() {
@@ -59,14 +73,38 @@ function handleQueue() {
   waitContents.value.push(
     ...cloneDeepWith(
       tempContents.value.map((item) => ({
+        ...item,
         dir: currentPath.value,
-        path: item.path,
-        content: item.content,
-        size: item.size,
       }))
     )
   );
   showSelectDir.value = false;
+}
+//上传
+async function handleUpload() {
+  const contents = waitContents.value.map((item) => ({
+    ...item,
+    path: item.dir + "/" + item.path,
+  }));
+  const res = await uploadFilesToGitHub(contents);
+  if (res?.status === 201) {
+    message.warning("上传成功");
+    waitContents.value = [];
+  }
+}
+//立即上传
+async function handleBeginUpload() {
+  //等待上传队列
+  waitContents.value.push(
+    ...cloneDeepWith(
+      tempContents.value.map((item) => ({
+        ...item,
+        dir: currentPath.value,
+      }))
+    )
+  );
+  showSelectDir.value = false;
+  handleUpload();
 }
 </script>
 
@@ -113,7 +151,12 @@ name: upload
       <div class="text-1.1rem font-bold color-#5448ee mb-20px">
         <Icon icon="ph:circle-notch-bold" /> 待上传 {{ waitContents.length }} 张
       </div>
-      <ImageCard v-for="item in waitContents" :key="item.path" v-bind="item" />
+      <ImageCard
+        v-for="(item, index) in waitContents"
+        :key="item.path"
+        v-bind="item"
+        @delete="() => waitContents.splice(index, 1)"
+      />
     </div>
 
     <n-drawer
@@ -125,6 +168,7 @@ name: upload
     >
       <n-drawer-content>
         <Icon
+          @click="() => (showSelectDir = false)"
           icon="material-symbols:close"
           class="float-right text-1.2rem cursor-pointer hover:color-#487aef select-none"
         />
@@ -184,7 +228,9 @@ name: upload
           <n-button type="primary" ghost class="mr-10px" @click="handleQueue"
             >加入队列</n-button
           >
-          <n-button type="primary">立即上传</n-button>
+          <n-button type="primary" @click="handleBeginUpload"
+            >立即上传</n-button
+          >
         </div>
       </n-drawer-content>
     </n-drawer>
@@ -195,7 +241,7 @@ name: upload
     class="text-center fixed bottom-100px w-full"
     v-show="waitContents.length"
   >
-    <n-button type="primary" ghost>立即上传</n-button>
+    <n-button type="primary" ghost @click="handleUpload">立即上传</n-button>
   </div>
 </template>
 

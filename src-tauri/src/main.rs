@@ -8,8 +8,8 @@ mod utils;
 
 use auth::{get_access_token, login_uri};
 use dotenv::dotenv;
-use image::{compression_image, image_to_base64};
-use utils::binary_to_base64;
+use image::compression_image;
+use utils::{binary_to_base64, rand_string};
 
 fn main() {
     dotenv().ok();
@@ -18,9 +18,9 @@ fn main() {
         .invoke_handler(tauri::generate_handler![
             get_access_token,
             login_uri,
-            image_to_base64,
             binary_to_base64,
-            compression_image
+            compression_image,
+            rand_string
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

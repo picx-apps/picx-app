@@ -4,7 +4,6 @@ import { useGlobalState } from "../store";
 import { Octokit } from "octokit";
 import { isArray } from "lodash-es";
 import { RepoContents } from "../types";
-import dirSvg from "../assets/images/dir.png?url";
 import { HomeImageDropDownOptions } from "../constant";
 import { writeText } from "@tauri-apps/api/clipboard";
 
@@ -24,9 +23,9 @@ const octokit = new Octokit({
 const [dirs, files] = useRepoContent(repoContent);
 const latest = computed(() => files.value.slice(0, 5));
 const latestDebounced = refDebounced(latest, 300);
-const showLatest = ref(false);
-const showDirs = ref(false);
-const showImages = ref(false);
+const showLatest = ref(true);
+const showDirs = ref(true);
+const showImages = ref(true);
 const showDropdown = ref(false);
 const dropDownPosition = reactive({
   x: 0,
@@ -162,79 +161,34 @@ name: home
       </template>
     </Header>
 
-    <!-- 最近添加 -->
-    <div class="latest px-16px">
-      <div class="title">
-        <div flex-1>最近添加</div>
-        <Icon
-          icon="material-symbols:arrow-drop-down-circle"
-          class="text-18px cursor-pointer select-none"
-          @click="showLatest = !showLatest"
-        />
-      </div>
-
-      <n-collapse-transition :show="showLatest">
-        <n-scrollbar x-scrollable>
-          <div class="scroll-content">
-            <div
-              v-for="item in latestDebounced"
-              :key="item.sha"
-              class="image-container"
-            >
-              <n-image
-                width="260"
-                height="160"
-                :src="item.download_url!"
-                lazy
-                object-fit="cover"
-                class="rounded-lg"
-              />
-              <div class="text-overlay"></div>
-              <div
-                class="absolute top-10px left-10px font-bold color-white text-11px flex items-center"
-              >
-                <Icon
-                  icon="material-symbols:highlighter-size-1"
-                  class="text-16px"
-                />
-                {{ bytesToMB(item.size) }}mb
-              </div>
-              <div
-                class="absolute bottom-10px left-10px color-white font-bold text-11px"
-              >
-                {{ item.name }}
-              </div>
-            </div>
-          </div>
-        </n-scrollbar>
-      </n-collapse-transition>
-    </div>
-
     <!-- 文件夹 -->
     <div class="list px-16px">
       <div class="title">
-        <div flex-1>文件夹</div>
-        <Icon
-          icon="material-symbols:arrow-drop-down-circle"
-          class="text-18px cursor-pointer select-none"
-          @click="showDirs = !showDirs"
-        />
+        <div flex-1>
+          {{
+            path
+              ? path.split("/")[path.split("/").length - 1].toLocaleUpperCase()
+              : "ROOT"
+          }}
+          <span
+            class="text-10px ml-2px color-#487aef cursor-pointer"
+            @click="handleClickBackUp"
+            v-if="path !== '/'"
+          >
+            返回
+          </span>
+        </div>
       </div>
 
       <n-collapse-transition :show="showDirs">
         <n-scrollbar x-scrollable>
           <div class="scroll-content">
             <div
-              class="dir-container"
-              v-show="path !== ''"
-              @click="handleClickBackUp"
+              class="dir-container disabled ml-4px color-#7d72f96e"
+              v-show="!dirs.length"
             >
-              <Icon
-                icon="ion:arrow-undo-sharp"
-                class="text-45px"
-                style="color: var(--color-purple)"
-              />
-              <div class="dir-name mt-8px">返回</div>
+              <Icon icon="ic:round-folder-open" class="text-4rem" />
+              <div class="dir-name">Empty</div>
             </div>
 
             <div
@@ -243,7 +197,8 @@ name: home
               class="dir-container"
               @click="handleClickDir(item)"
             >
-              <img :src="dirSvg" class="w-45px" />
+              <Icon icon="ic:round-folder" class="text-4rem color-#7d72f9" />
+              <!-- <img :src="dirSvg" class="w-45px" /> -->
               <div class="dir-name">
                 {{ item.name }}
               </div>
@@ -253,45 +208,89 @@ name: home
       </n-collapse-transition>
     </div>
 
+    <!-- 最近添加 -->
+    <div class="latest px-16px">
+      <div class="title">
+        <div flex-1>LATEST</div>
+        <!-- <Icon
+          icon="material-symbols:arrow-drop-down-circle"
+          class="text-18px cursor-pointer select-none"
+          @click="showLatest = !showLatest"
+        /> -->
+      </div>
+
+      <n-collapse-transition :show="showLatest">
+        <n-scrollbar x-scrollable>
+          <div class="scroll-content">
+            <n-image-group>
+              <div
+                v-for="item in latestDebounced"
+                :key="item.sha"
+                class="image-container"
+              >
+                <n-image
+                  width="260"
+                  height="160"
+                  :src="item.download_url!"
+                  lazy
+                  object-fit="cover"
+                  class="rounded-lg"
+                />
+                <div class="text-overlay"></div>
+                <div
+                  class="absolute top-10px left-10px font-bold color-white text-11px flex items-center"
+                >
+                  <Icon
+                    icon="material-symbols:highlighter-size-1"
+                    class="text-16px"
+                  />
+                  {{ bytesToMB(item.size) }}mb
+                </div>
+                <div
+                  class="absolute bottom-10px left-10px color-white font-bold text-11px"
+                >
+                  {{ item.name }}
+                </div>
+              </div>
+            </n-image-group>
+          </div>
+        </n-scrollbar>
+      </n-collapse-transition>
+    </div>
+
     <!-- 图库 -->
     <div class="image-list px-16px mb-80px">
       <div class="title">
-        <div flex-1>
-          图库
-          <span class="text-10px"
-            >路径:
-            <span style="color: var(--color-purple)">{{
-              path ? path : "根"
-            }}</span></span
-          >
-        </div>
-        <Icon
+        <div flex-1>LIBRARY</div>
+        <!-- <Icon
           icon="material-symbols:arrow-drop-down-circle"
           class="text-18px cursor-pointer select-none"
           @click="showImages = !showImages"
-        />
+        /> -->
       </div>
 
       <n-collapse-transition :show="showImages">
         <div class="image-list-container grid grid-gap-10px">
-          <div
-            class="w-100px h-100px relative"
-            v-for="item in files"
-            @contextmenu="handleClickImage($event, item)"
-          >
-            <n-image
-              :src="item.download_url!"
-              lazy
-              object-fit="cover"
-              class="rounded-lg w-100% h-100%"
-              :intersection-observer-options="{
-                root: '#app',
-              }"
-            />
-            <div class="image-list__filename">
-              {{ item.name }}
+          <n-image-group>
+            <div
+              class="w-110px h-110px relative"
+              v-for="item in files"
+              @contextmenu="handleClickImage($event, item)"
+            >
+              <n-image
+                :src="item.download_url!"
+                lazy
+                object-fit="cover"
+                class="rounded-lg w-100% h-100%"
+                :intersection-observer-options="{
+                  root: '#app',
+                }"
+              />
+              <div class="image-list__filename">
+                {{ item.name }}
+              </div>
             </div>
-          </div>
+          </n-image-group>
         </div>
       </n-collapse-transition>
     </div>
@@ -380,9 +379,15 @@ name: home
   display: inline-flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
+  align-items: start;
   border-radius: 8px;
   cursor: pointer;
+  margin-right: 10px;
+  &.disabled:hover,
+  &.disabled:active {
+    transform: scale(1);
+    cursor: not-allowed;
+  }
   &:hover,
   &:active {
     transform: scale(0.96);
@@ -392,7 +397,7 @@ name: home
   }
   .dir-name {
     line-height: 12px;
-    width: 50px;
+    width: 63px;
     font-size: 10px;
     color: #5d5d5d;
     text-align: center;
@@ -421,11 +426,11 @@ name: home
 .latest .title,
 .list .title,
 .image-list .title {
-  font-size: 16px;
+  font-size: 18px;
   font-weight: bold;
   letter-spacing: 1px;
-  color: #5d5d5d;
-  margin: 10px 0;
+  color: #252525;
+  margin: 15px 0 10px 0;
   display: flex;
   align-items: center;
 }

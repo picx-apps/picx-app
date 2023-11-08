@@ -47,5 +47,5 @@ export async function uploadFilesToGitHub(files: UploadContent[]) {
     force: true,
   });
 
-  return commitResponse.data;
+  return commitResponse;
 }
