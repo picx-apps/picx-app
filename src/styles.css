@@ -23,12 +23,11 @@
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
 
-  --text-primary: #1b153b;
-  --color-primary: rgba(202, 202, 202, 0.5);
-  --base-color-primary: linear-gradient(120deg, #b047ff 16%, #9499ff, #9499ff);
   --tabbar-background: linear-gradient(120deg, #cdf2ff, #e2e4ff, #ece1ff);
-  --color-purple: #487aef;
-  color: #505050;
+  --base-color: #5e14ff;
+  --base-color-light-3: #6e44f9;
+  --base-color-light-5: #8e70f1;
+  --base-color-light-7: #b29fef;
 }
 
 body {

@@ -10,11 +10,11 @@ import { Icon } from "@iconify/vue";
         class="text-26px select-none"
       ></Icon>
     </TabbarItem>
-    <TabbarItem name="upload" text="Upload">
-      <Icon icon="ri:upload-cloud-2-line" class="text-26px select-none"></Icon>
+    <TabbarItem name="upload" text="Node">
+      <Icon icon="mdi:cloud" class="text-26px select-none"></Icon>
     </TabbarItem>
     <TabbarItem name="user" text="User">
-      <Icon icon="ri:user-smile-line" class="text-26px select-none"></Icon>
+      <Icon icon="mdi:account-circle" class="text-26px select-none"></Icon>
     </TabbarItem>
   </div>
 </template>
