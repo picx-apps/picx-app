@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 // import { useGlobalState } from "../store";
 defineSlots<{
+  default: string;
   optional: void;
 }>();
 // const { user } = useGlobalState();
@@ -20,12 +21,12 @@ defineSlots<{
         </div>
         <div class="bio">晚上好，欢迎回来~</div>
       </div> -->
-      <h1 class="m-0">Home</h1>
+      <h1 class="m-0"><slot></slot></h1>
     </div>
 
-    <!-- <div class="optional">
+    <div class="optional">
       <slot name="optional"></slot>
-    </div> -->
+    </div>
   </div>
 </template>
 

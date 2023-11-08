@@ -42,6 +42,14 @@ const currentImage = ref<(typeof repoContent.value)[0] | null>(null);
 const activeImageDelete = ref(false);
 const { width } = useWindowSize();
 const maxRowNumber = computed(() => Math.floor(width.value / 110));
+const gridColGap = computed(
+  () =>
+    Math.floor((width.value - maxRowNumber.value * 100) / maxRowNumber.value) +
+    "px"
+);
+const toLocaleUpperCasePath = computed(() =>
+  path.value.split("/")[path.value.split("/").length - 1].toLocaleUpperCase()
+);
 
 async function contents() {
   const res = await octokit.request(
@@ -145,6 +153,7 @@ name: home
 <template>
   <n-scrollbar style="height: 100vh">
     <Header>
+      Home
       <template #optional>
         <Icon
           icon="ic:round-refresh"
@@ -157,7 +166,7 @@ name: home
           "
         />
         <Icon icon="ic:baseline-plus" class="text-26px mr-6px cursor-pointer" />
-        <Icon icon="prime:inbox" class="text-26px cursor-pointer" />
+        <!-- <Icon icon="prime:inbox" class="text-26px cursor-pointer" /> -->
       </template>
     </Header>
 
@@ -165,11 +174,7 @@ name: home
     <div class="list px-16px">
       <div class="title">
         <div flex-1>
-          {{
-            path
-              ? path.split("/")[path.split("/").length - 1].toLocaleUpperCase()
-              : "ROOT"
-          }}
+          {{ path ? toLocaleUpperCasePath : "ROOT" }}
           <span
             class="text-10px ml-2px color-#487aef cursor-pointer"
             @click="handleClickBackUp"
@@ -270,10 +275,10 @@ name: home
       </div>
 
       <n-collapse-transition :show="showImages">
-        <div class="image-list-container grid grid-gap-10px">
+        <div class="image-list-container">
           <n-image-group>
             <div
-              class="w-110px h-110px relative"
+              class="w-100px h-100px relative"
               v-for="item in files"
               @contextmenu="handleClickImage($event, item)"
             >
@@ -397,6 +402,7 @@ name: home
   }
   .dir-name {
     line-height: 12px;
+    height: 24px;
     width: 63px;
     font-size: 10px;
     color: #5d5d5d;
@@ -412,6 +418,8 @@ name: home
 .image-list-container {
   display: grid;
   grid-template-columns: repeat(v-bind(maxRowNumber), minmax(0, 1fr));
+  grid-row-gap: 15px;
+  grid-column-gap: v-bind(gridColGap);
 }
 :deep(.image-list-container) .n-image img {
   width: 100%;
