@@ -202,10 +202,7 @@ name: home
               class="dir-container"
               @click="handleClickDir(item)"
             >
-              <Icon
-                icon="ic:round-folder"
-                class="text-4rem color-primary-400"
-              />
+              <Icon icon="ic:round-folder" class="text-4rem color-blue-500" />
               <div class="dir-name">
                 {{ item.name }}
               </div>

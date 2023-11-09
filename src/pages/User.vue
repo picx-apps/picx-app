@@ -75,14 +75,11 @@ name: user
 
       <!-- 设置项 -->
       <div class="mt-30px">
-        <ReuseTemplate icon="ph:cloud-arrow-up" text="My Repos" />
-        <ReuseTemplate icon="ph:align-bottom-thin" text="My Watermark" />
+        <ReuseTemplate icon="fluent-emoji:bread" text="My Repos" />
+        <ReuseTemplate icon="fluent-emoji:ghost" text="My Watermark" />
+        <ReuseTemplate icon="fluent-emoji:flexed-biceps" text="My Compress" />
         <ReuseTemplate
-          icon="ph:square-split-vertical-light"
-          text="My Compress"
-        />
-        <ReuseTemplate
-          icon="fluent:dark-theme-20-regular"
+          icon="fluent-emoji:first-quarter-moon"
           text="Theme Setting"
         />
       </div>

@@ -127,13 +127,10 @@ name: upload
     <div class="px-16px pt-16px">
       <div v-if="!waitContents.length">
         <div class="text-center mt-0px">
-          <n-image
-            src="src/assets/images/node.png"
-            width="400"
-            preview-disabled
-          />
+          <Icon icon="fluent-emoji:astronaut-light" class="w-300px h-300px" />
+
           <div class="text-1.2rem font-bold color-gray-7">
-            上传你的第一张照片
+            UPLOAD YOUR PHOTO
           </div>
         </div>
       </div>
