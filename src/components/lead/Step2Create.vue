@@ -2,6 +2,7 @@
 import { Octokit } from "octokit";
 import { useGlobalState } from "../../store";
 import { CreateRepoContents } from "../../types";
+import { Icon } from "@iconify/vue";
 
 const { access_token } = useGlobalState();
 const octokit = new Octokit({
@@ -30,30 +31,44 @@ defineExpose({
 </script>
 
 <template>
-  <div class="flex flex-col items-center justify-center mt-20px">
-    <div class="my-20px color-#aaaaaa">创建一个新仓库!</div>
-    <n-form :model="form" class="w-full" label-placement="left">
-      <n-form-item label="名称" path="name">
-        <n-input
-          v-model:value="form.name"
-          type="text"
-          placeholder="新建仓库名"
-        />
-      </n-form-item>
-      <n-form-item label="描述" path="description">
-        <n-input
-          v-model:value="form.description"
-          type="textarea"
-          :autosize="{
-            minRows: 4,
-            maxRows: 4,
-          }"
-          show-count
-          placeholder="仓库描述"
-        />
-      </n-form-item>
-    </n-form>
+  <div class="mt-20px">
+    <div class="my-20px color-#aaaaaa">Create a new warehouse!</div>
   </div>
+  <n-form :model="form" class="w-full" label-width="50" label-placement="top">
+    <n-form-item label="Name" path="name">
+      <template #label>
+        <div class="flex items-center">
+          <span>Name</span>
+          <Icon
+            icon="fluent-emoji:carrot"
+            class="w-30px h-30px color-#aaaaaa"
+          />
+        </div>
+      </template>
+      <n-input v-model:value="form.name" type="text" placeholder="新建仓库名" />
+    </n-form-item>
+    <n-form-item label="Desc" path="description">
+      <template #label>
+        <div class="flex items-center">
+          <span>Desc</span>
+          <Icon
+            icon="fluent-emoji:feather"
+            class="w-30px h-30px color-#aaaaaa"
+          />
+        </div>
+      </template>
+      <n-input
+        v-model:value="form.description"
+        type="textarea"
+        :autosize="{
+          minRows: 4,
+          maxRows: 4,
+        }"
+        show-count
+        placeholder="仓库描述"
+      />
+    </n-form-item>
+  </n-form>
 </template>
 
 <style lang="less" scoped></style>

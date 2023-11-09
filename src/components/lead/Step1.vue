@@ -6,46 +6,52 @@ const props = defineProps<{
 }>();
 const emit = defineEmits(["update:modelValue"]);
 const modelValue = useVModel(props, "modelValue", emit);
-const [DefineOption, ReuseOption] = createReusableTemplate<{
+const [DefineTemplate, ReuseTemplate] = createReusableTemplate<{
   icon: string;
+  title: string;
   label: string;
-  value: boolean;
+  value?: string;
 }>();
 </script>
 
 <template>
-  <DefineOption v-slot="{ icon, label, value }">
+  <DefineTemplate v-slot="{ icon, title, label, value }">
     <div
-      class="text-center option"
-      :class="[modelValue === value && 'active']"
-      @click="modelValue = value"
+      class="flex items-center cursor-pointer rounded-10px hover:bg-#fafafa px-10px py-12px mb-10px"
     >
-      <div
-        class="bg-#F4F4F4 w-100px h-100px rounded-14px flex items-center justify-center mx-18px"
-      >
-        <Icon :icon="icon" class="text-3rem color-#525252 icon" />
+      <Icon :icon="icon" class="w-40px h-40px color-#aaaaaa" />
+      <div class="flex-1 ml-20px">
+        <div class="text-1rem font-600 color-#5d5d5d">{{ title }}</div>
+        <div class="text-10px color-#757575">{{ label }}</div>
       </div>
-      <div class="text-1.1rem mt-10px font-bold text">{{ label }}</div>
+      <div class="flex items-center">
+        <span class="text-1rem mr-10px color-#2f2f2f font-600">{{
+          value
+        }}</span>
+        <Icon
+          icon="material-symbols:arrow-forward-ios-rounded"
+          class="color-#545454"
+        />
+      </div>
     </div>
-  </DefineOption>
+  </DefineTemplate>
 
-  <div class="flex flex-col items-center justify-center mt-20px">
-    <div class="my-20px color-#aaaaaa">你准备好仓库了吗?</div>
-    <div class="flex items-center justify-center">
-      <!-- yes -->
-      <ReuseOption
-        icon="icon-park-solid:grinning-face-with-squinting-eyes"
-        label="Yes"
-        :value="true"
-      />
-
-      <!-- no -->
-      <ReuseOption
-        icon="icon-park-solid:grinning-face-with-tightly-closed-eyes-open-mouth"
-        label="No"
-        :value="false"
-      />
-    </div>
+  <div class="mt-20px">
+    <div class="my-20px color-#aaaaaa">Are you ready for the warehouse?</div>
+  </div>
+  <div class="w-full">
+    <ReuseTemplate
+      icon="fluent-emoji:beaming-face-with-smiling-eyes"
+      title="Yes"
+      label="I'm ready"
+      @click="modelValue = true"
+    ></ReuseTemplate>
+    <ReuseTemplate
+      icon="fluent-emoji:knocked-out-face"
+      title="No"
+      label="I'm not ready"
+      @click="modelValue = false"
+    ></ReuseTemplate>
   </div>
 </template>
 
@@ -56,7 +62,7 @@ const [DefineOption, ReuseOption] = createReusableTemplate<{
   &:hover .text,
   &.active .icon,
   &.active .text {
-    color: #ffb939;
+    color: #ffab4e;
   }
 }
 </style>

@@ -13,6 +13,18 @@ export default defineConfig({
     presetUno(),
     presetWebFonts({}),
   ],
+  theme: {
+    colors: {
+      primary: {
+        DEFAULT: "#5e14ff",
+        500: "#5e14ff",
+        400: "#6e44f9",
+        300: "#8e70f1",
+        200: "#b29fef",
+        100: "#e6e0fb",
+      },
+    },
+  },
   rules: [
     ["me-color-black", { color: "#1b153b" }],
     [

@@ -2,13 +2,10 @@
 import { Icon } from "@iconify/vue";
 import { invoke } from "@tauri-apps/api";
 
-const token = ref("");
-
 async function handleLogin() {
   const uri: string = await invoke("login_uri");
   location.href = uri;
 }
-function handleSignToken() {}
 </script>
 
 <route lang="yaml">
@@ -18,13 +15,11 @@ meta:
 </route>
 
 <template>
-  <div flex h-100vh class="login-container">
+  <div h-100vh class="login-container">
     <!-- <div class="flex-1 image max-sm:hidden"></div> -->
-    <div
-      class="max-w-600px min-w-400px flex items-start justify-center flex-col"
-      px-40px
-    >
-      <div class="mb-30px">
+    <div class="pt-100px text-center">
+      <div class="mb-30px w-full flex flex-col items-center">
+        <n-image src="src/assets/images/login.png" width="200" />
         <div
           class="my-4px text-2rem font-bold lh-38px color-#545454 base-text-color"
         >
@@ -33,42 +28,46 @@ meta:
         <p class="my-0 color-gray">Welcome back! Please enter your details.</p>
       </div>
 
-      <div class="my-4px text-.9rem font-500 color-#545454">Token</div>
+      <!-- <div class="my-4px text-.9rem font-500 color-#545454">Token</div>
       <n-input
         v-model="token"
         type="password"
         placeholder="Please enter"
         class="mb-20px"
-      ></n-input>
+      ></n-input> -->
 
-      <n-button type="primary" class="w-100% mb-20px" @click="handleSignToken">
+      <!-- <n-button type="primary" class="w-100% mb-20px" @click="handleSignToken">
         Sign in
-      </n-button>
+      </n-button> -->
 
-      <n-button
-        type="primary"
-        ghost
-        @click="handleLogin"
-        class="w-100% mb-10px"
-      >
-        <Icon icon="mdi:github" class="text-20px mr-10px" />
-        <span class="w-120px"> Continue with Github </span>
-      </n-button>
+      <div>
+        <n-button
+          quaternary
+          @click="handleLogin"
+          class="w-300px h-45px login-button"
+        >
+          <Icon icon="mdi:github" class="text-20px mr-10px" />
+          <span class="w-120px"> Continue with Github </span>
+        </n-button>
+      </div>
     </div>
   </div>
 </template>
 
 <style lang="less" scoped>
 .login-container {
-  background: white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transform: translateY(-80px);
+  padding: 0 30px;
 }
 .image {
   background-image: url("../assets/images/login-banner.png");
   background-position: center;
   background-size: cover;
+}
+.login-button {
+  background: linear-gradient(120deg, #5ee6dd, #9ea5ff, #e491fd);
+  color: white;
+  &:hover {
+    color: white;
+  }
 }
 </style>

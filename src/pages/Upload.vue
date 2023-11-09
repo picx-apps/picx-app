@@ -2,7 +2,6 @@
 import { Icon } from "@iconify/vue";
 import { open } from "@tauri-apps/api/dialog";
 import { useUploadState } from "../store/upload";
-import dirSvg from "../assets/images/dir.png?url";
 import { cloneDeepWith } from "lodash-es";
 import type { UploadContent } from "../types/upload";
 import { invoke } from "@tauri-apps/api";
@@ -133,7 +132,7 @@ name: upload
             width="400"
             preview-disabled
           />
-          <div class="text-1.2rem font-bold color-#525252">
+          <div class="text-1.2rem font-bold color-gray-7">
             上传你的第一张照片
           </div>
         </div>
@@ -141,7 +140,7 @@ name: upload
 
       <div v-else>
         <div
-          class="text-1.1rem font-bold color-#252525 mb-20px flex items-center"
+          class="text-1.1rem font-bold color-gray-8 mb-20px flex items-center"
         >
           <Icon icon="ph:circle-notch-bold" />
           <span class="ml-10px"> 待上传 {{ waitContents.length }} 张</span>
@@ -166,32 +165,24 @@ name: upload
         <Icon
           @click="() => (showSelectDir = false)"
           icon="material-symbols:close"
-          class="float-right text-1.2rem cursor-pointer hover:color-#487aef select-none"
+          class="float-right text-1.2rem cursor-pointer hover:color-primary-400 select-none"
         />
 
         <div class="my-20px">
           <div class="text-1.1rem font-bold flex items-center">
-            上传路径: {{ currentPath ? currentPath : "/" }}
+            PATH: {{ currentPath ? currentPath : "Root" }}
           </div>
         </div>
 
         <n-scrollbar class="h[calc(100%-140px)]">
           <CellGroup>
-            <Cell
-              title="返回上一级"
-              icon="ion:arrow-undo-sharp"
-              @click="
-                () => {
-                  removeUploadPath(currentPath);
-                }
-              "
-              style="
-                --cell-padding-x: 0;
-                --cell-bg-color-hover: white;
-                align-items: end;
-                --cell-icon-color: #6498ff;
-              "
-            />
+            <div>
+              <span
+                class="cursor-pointer hover:color-primary-400"
+                @click="removeUploadPath(currentPath)"
+                >Back</span
+              >
+            </div>
             <template v-if="currentDirs.length">
               <Cell
                 v-for="item in currentDirs"
@@ -206,17 +197,26 @@ name: upload
                 style="--cell-padding-x: 0; --cell-bg-color-hover: white"
               >
                 <template #prefix>
-                  <img :src="dirSvg" class="w-35px mr-10px" />
+                  <Icon
+                    icon="ic:round-folder"
+                    class="text-3rem color-primary-400 mr-10px"
+                  />
                 </template>
               </Cell>
             </template>
-            <div
+
+            <Cell
               v-else
-              class="flex flex-col items-center justify-center color-#aaaaaa mt-20px"
+              title="Empty"
+              style="--cell-padding-x: 0; --cell-bg-color-hover: white"
             >
-              <Icon icon="octicon:file-directory-fill-24" class="text-3rem" />
-              <div>无下级目录</div>
-            </div>
+              <template #prefix>
+                <Icon
+                  icon="ic:round-folder-open"
+                  class="text-3rem color-primary-100 mr-10px"
+                />
+              </template>
+            </Cell>
           </CellGroup>
         </n-scrollbar>
 
@@ -237,12 +237,8 @@ name: upload
     class="text-center fixed bottom-100px w-full"
     v-show="waitContents.length"
   >
-    <n-button type="primary" ghost @click="handleUpload">立即上传</n-button>
+    <n-button type="primary" @click="handleUpload">立即上传</n-button>
   </div>
 </template>
 
-<style lang="less" scoped>
-.a {
-  color: #8c8c8c;
-}
-</style>
+<style lang="less" scoped></style>

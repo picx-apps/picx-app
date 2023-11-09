@@ -38,7 +38,7 @@ name: user
           <div class="my-4px flex color-#8c8c8c text-14px">
             <Icon
               icon="ic:baseline-supervisor-account"
-              class="text-1.3rem mr-2px h-20px color-#7d14ff"
+              class="text-1.3rem mr-2px h-20px color-primary-300"
             />
             <span>{{ user?.followers }} followers</span>
             <span
@@ -49,7 +49,7 @@ name: user
           <div class="my-4px flex color-#cccccc text-12px">
             <Icon
               icon="material-symbols:details-rounded"
-              class="text-1.1rem ml-2px mr-5px h-20px color-#7d14ff"
+              class="text-1.1rem ml-2px mr-5px h-20px color-primary-300"
             />
             <div class="lh-23px">
               {{ user?.bio || "No bio" }}

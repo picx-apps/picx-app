@@ -2,11 +2,9 @@
 import type { BranchInfo, LeadConfig, RepoInfo } from "../../types";
 import { Octokit } from "octokit";
 import { useGlobalState } from "../../store";
+import { Icon } from "@iconify/vue";
+import { isEmpty } from "lodash-es";
 
-const icon = {
-  yes: "icon-park-solid:grinning-face-with-squinting-eyes",
-  no: "icon-park-solid:grinning-face-with-tightly-closed-eyes-open-mouth",
-};
 const props = defineProps<{
   modelValue: LeadConfig;
 }>();
@@ -18,6 +16,19 @@ const branchOptions = ref<BranchInfo[]>([]);
 const octokit = new Octokit({ auth: access_token.value });
 const repoVisible = ref(false);
 const branchVisible = ref(false);
+const [DefineTemplate, ReuseTemplate] = createReusableTemplate<{
+  icon: string;
+  title: string;
+  label: string;
+  value: string;
+}>();
+
+const [DefineOption, ReuseOption] = createReusableTemplate<{
+  icon: string;
+  title: string;
+  label?: string;
+  value?: string;
+}>();
 
 async function initRepo() {
   const { data } = await octokit.request("GET /search/repositories", {
@@ -53,42 +64,71 @@ function handleClickBranch(item: BranchInfo) {
 onMounted(() => {
   initRepo();
 });
+
+watch(
+  modelValue,
+  (value) => {
+    console.log(value);
+  },
+  { deep: true, immediate: true }
+);
 </script>
 
 <template>
-  <div class="flex flex-col items-center justify-center mt-20px">
-    <div class="my-20px color-#aaaaaa">选择你的仓库!</div>
-    <CellGroup>
-      <Cell
-        icon="ic:sharp-home"
-        title="仓库"
-        label="浏览你的所有仓库"
-        :value="modelValue.repoName"
-        is-link
-        :link-icon="modelValue.repoName ? icon.yes : icon.no"
-        style="--cell-link-icon-size: 24px"
-        :style="{
-          '--cell-link-icon-color': modelValue.repoName ? '#ffb939' : '#aaaaaa',
-        }"
-        @click="repoVisible = true"
-      />
-      <Cell
-        v-show="modelValue.repoName"
-        icon="mingcute:git-branch-fill"
-        title="分支"
-        label="浏览当前仓库分支"
-        :value="modelValue.branchName"
-        is-link
-        :link-icon="modelValue.branchName ? icon.yes : icon.no"
-        style="--cell-link-icon-size: 24px"
-        :style="{
-          '--cell-link-icon-color': modelValue.branchName
-            ? '#ffb939'
-            : '#aaaaaa',
-        }"
-        @click="branchVisible = true"
-      />
-    </CellGroup>
+  <DefineTemplate v-slot="{ icon, title, label, value }">
+    <div
+      class="flex items-center cursor-pointer rounded-10px hover:bg-#fafafa px-10px py-12px mb-10px"
+    >
+      <Icon :icon="icon" class="w-40px h-40px color-#aaaaaa" />
+      <div class="flex-1 ml-20px">
+        <div class="text-1rem font-600 color-#5d5d5d">
+          {{ value ? value : title }}
+        </div>
+        <div class="text-10px color-#757575">{{ label }}</div>
+      </div>
+      <div class="flex items-center">
+        <Icon
+          icon="material-symbols:arrow-forward-ios-rounded"
+          class="color-#545454"
+        />
+      </div>
+    </div>
+  </DefineTemplate>
+  <DefineOption v-slot="{ icon, title, label, value }">
+    <div
+      class="flex items-center cursor-pointer rounded-10px hover:bg-#fafafa px-10px py-12px mb-10px"
+    >
+      <Icon :icon="icon" class="w-25px h-25px color-#aaaaaa" />
+      <div class="flex-1 ml-10px">
+        <div class="text-1rem font-600 color-#5d5d5d">
+          {{ title }}
+        </div>
+        <div class="text-10px color-#757575">{{ label }}</div>
+      </div>
+      <div class="flex items-center color-#8c8c8c text-10px">
+        {{ value }}
+      </div>
+    </div>
+  </DefineOption>
+  <div class="mt-20px">
+    <div class="my-20px color-#aaaaaa">Select your repositories!</div>
+  </div>
+  <div class="w-full">
+    <ReuseTemplate
+      icon="fluent-emoji:bread"
+      title="Repositories"
+      label="Browse all your Repositories"
+      :value="modelValue.repoName!"
+      @click="repoVisible = true"
+    ></ReuseTemplate>
+    <ReuseTemplate
+      v-show="!isEmpty(modelValue.repoName)"
+      icon="fluent-emoji:crown"
+      title="Branch"
+      label="Browse all your Branch"
+      :value="modelValue.branchName!"
+      @click="branchVisible = true"
+    ></ReuseTemplate>
   </div>
 
   <n-drawer
@@ -97,24 +137,18 @@ onMounted(() => {
     height="80%"
     :drawer-style="{ borderRadius: '18px 18px 0 0' }"
   >
-    <n-drawer-content title="选择仓库" :native-scrollbar="false">
-      <Cell
+    <n-drawer-content :native-scrollbar="false">
+      <div class="px-10px text-1.5rem py-10px font-bold">
+        Select repositories
+      </div>
+      <ReuseOption
         v-for="item in repoOptions"
-        @click="handleClickRepo(item)"
-        :icon="modelValue.repoName === item.name ? icon.yes : icon.no"
+        icon="fluent-emoji:bread"
         :title="item.name"
         :label="item.description ? item.description : item.name"
-        :value="item.language"
-        style="
-          --cell-value-size: 12px;
-          --cell-icon-size: 20px;
-          border-radius: 8px;
-        "
-        :style="{
-          '--cell-icon-color':
-            modelValue.repoName === item.name ? '#ffb939' : '#aaaaaa',
-        }"
-      />
+        :value="item.language!"
+        @click="handleClickRepo(item)"
+      ></ReuseOption>
     </n-drawer-content>
   </n-drawer>
   <n-drawer
@@ -123,24 +157,20 @@ onMounted(() => {
     height="80%"
     :drawer-style="{ borderRadius: '18px 18px 0 0' }"
   >
-    <n-drawer-content title="选择分支" :native-scrollbar="false">
-      <Cell
+    <n-drawer-content :native-scrollbar="false">
+      <div class="px-10px text-1.5rem py-10px font-bold">Select branch</div>
+      <ReuseOption
         v-for="item in branchOptions"
-        @click="handleClickBranch(item)"
-        :icon="modelValue.branchName === item.name ? icon.yes : icon.no"
+        icon="fluent-emoji:crown"
         :title="item.name"
-        style="
-          --cell-icon-size: 20px;
-          --cell-title-size: 18px;
-          border-radius: 8px;
-        "
-        :style="{
-          '--cell-icon-color':
-            modelValue.branchName === item.name ? '#ffb939' : '#aaaaaa',
-        }"
-      />
+        @click="handleClickBranch(item)"
+      ></ReuseOption>
     </n-drawer-content>
   </n-drawer>
 </template>
 
-<style lang="less" scoped></style>
+<style lang="less" scoped>
+.a {
+  color: #2f2f2f;
+}
+</style>

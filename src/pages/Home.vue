@@ -41,10 +41,10 @@ const path = computed(() =>
 const currentImage = ref<(typeof repoContent.value)[0] | null>(null);
 const activeImageDelete = ref(false);
 const { width } = useWindowSize();
-const maxRowNumber = computed(() => Math.floor(width.value / 110));
+const maxRowNumber = computed(() => Math.floor(width.value / 115));
 const gridColGap = computed(
   () =>
-    Math.floor((width.value - maxRowNumber.value * 100) / maxRowNumber.value) +
+    Math.floor((width.value - maxRowNumber.value * 110) / maxRowNumber.value) +
     "px"
 );
 const toLocaleUpperCasePath = computed(() =>
@@ -151,7 +151,7 @@ name: home
 </route>
 
 <template>
-  <n-scrollbar style="height: 100vh">
+  <n-scrollbar style="height: 100vh" :size="0">
     <Header>
       Home
       <template #optional>
@@ -176,7 +176,7 @@ name: home
         <div flex-1>
           {{ path ? toLocaleUpperCasePath : "ROOT" }}
           <span
-            class="text-10px ml-2px color-#487aef cursor-pointer"
+            class="text-10px ml-2px color-blue-500 cursor-pointer"
             @click="handleClickBackUp"
             v-if="path !== '/'"
           >
@@ -189,7 +189,7 @@ name: home
         <n-scrollbar x-scrollable>
           <div class="scroll-content">
             <div
-              class="dir-container disabled ml-4px color-#7d72f96e"
+              class="dir-container disabled ml-4px color-primary-100"
               v-show="!dirs.length"
             >
               <Icon icon="ic:round-folder-open" class="text-4rem" />
@@ -202,8 +202,10 @@ name: home
               class="dir-container"
               @click="handleClickDir(item)"
             >
-              <Icon icon="ic:round-folder" class="text-4rem color-#7d72f9" />
-              <!-- <img :src="dirSvg" class="w-45px" /> -->
+              <Icon
+                icon="ic:round-folder"
+                class="text-4rem color-primary-400"
+              />
               <div class="dir-name">
                 {{ item.name }}
               </div>
@@ -278,7 +280,7 @@ name: home
         <div class="image-list-container">
           <n-image-group>
             <div
-              class="w-100px h-130px relative"
+              class="w-110px h-130px relative"
               v-for="item in files"
               @contextmenu="handleClickImage($event, item)"
             >
@@ -387,7 +389,7 @@ name: home
   align-items: start;
   border-radius: 8px;
   cursor: pointer;
-  margin-right: 10px;
+  margin-right: 4px;
   &.disabled:hover,
   &.disabled:active {
     transform: scale(1);
