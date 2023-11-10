@@ -7,12 +7,6 @@ import { RepoContents } from "../types";
 import { HomeImageDropDownOptions } from "../constant";
 import { writeText } from "@tauri-apps/api/clipboard";
 
-defineOptions({
-  name: "home",
-});
-
-onActivated(() => {});
-
 const {
   user,
   access_token,
