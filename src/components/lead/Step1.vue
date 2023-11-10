@@ -12,6 +12,7 @@ const [DefineTemplate, ReuseTemplate] = createReusableTemplate<{
   label: string;
   value?: string;
 }>();
+const { t } = useI18n();
 </script>
 
 <template>
@@ -37,19 +38,19 @@ const [DefineTemplate, ReuseTemplate] = createReusableTemplate<{
   </DefineTemplate>
 
   <div class="mt-20px">
-    <div class="my-20px color-#aaaaaa">Are you ready for the warehouse?</div>
+    <div class="my-20px color-#aaaaaa">{{ t("init.init_repo") }}</div>
   </div>
   <div class="w-full">
     <ReuseTemplate
       icon="fluent-emoji:beaming-face-with-smiling-eyes"
-      title="Yes"
-      label="I'm ready"
+      :title="t('yes')"
+      :label="t('init.yes_read')"
       @click="modelValue = true"
     ></ReuseTemplate>
     <ReuseTemplate
       icon="fluent-emoji:knocked-out-face"
-      title="No"
-      label="I'm not ready"
+      :title="t('no')"
+      :label="t('init.no_read')"
       @click="modelValue = false"
     ></ReuseTemplate>
   </div>

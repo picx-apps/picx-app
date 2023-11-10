@@ -32,7 +32,7 @@ const dropDownPosition = reactive({
   y: 0,
 });
 const message = useMessage();
-const t = useStorage("picx-update-key", Date.now()); //缓存更新时间
+const time = useStorage("picx-update-key", Date.now()); //缓存更新时间
 const path = computed(() =>
   imagePaths.value.length > 0
     ? imagePaths.value[imagePaths.value.length - 1]
@@ -50,6 +50,7 @@ const gridColGap = computed(
 const toLocaleUpperCasePath = computed(() =>
   path.value.split("/")[path.value.split("/").length - 1].toLocaleUpperCase()
 );
+const { t } = useI18n();
 
 async function contents() {
   const res = await octokit.request(
@@ -59,7 +60,7 @@ async function contents() {
       repo: repo_name.value,
       ref: branch_name.value,
       path: path.value,
-      t: t.value,
+      t: time.value,
     }
   );
   if (res.status === 200) {
@@ -153,20 +154,19 @@ name: home
 <template>
   <n-scrollbar style="height: 100vh" :size="0">
     <Header>
-      Home
+      {{ t("home.title") }}
       <template #optional>
         <Icon
           icon="ic:round-refresh"
           class="text-26px ml-6px cursor-pointer"
           @click="
             () => {
-              t = Date.now();
+              time = Date.now();
               contents();
             }
           "
         />
         <Icon icon="ic:baseline-plus" class="text-26px ml-6px cursor-pointer" />
-        <!-- <Icon icon="prime:inbox" class="text-26px cursor-pointer" /> -->
       </template>
     </Header>
 
@@ -174,13 +174,13 @@ name: home
     <div class="list px-16px">
       <div class="title">
         <div flex-1>
-          {{ path ? toLocaleUpperCasePath : "ROOT" }}
+          {{ path ? toLocaleUpperCasePath : t("root") }}
           <span
             class="text-10px ml-2px color-blue-500 cursor-pointer"
             @click="handleClickBackUp"
             v-if="path"
           >
-            返回
+            {{ t("back") }}
           </span>
         </div>
       </div>
@@ -193,7 +193,7 @@ name: home
               v-show="!dirs.length"
             >
               <Icon icon="ic:round-folder-open" class="text-4rem" />
-              <div class="dir-name">Empty</div>
+              <div class="dir-name">{{ t("empty") }}</div>
             </div>
 
             <div
@@ -202,7 +202,7 @@ name: home
               class="dir-container"
               @click="handleClickDir(item)"
             >
-              <Icon icon="ic:round-folder" class="text-4rem color-blue-500" />
+              <Icon icon="ic:round-folder" class="text-4rem color-blue-400" />
               <div class="dir-name">
                 {{ item.name }}
               </div>
@@ -215,7 +215,7 @@ name: home
     <!-- 最近添加 -->
     <div class="latest px-16px">
       <div class="title">
-        <div flex-1>LATEST</div>
+        <div flex-1>{{ t("home.latest") }}</div>
         <!-- <Icon
           icon="material-symbols:arrow-drop-down-circle"
           class="text-18px cursor-pointer select-none"
@@ -265,7 +265,7 @@ name: home
     <!-- 图库 -->
     <div class="image-list px-16px mb-80px">
       <div class="title">
-        <div flex-1>LIBRARY</div>
+        <div flex-1>{{ t("home.library") }}</div>
         <!-- <Icon
           icon="material-symbols:arrow-drop-down-circle"
           class="text-18px cursor-pointer select-none"
@@ -318,7 +318,7 @@ name: home
     >
       <n-drawer-content>
         <div class="text-14px color-#aaaaaa text-center mt-10px">
-          确定删除吗?
+          {{ t("delete tip") }}
         </div>
         <n-button
           type="error"
@@ -326,7 +326,7 @@ name: home
           class="w-100% my-20px"
           @click="handleDeleteImage"
         >
-          删除
+          {{ t("confirm") }}
         </n-button>
         <n-button
           type="primary"
@@ -334,7 +334,7 @@ name: home
           class="w-100%"
           @click="activeImageDelete = false"
         >
-          取消
+          {{ t("cancel") }}
         </n-button>
       </n-drawer-content>
     </n-drawer>

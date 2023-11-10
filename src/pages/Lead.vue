@@ -13,6 +13,7 @@ const config = ref<LeadConfig>({
   branchName: undefined,
 });
 const { set_repository } = useGlobalState();
+const { t } = useI18n();
 
 function handlePrev() {
   if (step.value === 1) return;
@@ -72,15 +73,15 @@ name: lead
 
 <template>
   <div class="flex justify-center h-screen">
-    <div class="px-16px max-w-500px">
+    <div class="px-16px max-w-500px min-w-350px">
       <div class="mt-100px w-full mb-50px">
         <div
           class="my-4px text-2rem font-bold lh-38px color-#545454 base-text-color"
         >
-          WELCOME PICX
+          {{ t("welcome") }}
         </div>
         <p class="my-0 color-gray">
-          Let's initialize your personality gallery together
+          {{ t("init.init_repo_info") }}
         </p>
       </div>
 
@@ -104,7 +105,7 @@ name: lead
           class="mx-10px"
           @click="handlePrev"
         >
-          Back
+          {{ t("back") }}
         </n-button>
         <n-button
           type="primary"
@@ -113,7 +114,7 @@ name: lead
           class="mx-10px"
           @click="handleNext"
         >
-          Complete
+          {{ t("complete") }}
         </n-button>
       </div>
     </div>

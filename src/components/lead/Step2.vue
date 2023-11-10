@@ -29,6 +29,7 @@ const [DefineOption, ReuseOption] = createReusableTemplate<{
   label?: string;
   value?: string;
 }>();
+const { t } = useI18n();
 
 async function initRepo() {
   const { data } = await octokit.request("GET /search/repositories", {
@@ -111,21 +112,21 @@ watch(
     </div>
   </DefineOption>
   <div class="mt-20px">
-    <div class="my-20px color-#aaaaaa">Select your repositories!</div>
+    <div class="my-20px color-#aaaaaa">{{ t("init.select_repo") }}</div>
   </div>
   <div class="w-full">
     <ReuseTemplate
       icon="fluent-emoji:bread"
-      title="Repositories"
-      label="Browse all your Repositories"
+      :title="t('init.repo_name')"
+      :label="t('init.repo_name_info')"
       :value="modelValue.repoName!"
       @click="repoVisible = true"
     ></ReuseTemplate>
     <ReuseTemplate
       v-show="!isEmpty(modelValue.repoName)"
       icon="fluent-emoji:crown"
-      title="Branch"
-      label="Browse all your Branch"
+      :title="t('init.branch_name')"
+      :label="t('init.branch_name_info')"
       :value="modelValue.branchName!"
       @click="branchVisible = true"
     ></ReuseTemplate>
@@ -139,7 +140,7 @@ watch(
   >
     <n-drawer-content :native-scrollbar="false">
       <div class="px-10px text-1.5rem py-10px font-bold">
-        Select repositories
+        {{ t("init.select_repo") }}
       </div>
       <ReuseOption
         v-for="item in repoOptions"
@@ -158,7 +159,9 @@ watch(
     :drawer-style="{ borderRadius: '18px 18px 0 0' }"
   >
     <n-drawer-content :native-scrollbar="false">
-      <div class="px-10px text-1.5rem py-10px font-bold">Select branch</div>
+      <div class="px-10px text-1.5rem py-10px font-bold">
+        {{ t("init.select_branch") }}
+      </div>
       <ReuseOption
         v-for="item in branchOptions"
         icon="fluent-emoji:crown"

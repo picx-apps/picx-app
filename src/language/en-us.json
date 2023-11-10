@@ -1,0 +1,55 @@
+{
+  "root": "ROOT",
+  "back": "Back",
+  "empty": "Empty",
+  "home": {
+    "title": "Home",
+    "latest": "LATEST",
+    "library": "LIBRARY"
+  },
+  "node": {
+    "title": "Node",
+    "info": "UPLOAD YOUR PHOTO",
+    "wait_upload_number": "Wait upload {number} draw",
+    "button": {
+      "queue": "add queue",
+      "immediately": "immediately",
+      "upload": "upload"
+    }
+  },
+  "user": {
+    "name": "User",
+    "title": "Personal",
+    "repo": "Repos Setting",
+    "watermark": "Watermark Setting",
+    "compress": "Compress Setting",
+    "theme": "Theme Setting",
+    "followers": "followers",
+    "following": "following"
+  },
+  "welcome": "Welcome Picx",
+  "login": {
+    "detail": "Start your pleasant journey.",
+    "github_login": "Continue with GitHub"
+  },
+  "init": {
+    "init_repo_info": "Let's initialize your personality gallery together",
+    "init_repo": "Are you ready for the warehouse?",
+    "yes_read": "I'm read",
+    "no_read": "I'm not read",
+    "select_repo": "Select your repositories!",
+    "select_branch": "Select your branch!",
+    "repo_name": "Repositories name",
+    "branch_name": "Branch name",
+    "repo_name_info": "Browse all your Repositories",
+    "branch_name_info": "Browse all your Branches"
+  },
+  "yes": "Yes",
+  "no": "No",
+  "delete tip": "Are you sure you want to delete this photo?",
+  "confirm": "confirm",
+  "cancel": "cancel",
+  "path": "Path",
+  "sign_out": "SIGN OUT",
+  "complete": "Complete"
+}

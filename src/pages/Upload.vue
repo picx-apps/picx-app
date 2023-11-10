@@ -13,6 +13,7 @@ const { currentPath, currentDirs, addUploadPath, removeUploadPath } =
   useUploadState();
 const showSelectDir = ref(false);
 const message = useMessage();
+const { t } = useI18n();
 
 async function handleClickUpload() {
   const selected = (await open({
@@ -114,7 +115,7 @@ name: upload
 <template>
   <n-scrollbar style="height: 100vh">
     <Header>
-      Node
+      {{ t("node.title") }}
       <template #optional>
         <Icon
           @click="handleClickUpload"
@@ -130,7 +131,7 @@ name: upload
           <Icon icon="fluent-emoji:astronaut-light" class="w-300px h-300px" />
 
           <div class="text-1.2rem font-bold color-gray-7">
-            UPLOAD YOUR PHOTO
+            {{ t("node.info") }}
           </div>
         </div>
       </div>
@@ -140,7 +141,9 @@ name: upload
           class="text-1.1rem font-bold color-gray-8 mb-20px flex items-center"
         >
           <Icon icon="ph:circle-notch-bold" />
-          <span class="ml-10px"> 待上传 {{ waitContents.length }} 张</span>
+          <span class="ml-10px">
+            {{ t("node.wait_upload_number", { number: waitContents.length }) }}
+          </span>
         </div>
         <ImageCard
           v-for="(item, index) in waitContents"
@@ -167,7 +170,7 @@ name: upload
 
         <div class="my-20px">
           <div class="text-1.1rem font-bold flex items-center">
-            PATH: {{ currentPath ? currentPath : "Root" }}
+            {{ t("path") }}: {{ currentPath ? currentPath : "Root" }}
           </div>
         </div>
 
@@ -177,7 +180,7 @@ name: upload
               <span
                 class="cursor-pointer hover:color-primary-400"
                 @click="removeUploadPath(currentPath)"
-                >Back</span
+                >{{ t("back") }}</span
               >
             </div>
             <template v-if="currentDirs.length">
@@ -218,12 +221,12 @@ name: upload
         </n-scrollbar>
 
         <div class="w-full text-center">
-          <n-button type="primary" ghost class="mr-10px" @click="handleQueue"
-            >加入队列</n-button
-          >
-          <n-button type="primary" @click="handleBeginUpload"
-            >立即上传</n-button
-          >
+          <n-button type="primary" ghost class="mr-10px" @click="handleQueue">{{
+            t("node.button.queue")
+          }}</n-button>
+          <n-button type="primary" @click="handleBeginUpload">{{
+            t("node.button.immediately")
+          }}</n-button>
         </div>
       </n-drawer-content>
     </n-drawer>
@@ -234,7 +237,9 @@ name: upload
     class="text-center fixed bottom-100px w-full"
     v-show="waitContents.length"
   >
-    <n-button type="primary" @click="handleUpload">立即上传</n-button>
+    <n-button type="primary" @click="handleUpload">{{
+      t("node.button.upload")
+    }}</n-button>
   </div>
 </template>
 

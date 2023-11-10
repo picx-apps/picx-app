@@ -1,0 +1,54 @@
+{
+  "root": "根",
+  "back": "返回",
+  "empty": "空",
+  "home": {
+    "title": "首页",
+    "latest": "最新",
+    "library": "图库"
+  },
+  "node": {
+    "title": "上传",
+    "info": "上传你的照片",
+    "wait_upload_number": "待上传 {number} 张",
+    "button": {
+      "queue": "添加队列",
+      "immediately": "立即上传",
+      "upload": "上传"
+    }
+  },
+  "user": {
+    "name": "Hi",
+    "title": "我的",
+    "repo": "我的仓库",
+    "watermark": "水印设置",
+    "compress": "压缩设置",
+    "theme": "主题设置",
+    "followers": "被关注",
+    "following": "关注"
+  },
+  "welcome": "欢迎来到 Picx",
+  "login": {
+    "detail": "开始你的愉快旅途.",
+    "github_login": "登陆Github"
+  },
+  "init": {
+    "init_repo_info": "让我们一起初始化你的个性图库",
+    "init_repo": "你已经有创建好的仓库了吗？",
+    "yes_read": "是的",
+    "no_read": "没有",
+    "select_repo": "选择一个仓库!",
+    "select_branch": "选择一个分支",
+    "repo_name": "仓库名称",
+    "branch_name": "分支名称",
+    "repo_name_info": "浏览你的所有仓库",
+    "branch_name_info": "浏览你的分支"
+  },
+  "yes": "Yes",
+  "no": "No",
+  "delete tip": "你确认删除吗",
+  "confirm": "确认",
+  "cancel": "取消",
+  "path": "路径",
+  "complete": "下一步"
+}

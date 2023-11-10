@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { Icon } from "@iconify/vue";
 import { useGlobalState } from "../store";
-const { user, octokit } = useGlobalState();
+const { user } = useGlobalState();
 
 const [DefineTemplate, ReuseTemplate] = createReusableTemplate<{
   icon: string;
@@ -9,6 +9,7 @@ const [DefineTemplate, ReuseTemplate] = createReusableTemplate<{
 }>();
 const dialog = useDialog();
 const router = useRouter();
+const { t } = useI18n();
 
 async function handleSignOut() {
   dialog.warning({
@@ -31,7 +32,7 @@ name: user
 <template>
   <n-scrollbar style="height: 100vh">
     <Header>
-      Personal
+      {{ t("user.name") }}
       <template #optional>
         <Icon icon="prime:inbox" class="text-26px ml-6px cursor-pointer" />
       </template>
@@ -90,12 +91,15 @@ name: user
 
       <!-- 设置项 -->
       <div class="mt-30px">
-        <ReuseTemplate icon="fluent-emoji:bread" text="My Repos" />
-        <ReuseTemplate icon="fluent-emoji:ghost" text="My Watermark" />
-        <ReuseTemplate icon="fluent-emoji:flexed-biceps" text="My Compress" />
+        <ReuseTemplate icon="fluent-emoji:bread" :text="t('user.repo')" />
+        <ReuseTemplate icon="fluent-emoji:ghost" :text="t('user.watermark')" />
+        <ReuseTemplate
+          icon="fluent-emoji:flexed-biceps"
+          :text="t('user.compress')"
+        />
         <ReuseTemplate
           icon="fluent-emoji:first-quarter-moon"
-          text="Theme Setting"
+          :text="t('user.theme')"
         />
 
         <n-button

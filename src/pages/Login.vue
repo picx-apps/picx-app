@@ -2,6 +2,8 @@
 import { Icon } from "@iconify/vue";
 import { invoke } from "@tauri-apps/api";
 
+const { t } = useI18n();
+
 async function handleLogin() {
   const uri: string = await invoke("login_uri");
   location.href = uri;
@@ -23,9 +25,9 @@ meta:
         <div
           class="my-4px text-2rem font-bold lh-38px color-#545454 base-text-color"
         >
-          Welcome Picx
+          {{ t("welcome") }}
         </div>
-        <p class="my-0 color-gray">Welcome back! Please enter your details.</p>
+        <p class="my-0 color-gray">{{ t("login.detail") }}</p>
       </div>
 
       <!-- <div class="my-4px text-.9rem font-500 color-#545454">Token</div>
@@ -47,7 +49,7 @@ meta:
           class="w-300px h-45px login-button"
         >
           <Icon icon="mdi:github" class="text-20px mr-10px" />
-          <span class="w-120px"> Continue with Github </span>
+          <span class="max-w-120px"> {{ t("login.github_login") }} </span>
         </n-button>
       </div>
     </div>
