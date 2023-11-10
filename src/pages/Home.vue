@@ -178,7 +178,7 @@ name: home
           <span
             class="text-10px ml-2px color-blue-500 cursor-pointer"
             @click="handleClickBackUp"
-            v-if="path !== '/'"
+            v-if="path"
           >
             返回
           </span>

@@ -1,13 +1,14 @@
 <script lang="ts" setup>
 import { Icon } from "@iconify/vue";
 import { useGlobalState } from "../store";
-const { user } = useGlobalState();
+const { user, octokit } = useGlobalState();
 
 const [DefineTemplate, ReuseTemplate] = createReusableTemplate<{
   icon: string;
   text: string;
 }>();
 const dialog = useDialog();
+const router = useRouter();
 
 async function handleSignOut() {
   dialog.warning({
@@ -17,6 +18,7 @@ async function handleSignOut() {
     negativeText: "No",
     onPositiveClick: async () => {
       localStorage.clear();
+      router.push("/login");
     },
   });
 }

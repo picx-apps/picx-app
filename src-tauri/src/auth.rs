@@ -1,5 +1,5 @@
 use reqwest::Client;
-use std::{collections::HashMap, env, fmt::format};
+use std::{collections::HashMap, env};
 use url::Url;
 
 use crate::model::{AuthConfig, UserToken};
@@ -58,7 +58,7 @@ pub fn login_uri() -> String {
     let uri = Url::parse_with_params(BASE_LOGIN_URL, params)
         .unwrap()
         .to_string();
-
+    println!("{}", uri);
     uri
 }
 
