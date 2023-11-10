@@ -12,10 +12,12 @@ import { themeOverrides } from "./theme";
               <n-config-provider :theme-overrides="themeOverrides">
                 <n-notification-provider>
                   <n-message-provider>
-                    <!-- <n-theme-editor> -->
-                    <!-- 主要内容 -->
-                    <component :is="Component"></component>
-                    <!-- </n-theme-editor> -->
+                    <n-dialog-provider>
+                      <!-- <n-theme-editor> -->
+                      <!-- 主要内容 -->
+                      <component :is="Component"></component>
+                      <!-- </n-theme-editor> -->
+                    </n-dialog-provider>
                   </n-message-provider>
                 </n-notification-provider>
               </n-config-provider>

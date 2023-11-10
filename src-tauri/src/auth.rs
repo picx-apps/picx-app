@@ -1,5 +1,5 @@
 use reqwest::Client;
-use std::env;
+use std::{collections::HashMap, env, fmt::format};
 use url::Url;
 
 use crate::model::{AuthConfig, UserToken};
@@ -48,14 +48,33 @@ pub async fn get_access_token(code: String) -> UserToken {
 #[tauri::command]
 pub fn login_uri() -> String {
     let config = read_auth_env();
+    let scope = String::from("user repo project");
     let params = vec![
         ("client_id", &config.client_id),
         ("redirect_uri", &config.redirect_uri),
         ("state", &config.state),
+        ("scope", &scope),
     ];
     let uri = Url::parse_with_params(BASE_LOGIN_URL, params)
         .unwrap()
         .to_string();
 
     uri
+}
+
+#[tauri::command]
+pub async fn sign_out(token: String) -> u16 {
+    let mut map = HashMap::new();
+    map.insert("access_token", &token);
+    let client = Client::new();
+    let status = client
+        .delete("https://github.com/installation/token")
+        .header("Accept", "application/vnd.github+json")
+        .header("Authorization", format!("token {}", &token))
+        .send()
+        .await
+        .unwrap()
+        .status();
+    println!("{}", status.as_u16());
+    status.as_u16()
 }

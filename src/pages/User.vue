@@ -7,6 +7,19 @@ const [DefineTemplate, ReuseTemplate] = createReusableTemplate<{
   icon: string;
   text: string;
 }>();
+const dialog = useDialog();
+
+async function handleSignOut() {
+  dialog.warning({
+    title: "Sign Out",
+    content: "Are you sure you want to sign out?",
+    positiveText: "Yes",
+    negativeText: "No",
+    onPositiveClick: async () => {
+      localStorage.clear();
+    },
+  });
+}
 </script>
 
 <route lang="yaml">
@@ -82,6 +95,14 @@ name: user
           icon="fluent-emoji:first-quarter-moon"
           text="Theme Setting"
         />
+
+        <n-button
+          class="w-full mt-10px"
+          type="error"
+          ghost
+          @click="() => handleSignOut()"
+          >SIGN OUT</n-button
+        >
       </div>
     </div>
 
