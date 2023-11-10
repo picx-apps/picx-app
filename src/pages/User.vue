@@ -107,7 +107,7 @@ name: user
           type="error"
           ghost
           @click="() => handleSignOut()"
-          >SIGN OUT</n-button
+          >{{ t("sign_out") }}</n-button
         >
       </div>
     </div>

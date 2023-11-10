@@ -1,19 +1,21 @@
 <script lang="ts" setup>
 import { Icon } from "@iconify/vue";
+
+const { t } = useI18n();
 </script>
 
 <template>
   <div class="tabbar">
-    <TabbarItem name="home" text="Home">
+    <TabbarItem name="home" :text="t('home.title')">
       <Icon
         icon="material-symbols:home-rounded"
         class="text-26px select-none"
       ></Icon>
     </TabbarItem>
-    <TabbarItem name="upload" text="Node">
+    <TabbarItem name="upload" :text="t('node.title')">
       <Icon icon="mdi:cloud" class="text-26px select-none"></Icon>
     </TabbarItem>
-    <TabbarItem name="user" text="User">
+    <TabbarItem name="user" :text="t('user.title')">
       <Icon icon="mdi:account-circle" class="text-26px select-none"></Icon>
     </TabbarItem>
   </div>
