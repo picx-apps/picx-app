@@ -70,6 +70,7 @@ watchEffect(() => {
           v-for="(item, key) in CompressionQuality"
           :label="item"
           :value="key"
+          @click="() => (compress.compress_type = key)"
         />
       </div>
     </div>

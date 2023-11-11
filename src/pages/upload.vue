@@ -5,12 +5,13 @@ import { useUploadState } from "../store/upload";
 import { cloneDeepWith } from "lodash-es";
 import type { UploadContent } from "../types/upload";
 import { invoke } from "@tauri-apps/api";
-import { CompressionQuality } from "../enum";
+import { useGlobalState } from "../store";
 
 const tempContents = ref<UploadContent[]>([]);
 const waitContents = ref<UploadContent[]>([]);
 const { currentPath, currentDirs, addUploadPath, removeUploadPath } =
   useUploadState();
+const { compress } = useGlobalState();
 const showSelectDir = ref(false);
 const message = useMessage();
 const { t } = useI18n();
@@ -31,7 +32,7 @@ async function handleClickUpload() {
 }
 async function handleImages(paths: string[]) {
   for (const path of paths) {
-    console.time("bbb");
+    console.time("compress time");
     const {
       buffer,
       base64,
@@ -44,9 +45,11 @@ async function handleImages(paths: string[]) {
       compression_base64: string;
     } = await invoke("compression_image", {
       path,
-      compressionQuality: CompressionQuality.Default,
+      compressionQuality: compress.value.enable
+        ? compress.value.compress_type
+        : undefined,
     });
-    console.timeEnd("bbb");
+    console.timeEnd("compress time");
     let filename = path.split("/").pop() as string;
     const random: string = await invoke("rand_string");
     const _filename = filename.split(".");

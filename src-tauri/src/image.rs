@@ -23,12 +23,25 @@ pub enum CompressionQuality {
 }
 
 #[tauri::command]
-pub fn compression_image(path: &str, compression_quality: CompressionQuality) -> CompressionImage {
+pub fn compression_image(
+    path: &str,
+    compression_quality: Option<CompressionQuality>,
+) -> CompressionImage {
     let image_data = read_image(path).expect("Failed to read image");
     let image = image::load_from_memory(&image_data).expect("Failed to load image");
     // 创建一个空的字节数组作为输出缓冲区
     let mut compressed_image_data = Vec::new();
     let format = image::guess_format(&image_data).expect("Failed to guess image format");
+    if compression_quality.is_none() {
+        return CompressionImage {
+            buffer: image_data.clone(),
+            base64: binary_to_base64(image_data.clone()),
+            compression_buffer: image_data.clone(),
+            compression_base64: binary_to_base64(image_data),
+        };
+    };
+
+    let compression_quality = compression_quality.unwrap();
     let rate = match compression_quality {
         CompressionQuality::Default => 60,
         CompressionQuality::Fast => 80,
