@@ -6,15 +6,30 @@ import { cloneDeepWith } from "lodash-es";
 import type { UploadContent } from "../types/upload";
 import { invoke } from "@tauri-apps/api";
 import { useGlobalState } from "../store";
+import { NInput } from "naive-ui";
 
 const tempContents = ref<UploadContent[]>([]);
 const waitContents = ref<UploadContent[]>([]);
-const { currentPath, currentDirs, addUploadPath, removeUploadPath } =
-  useUploadState();
+const {
+  currentPath,
+  currentDirs,
+  addUploadPath,
+  removeUploadPath,
+  updateDirs,
+} = useUploadState();
 const { compress } = useGlobalState();
 const showSelectDir = ref(false);
 const message = useMessage();
 const { t } = useI18n();
+const enableFolder = ref(false);
+const folderName = ref("");
+const [DefineTemplate, ReusableTemplate] = createReusableTemplate<{
+  icon: string;
+  iconColor?: string;
+  label?: string;
+  isLink: boolean;
+}>();
+const folderNameInput = ref<InstanceType<typeof NInput>>();
 
 async function handleClickUpload() {
   const selected = (await open({
@@ -109,6 +124,27 @@ async function handleBeginUpload() {
   showSelectDir.value = false;
   handleUpload();
 }
+function handleOpenEnableFolder() {
+  enableFolder.value = !enableFolder.value;
+  nextTick(() => {
+    folderNameInput.value?.focus();
+  });
+}
+//创建文件夹
+async function handleCreateFolder() {
+  if (!folderName.value) {
+    enableFolder.value = false;
+    return;
+  }
+  const res = await useCreateFolder(currentPath.value + folderName.value);
+  if (res?.status === 201) {
+    enableFolder.value = false;
+    folderName.value = "";
+    await updateDirs();
+  } else {
+    message.error("创建失败");
+  }
+}
 </script>
 
 <route lang="yaml">
@@ -157,6 +193,30 @@ name: upload
       </div>
     </div>
 
+    <DefineTemplate v-slot="{ $slots, icon, label, isLink, iconColor }">
+      <div class="flex items-center cursor-pointer py-6px">
+        <div class="flex-1 flex items-center">
+          <Icon
+            :icon="icon"
+            class="text-3rem mr-10px"
+            :class="[iconColor ? iconColor : 'color-blue-400']"
+          />
+          <div class="max-w-200px">
+            <div class="color-gray-6" v-if="!$slots.input">
+              {{ label }}
+            </div>
+            <component :is="$slots.input" />
+          </div>
+        </div>
+
+        <Icon
+          v-show="isLink"
+          icon="material-symbols:arrow-forward-ios-rounded"
+          class="text-16px color-gray-6"
+        />
+      </div>
+    </DefineTemplate>
+
     <n-drawer
       v-model:show="showSelectDir"
       placement="bottom"
@@ -178,49 +238,62 @@ name: upload
         </div>
 
         <n-scrollbar class="h[calc(100%-140px)]">
-          <CellGroup>
+          <div class="flex justify-between">
+            <span
+              class="cursor-pointer color-primary-300"
+              @click="handleOpenEnableFolder"
+            >
+              {{ t("new_folder") }}
+            </span>
+
             <div>
               <span
-                class="cursor-pointer hover:color-primary-400"
+                v-if="currentPath"
+                class="cursor-pointer color-primary-300"
                 @click="removeUploadPath(currentPath)"
-                >{{ t("back") }}</span
               >
+                {{ t("back") }}
+              </span>
             </div>
-            <template v-if="currentDirs.length">
-              <Cell
-                v-for="item in currentDirs"
-                :key="item.sha"
-                :title="item.name"
-                is-link
-                @click="
-                  () => {
-                    addUploadPath(item.path);
-                  }
-                "
-                style="--cell-padding-x: 0; --cell-bg-color-hover: white"
-              >
-                <template #prefix>
-                  <Icon
-                    icon="ic:round-folder"
-                    class="text-3rem color-primary-400 mr-10px"
-                  />
-                </template>
-              </Cell>
-            </template>
+          </div>
 
-            <Cell
-              v-else
-              title="Empty"
-              style="--cell-padding-x: 0; --cell-bg-color-hover: white"
-            >
-              <template #prefix>
-                <Icon
-                  icon="ic:round-folder-open"
-                  class="text-3rem color-primary-100 mr-10px"
-                />
-              </template>
-            </Cell>
-          </CellGroup>
+          <!-- 新建文件夹 -->
+          <ReusableTemplate v-if="enableFolder" icon="ic:round-folder" is-link>
+            <template #input>
+              <n-input
+                v-if="enableFolder"
+                ref="folderNameInput"
+                v-model:value="folderName"
+                :placeholder="t('please_folder')"
+                @blur="handleCreateFolder"
+              />
+            </template>
+          </ReusableTemplate>
+
+          <!-- 文件夹列表 -->
+          <template v-if="currentDirs.length">
+            <ReusableTemplate
+              v-for="item in currentDirs"
+              :key="item.sha"
+              :label="item.name"
+              icon="ic:round-folder"
+              is-link
+              @click="
+                () => {
+                  addUploadPath(item.path);
+                }
+              "
+            />
+          </template>
+
+          <!-- 空文件夹 -->
+          <ReusableTemplate
+            v-else
+            label="Empty"
+            icon="ic:round-folder-open"
+            icon-color="color-blue-100"
+            is-link
+          />
         </n-scrollbar>
 
         <div class="w-full text-center">

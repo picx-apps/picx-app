@@ -166,7 +166,7 @@ name: home
             }
           "
         />
-        <Icon icon="ic:baseline-plus" class="text-26px ml-6px cursor-pointer" />
+        <!-- <Icon icon="ic:baseline-plus" class="text-26px ml-6px cursor-pointer" /> -->
       </template>
     </Header>
 

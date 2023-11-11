@@ -64,5 +64,7 @@
     "title": "压缩",
     "enable": "开启",
     "enable_info": "是否开启图片压缩"
-  }
+  },
+  "new_folder": "新建文件夹",
+  "please_folder": "请输入文件夹名称"
 }

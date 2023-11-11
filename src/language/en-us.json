@@ -64,5 +64,7 @@
     "title": "Compress",
     "enable": "Enable",
     "enable_info": "whether enable image compress"
-  }
+  },
+  "new_folder": "New Folder",
+  "please_folder": "Please folder name"
 }
