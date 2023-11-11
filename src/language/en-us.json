@@ -18,14 +18,15 @@
     }
   },
   "user": {
-    "name": "User",
-    "title": "Personal",
+    "name": "Personal",
+    "title": "User",
     "repo": "Repos Setting",
     "watermark": "Watermark Setting",
     "compress": "Compress Setting",
     "theme": "Theme Setting",
     "followers": "followers",
-    "following": "following"
+    "following": "following",
+    "language": "change language"
   },
   "welcome": "Welcome Picx",
   "login": {
@@ -55,5 +56,8 @@
   "repositories": {
     "title": "My Repositories",
     "complete": "Complete Updater"
+  },
+  "language": {
+    "title": "Language"
   }
 }

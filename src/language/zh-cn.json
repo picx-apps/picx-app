@@ -25,7 +25,8 @@
     "compress": "压缩设置",
     "theme": "主题设置",
     "followers": "被关注",
-    "following": "关注"
+    "following": "关注",
+    "language": "切换语言"
   },
   "welcome": "欢迎来到 Picx",
   "login": {
@@ -55,5 +56,8 @@
   "repositories": {
     "title": "我的仓库",
     "complete": "确认修改"
+  },
+  "language": {
+    "title": "语言"
   }
 }

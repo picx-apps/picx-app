@@ -105,6 +105,11 @@ name: user
           icon="fluent-emoji:first-quarter-moon"
           :text="t('user.theme')"
         />
+        <ReuseTemplate
+          icon="fluent-emoji:ab-button-blood-type"
+          :text="t('user.language')"
+          @click="router.push('/setting/language')"
+        />
 
         <n-button
           class="w-full mt-10px"
