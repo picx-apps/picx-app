@@ -59,5 +59,10 @@
   },
   "language": {
     "title": "语言"
+  },
+  "compress": {
+    "title": "压缩",
+    "enable": "开启",
+    "enable_info": "是否开启图片压缩"
   }
 }

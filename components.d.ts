@@ -30,6 +30,7 @@ declare module 'vue' {
     NMessageProvider: typeof import('naive-ui')['NMessageProvider']
     NNotificationProvider: typeof import('naive-ui')['NNotificationProvider']
     NScrollbar: typeof import('naive-ui')['NScrollbar']
+    NSwitch: typeof import('naive-ui')['NSwitch']
     RepoSetting: typeof import('./src/components/RepoSetting.vue')['default']
     RepoSettings: typeof import('./src/components/RepoSettings.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']

@@ -59,5 +59,10 @@
   },
   "language": {
     "title": "Language"
+  },
+  "compress": {
+    "title": "Compress",
+    "enable": "Enable",
+    "enable_info": "whether enable image compress"
   }
 }

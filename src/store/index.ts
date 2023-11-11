@@ -1,10 +1,16 @@
 import { merge } from "lodash-es";
 import type { UserToken, User } from "../types";
 import { Octokit } from "octokit";
+import { CompressionQuality } from "../enum";
 
 export interface Repository {
   repo_name: string;
   branch_name: string;
+}
+
+export interface Compress {
+  enable: boolean;
+  compress_type: keyof typeof CompressionQuality;
 }
 
 export const useGlobalState = createGlobalState(() => {
@@ -36,6 +42,14 @@ export const useGlobalState = createGlobalState(() => {
   );
   const imagePath = useStorage<string[]>("picx-image-path", [], localStorage);
   const octokit = ref<Octokit | null>(null);
+  const compress = useStorage<Compress>(
+    "picx-compress",
+    {
+      enable: true,
+      compress_type: CompressionQuality.Default,
+    },
+    localStorage
+  );
 
   // getters
   const access_token = computed(() => authorize.value.access_token);
@@ -94,6 +108,7 @@ export const useGlobalState = createGlobalState(() => {
     imagePaths,
     octokit,
     repository,
+    compress,
     set_authorize,
     set_userinfo,
     set_repository,

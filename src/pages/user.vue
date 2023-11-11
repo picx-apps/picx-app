@@ -100,6 +100,7 @@ name: user
         <ReuseTemplate
           icon="fluent-emoji:flexed-biceps"
           :text="t('user.compress')"
+          @click="router.push('/setting/compress')"
         />
         <ReuseTemplate
           icon="fluent-emoji:first-quarter-moon"
