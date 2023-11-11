@@ -93,6 +93,7 @@ export const useGlobalState = createGlobalState(() => {
     branch_name,
     imagePaths,
     octokit,
+    repository,
     set_authorize,
     set_userinfo,
     set_repository,

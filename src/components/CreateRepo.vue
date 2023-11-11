@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { Octokit } from "octokit";
-import { useGlobalState } from "../../store";
-import { CreateRepoContents } from "../../types";
+import { useGlobalState } from "../store";
+import { CreateRepoContents } from "../types";
 import { Icon } from "@iconify/vue";
 
 const { access_token } = useGlobalState();

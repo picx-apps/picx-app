@@ -91,7 +91,11 @@ name: user
 
       <!-- 设置项 -->
       <div class="mt-30px">
-        <ReuseTemplate icon="fluent-emoji:bread" :text="t('user.repo')" />
+        <ReuseTemplate
+          icon="fluent-emoji:bread"
+          :text="t('user.repo')"
+          @click="router.push('/setting/repo')"
+        />
         <ReuseTemplate icon="fluent-emoji:ghost" :text="t('user.watermark')" />
         <ReuseTemplate
           icon="fluent-emoji:flexed-biceps"

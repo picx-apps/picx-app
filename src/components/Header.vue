@@ -1,30 +1,23 @@
 <script lang="ts" setup>
-// import { useGlobalState } from "../store";
+defineProps<{ title?: string }>();
 defineSlots<{
   default: string;
+  title: void;
   optional: void;
 }>();
-// const { user } = useGlobalState();
 </script>
 
 <template>
   <div class="header p-10px px-16px flex items-center">
-    <div flex-1 class="flex items-center">
-      <!-- <img
-        :src="user?.avatar_url"
-        :alt="user?.login"
-        class="w-46px h-46px rounded-8px mr-8px avatar"
-      />
-      <div>
-        <div class="text-18px lh-20px font-bold">
-          {{ user?.name || user?.login }}
-        </div>
-        <div class="bio">晚上好，欢迎回来~</div>
-      </div> -->
+    <div class="flex items-center w-100px">
       <h1 class="m-0"><slot></slot></h1>
     </div>
 
-    <div class="optional">
+    <div class="flex-1 text-center text-1.1rem color-gray-600">
+      <slot name="title">{{ title }}</slot>
+    </div>
+
+    <div class="optional w-100px text-right">
       <slot name="optional"></slot>
     </div>
   </div>

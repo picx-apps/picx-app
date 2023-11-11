@@ -15,7 +15,7 @@ const { t } = useI18n();
     <TabbarItem name="upload" :text="t('node.title')">
       <Icon icon="mdi:cloud" class="text-26px select-none"></Icon>
     </TabbarItem>
-    <TabbarItem name="user" :text="t('user.title')">
+    <TabbarItem name="user" :text="t('user.name')">
       <Icon icon="mdi:account-circle" class="text-26px select-none"></Icon>
     </TabbarItem>
   </div>

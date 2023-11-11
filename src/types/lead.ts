@@ -1,6 +1,6 @@
-export interface LeadConfig {
+import type { Repository } from "../store";
+
+export interface LeadConfig extends Repository {
   // is new repository
   isNewRepo: boolean | undefined;
-  repoName: string | undefined;
-  branchName: string | undefined;
 }

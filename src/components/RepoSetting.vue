@@ -1,12 +1,12 @@
 <script lang="ts" setup>
-import type { BranchInfo, LeadConfig, RepoInfo } from "../../types";
+import type { BranchInfo, RepoInfo } from "../types";
 import { Octokit } from "octokit";
-import { useGlobalState } from "../../store";
+import { Repository, useGlobalState } from "../store";
 import { Icon } from "@iconify/vue";
 import { isEmpty } from "lodash-es";
 
 const props = defineProps<{
-  modelValue: LeadConfig;
+  modelValue: Repository;
 }>();
 const emit = defineEmits(["update:modelValue"]);
 const modelValue = useVModel(props, "modelValue", emit);
@@ -40,39 +40,31 @@ async function initRepo() {
   repoOptions.value = data.items;
 }
 async function initBranches() {
-  if (modelValue.value.repoName) {
+  if (modelValue.value.repo_name) {
     const { data } = await octokit.request(
       "GET /repos/{owner}/{repo}/branches",
       {
         owner: user.value?.login!,
-        repo: modelValue.value.repoName,
+        repo: modelValue.value.repo_name,
       }
     );
     branchOptions.value = data;
   }
 }
 function handleClickRepo(item: RepoInfo) {
-  modelValue.value.repoName = item.name;
-  modelValue.value.branchName = item.default_branch;
+  modelValue.value.repo_name = item.name;
+  modelValue.value.branch_name = item.default_branch;
   repoVisible.value = false;
   initBranches();
 }
 function handleClickBranch(item: BranchInfo) {
-  modelValue.value.branchName = item.name;
+  modelValue.value.branch_name = item.name;
   branchVisible.value = false;
 }
 
 onMounted(() => {
   initRepo();
 });
-
-watch(
-  modelValue,
-  (value) => {
-    console.log(value);
-  },
-  { deep: true, immediate: true }
-);
 </script>
 
 <template>
@@ -111,23 +103,21 @@ watch(
       </div>
     </div>
   </DefineOption>
-  <div class="mt-20px">
-    <div class="my-20px color-#aaaaaa">{{ t("init.select_repo") }}</div>
-  </div>
+
   <div class="w-full">
     <ReuseTemplate
       icon="fluent-emoji:bread"
       :title="t('init.repo_name')"
       :label="t('init.repo_name_info')"
-      :value="modelValue.repoName!"
+      :value="modelValue.repo_name!"
       @click="repoVisible = true"
     ></ReuseTemplate>
     <ReuseTemplate
-      v-show="!isEmpty(modelValue.repoName)"
+      v-show="!isEmpty(modelValue.repo_name)"
       icon="fluent-emoji:crown"
       :title="t('init.branch_name')"
       :label="t('init.branch_name_info')"
-      :value="modelValue.branchName!"
+      :value="modelValue.branch_name!"
       @click="branchVisible = true"
     ></ReuseTemplate>
   </div>

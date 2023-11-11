@@ -11,6 +11,7 @@ export async function uploadFilesToGitHub(files: UploadContent[]) {
   const branch = branch_name.value;
   const tree: Tree = [];
   for (const file of files) {
+    file.path = file.path.slice(1);
     const { data } = await octokit.value.rest.git.createBlob({
       owner,
       repo,
