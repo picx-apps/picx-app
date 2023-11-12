@@ -6,6 +6,7 @@ import { isArray } from "lodash-es";
 import { RepoContents } from "../types";
 import { HomeImageDropDownOptions } from "../constant";
 import { writeText } from "@tauri-apps/api/clipboard";
+import { showImagePreview } from "../components/image-preview";
 
 const {
   user,
@@ -140,6 +141,11 @@ async function handleDeleteImage() {
     });
     contents();
   }
+}
+function handleImage(index: number) {
+  if (!files.value.length) return;
+  const images = files.value.map((item) => item.download_url!);
+  showImagePreview({ images, startPosition: index });
 }
 
 onMounted(() => {
@@ -278,17 +284,19 @@ name: home
           <n-image-group>
             <div
               class="w-110px h-130px relative"
-              v-for="item in files"
+              v-for="(item, index) in files"
               @contextmenu="handleClickImage($event, item)"
             >
               <n-image
                 :src="item.download_url!"
                 lazy
                 object-fit="cover"
+                preview-disabled
                 class="rounded-lg w-100% h-100%"
                 :intersection-observer-options="{
                   root: '#app',
                 }"
+                @click="handleImage(index)"
               />
               <div class="image-list__filename">
                 {{ item.name }}

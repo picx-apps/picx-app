@@ -8,7 +8,7 @@
     "library": "LIBRARY"
   },
   "node": {
-    "title": "Node",
+    "title": "Upload",
     "info": "UPLOAD YOUR PHOTO",
     "wait_upload_number": "Wait upload {number} draw",
     "button": {

@@ -6,11 +6,13 @@ import AutoImport from "unplugin-auto-import/vite";
 import { NaiveUiResolver } from "unplugin-vue-components/resolvers";
 import Icons from "unplugin-icons/vite";
 import Pages from "vite-plugin-pages";
+import vueJsx from "@vitejs/plugin-vue-jsx";
 
 // https://vitejs.dev/config/
 export default defineConfig(() => ({
   plugins: [
     vue(),
+    vueJsx(),
     Pages(),
     UnoCSS(),
     AutoImport({
