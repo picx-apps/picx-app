@@ -1,0 +1,37 @@
+{
+  "cSpell.words": [
+    "activityplace",
+    "attchment",
+    "behaviour",
+    "cascader",
+    "composables",
+    "daygrid",
+    "echarts",
+    "fortawesome",
+    "fullcalendar",
+    "iduo",
+    "nprogress",
+    "picx",
+    "popconfirm",
+    "preact",
+    "selectables",
+    "showmore",
+    "subname",
+    "tabbar",
+    "tauri",
+    "timegrid",
+    "unref",
+    "vant",
+    "viselect",
+    "vitejs",
+    "vueuse",
+    "wangeditor"
+  ],
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "vue.codeActions.enabled": true,
+  "[xml]": {
+    "editor.defaultFormatter": "redhat.vscode-xml"
+  }
+}
