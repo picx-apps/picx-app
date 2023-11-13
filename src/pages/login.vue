@@ -1,11 +1,17 @@
 <script lang="ts" setup>
 import { Icon } from "@iconify/vue";
-import { invoke } from "@tauri-apps/api";
+import image from "../assets/images/login.png?url";
 
 const { t } = useI18n();
 
 async function handleLogin() {
-  const uri: string = await invoke("login_uri");
+  const params = paramsSerializer({
+    client_id: import.meta.env.VITE_CLIENT_ID,
+    redirect_uri: import.meta.env.VITE_REDIRECT_URI,
+    state: import.meta.env.VITE_STATE,
+    scope: import.meta.env.VITE_SCOPE,
+  });
+  const uri = "https://github.com/login/oauth/authorize" + params;
   location.href = uri;
 }
 </script>
@@ -21,7 +27,7 @@ meta:
     <!-- <div class="flex-1 image max-sm:hidden"></div> -->
     <div class="pt-100px text-center">
       <div class="mb-30px w-full flex flex-col items-center">
-        <n-image src="src/assets/images/login.png" width="200" />
+        <n-image :src="image" width="200" />
         <div
           class="my-4px text-2rem font-bold lh-38px color-#545454 base-text-color"
         >
