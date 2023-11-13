@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import CreateRepo from "../components/CreateRepo.vue";
+import { autoCreateOfSettings, useSettings } from "../settings";
 import { useGlobalState } from "../store";
 import type { LeadConfig } from "../types";
 
@@ -25,6 +26,7 @@ function setRepo() {
     branch_name: config.value.branch_name,
   });
 }
+
 async function handleNext() {
   const { isNewRepo, repo_name, branch_name } = config.value;
   if (isNewRepo === true) {
@@ -34,6 +36,12 @@ async function handleNext() {
         duration: 1000,
       });
     setRepo();
+
+    autoCreateOfSettings({
+      ref: branch_name,
+      repo: repo_name,
+    });
+
     return router.push({ name: "home" });
   }
   if (isNewRepo === false) {
@@ -46,6 +54,12 @@ async function handleNext() {
       config.value.repo_name = res.data.name;
       config.value.branch_name = res.data.default_branch;
       setRepo();
+
+      autoCreateOfSettings({
+        ref: config.value.repo_name,
+        repo: config.value.branch_name,
+      });
+
       return router.push({ name: "home" });
     } else if (res?.status === 422) {
       return notification.error({
