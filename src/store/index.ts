@@ -41,7 +41,7 @@ export const useGlobalState = createGlobalState(() => {
     localStorage
   );
   const imagePath = useStorage<string[]>("picx-image-path", [], localStorage);
-  const octokit = ref<Octokit | null>(null);
+  const octokit = ref(new Octokit({}));
   const compress = useStorage<Compress>(
     "picx-compress",
     {
