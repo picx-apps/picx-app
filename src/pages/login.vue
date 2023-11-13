@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import { Icon } from "@iconify/vue";
 import image from "../assets/images/login.png?url";
+import { event } from "@tauri-apps/api";
 
 const { t } = useI18n();
 
@@ -14,6 +15,13 @@ async function handleLogin() {
   const uri = "https://github.com/login/oauth/authorize" + params;
   location.href = uri;
 }
+
+onMounted(() => {
+  event.listen("scheme-request-received", (event) => {
+    console.log("login");
+    console.log(event);
+  });
+});
 </script>
 
 <route lang="yaml">
