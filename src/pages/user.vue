@@ -112,6 +112,12 @@ name: user
           @click="router.push('/setting/language')"
         />
 
+        <ReuseTemplate
+          icon="fluent-emoji:ab-button-blood-type"
+          :text="t('user.folder_manage')"
+          @click="router.push('/setting/folder_manage')"
+        />
+
         <n-button
           class="w-full mt-10px"
           type="error"

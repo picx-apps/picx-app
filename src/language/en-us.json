@@ -1,6 +1,7 @@
 {
   "root": "ROOT",
   "back": "Back",
+  "delete": "delete",
   "empty": "Empty",
   "home": {
     "title": "Home",
@@ -26,7 +27,8 @@
     "theme": "Theme Setting",
     "followers": "followers",
     "following": "following",
-    "language": "change language"
+    "language": "change language",
+    "folder_manage": "Folder Manage"
   },
   "welcome": "Welcome Picx",
   "login": {
@@ -66,5 +68,9 @@
     "enable_info": "whether enable image compress"
   },
   "new_folder": "New Folder",
-  "please_folder": "Please folder name"
+  "please_folder": "Please folder name",
+  "folder_manage": {
+    "title": "Folder Manager",
+    "complete": "Complete Updater"
+  }
 }

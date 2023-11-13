@@ -1,6 +1,7 @@
 import { isArray } from "lodash-es";
 import { useGlobalState } from "./";
 import { RepoContents } from "../types";
+import { isDeletableInRecycleBin } from "../recycle-bin";
 
 const { octokit, user, repo_name, branch_name } = useGlobalState();
 
@@ -40,7 +41,10 @@ export const useUploadState = createGlobalState(() => {
     );
     if (res.status === 200) {
       const data = isArray(res.data) ? res.data : [res.data];
-      currentDirs.value = useRepoContent(data)[0].value;
+      currentDirs.value = useRepoContent(data)[0].value.filter(
+        (item) => !isDeletableInRecycleBin(item.path)
+      );
+
       console.log("upload_dirs", currentDirs.value);
     }
   }
