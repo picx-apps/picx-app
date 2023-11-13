@@ -19,7 +19,7 @@ fn read_auth_env() -> AuthConfig {
 
 #[tokio::main]
 #[tauri::command]
-pub async fn get_access_token(code: String) -> UserToken {
+pub async fn get_access_token(code: String) -> Result<UserToken, String> {
     let mut config = read_auth_env();
     config.code = code;
 
@@ -36,13 +36,12 @@ pub async fn get_access_token(code: String) -> UserToken {
         .header("Accept", "application/json")
         .form(&params)
         .send()
-        .await
-        .unwrap()
-        .json::<UserToken>()
-        .await
-        .unwrap();
+        .await;
 
-    user_token
+    match user_token {
+        Ok(v) => Ok(v.json::<UserToken>().await.unwrap()),
+        Err(e) => Err(e.to_string()),
+    }
 }
 
 #[tauri::command]
