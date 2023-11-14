@@ -1,5 +1,9 @@
 <script setup lang="ts">
 import { themeOverrides } from "./theme";
+import { useSettingState } from "./store/setting";
+onMounted(() => {
+  useSettingState().autoCreateOfSettings();
+});
 </script>
 
 <template>

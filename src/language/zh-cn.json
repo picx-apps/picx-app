@@ -71,6 +71,6 @@
   "please_folder": "请输入文件夹名称",
   "folder_manage": {
     "title": "文件夹",
-    "complete": "Complete Updater"
+    "complete": "确认修改"
   }
 }

@@ -96,6 +96,11 @@ name: user
           :text="t('user.repo')"
           @click="router.push('/setting/repo')"
         />
+        <ReuseTemplate
+          icon="fluent-emoji:books"
+          :text="t('user.folder_manage')"
+          @click="router.push('/setting/folder_manage')"
+        />
         <ReuseTemplate icon="fluent-emoji:ghost" :text="t('user.watermark')" />
         <ReuseTemplate
           icon="fluent-emoji:flexed-biceps"
@@ -110,12 +115,6 @@ name: user
           icon="fluent-emoji:ab-button-blood-type"
           :text="t('user.language')"
           @click="router.push('/setting/language')"
-        />
-
-        <ReuseTemplate
-          icon="fluent-emoji:ab-button-blood-type"
-          :text="t('user.folder_manage')"
-          @click="router.push('/setting/folder_manage')"
         />
 
         <n-button

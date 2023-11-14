@@ -14,3 +14,10 @@ export const HomeImageDropDownOptions: DropdownOption[] = [
     key: "delete",
   },
 ];
+
+export const FolderDropDownOptions: DropdownOption[] = [
+  {
+    label: "删除",
+    key: "delete",
+  },
+];

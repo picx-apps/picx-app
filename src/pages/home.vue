@@ -7,6 +7,7 @@ import { RepoContents } from "../types";
 import { HomeImageDropDownOptions } from "../constant";
 import { writeText } from "@tauri-apps/api/clipboard";
 import { showImagePreview } from "../components/image-preview";
+import { useSettingState } from "../store/setting";
 
 const {
   user,
@@ -17,6 +18,7 @@ const {
   addImagePath,
   removeImagePath,
 } = useGlobalState();
+const { settings } = useSettingState();
 const repoContent = ref<RepoContents>([]);
 const octokit = new Octokit({
   auth: access_token.value,
@@ -65,7 +67,10 @@ async function contents() {
     }
   );
   if (res.status === 200) {
-    repoContent.value = isArray(res.data) ? res.data : [res.data];
+    const data = isArray(res.data) ? res.data : [res.data];
+    repoContent.value = data.filter(
+      (item) => !settings.value.recycleBin[item.path]
+    );
     showDirs.value = true;
     showLatest.value = true;
     showImages.value = true;

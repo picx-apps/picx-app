@@ -1,9 +1,10 @@
 import { isArray } from "lodash-es";
 import { useGlobalState } from "./";
 import { RepoContents } from "../types";
-import { isDeletableInRecycleBin } from "../recycle-bin";
+import { useSettingState } from "./setting";
 
 const { octokit, user, repo_name, branch_name } = useGlobalState();
+const { settings } = useSettingState();
 
 export const useUploadState = createGlobalState(() => {
   const uploadPath = useStorage<string[]>("picx-upload-path", [], localStorage);
@@ -42,10 +43,8 @@ export const useUploadState = createGlobalState(() => {
     if (res.status === 200) {
       const data = isArray(res.data) ? res.data : [res.data];
       currentDirs.value = useRepoContent(data)[0].value.filter(
-        (item) => !isDeletableInRecycleBin(item.path)
+        (item) => !settings.value.recycleBin[item.path]
       );
-
-      console.log("upload_dirs", currentDirs.value);
     }
   }
   function updateDirs() {
@@ -54,7 +53,7 @@ export const useUploadState = createGlobalState(() => {
   }
 
   watch(
-    uploadPath,
+    [uploadPath, () => settings.value.recycleBin],
     () => {
       fetchDirs();
     },
