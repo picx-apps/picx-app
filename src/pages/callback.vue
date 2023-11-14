@@ -2,13 +2,16 @@
 import { invoke } from "@tauri-apps/api";
 import type { UserToken } from "../types/auth";
 import { useGlobalState } from "../store";
+import { event } from "@tauri-apps/api";
 
-const route = useRoute();
 const router = useRouter();
-const code = route.query.code as string;
 const { set_authorize } = useGlobalState();
 
-onMounted(async () => {
+event.listen("scheme-request-received", async (event) => {
+  const payload = event.payload as string;
+  if (!payload) return;
+  const params = new URLSearchParams(payload.split("?")[1]);
+  const code = params.get("code");
   const token: UserToken = await invoke("get_access_token", { code });
   set_authorize(token);
   router.push({ name: "lead" });
@@ -21,6 +24,8 @@ meta:
   public: true
 </route>
 
-<template>callback</template>
+<template>
+  <h2>Waiting for authorization to return</h2>
+</template>
 
 <style lang="less" scoped></style>

@@ -29,3 +29,6 @@ dist-ssr
 ./src/.env.development
 ./src-tauri/.env
 ./src-tauri/.env.development
+
+# nuxt
+.nuxt

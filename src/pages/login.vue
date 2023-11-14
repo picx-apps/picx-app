@@ -1,9 +1,10 @@
 <script lang="ts" setup>
 import { Icon } from "@iconify/vue";
 import image from "../assets/images/login.png?url";
-import { event } from "@tauri-apps/api";
+import { shell } from "@tauri-apps/api";
 
 const { t } = useI18n();
+const router = useRouter();
 
 async function handleLogin() {
   const params = paramsSerializer({
@@ -13,15 +14,9 @@ async function handleLogin() {
     scope: import.meta.env.VITE_SCOPE,
   });
   const uri = "https://github.com/login/oauth/authorize" + params;
-  location.href = uri;
+  shell.open(uri);
+  router.push("/callback");
 }
-
-onMounted(() => {
-  event.listen("scheme-request-received", (event) => {
-    console.log("login");
-    console.log(event);
-  });
-});
 </script>
 
 <route lang="yaml">
