@@ -33,7 +33,10 @@
   "welcome": "Welcome Picx",
   "login": {
     "detail": "Start your pleasant journey.",
-    "github_login": "Continue with GitHub"
+    "github_login": "Continue with GitHub",
+    "install": "Installations",
+    "install_app": "Install Github Apps",
+    "install-detail": "We need to install the picx app to authorize"
   },
   "init": {
     "init_repo_info": "Let's initialize your personality gallery together",

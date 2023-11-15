@@ -74,7 +74,7 @@ export const useSettingState = createGlobalState(() => {
       owner: user.value?.login!,
       repo: repo_name.value,
       ref: branch_name.value,
-      sha: (res.data as any).sha,
+      sha: (res?.data as any).sha,
       path: setting_filename,
       message: `chore: Create ${setting_filename}`,
       content: settingsSerializer.value,
@@ -83,6 +83,7 @@ export const useSettingState = createGlobalState(() => {
   }
   //检查远程是否存在该文件，如果存在直接与本地同步，如果不存在则创建
   async function autoCreateOfSettings() {
+    if (!repo_name.value || !branch_name.value) return;
     const exist = await checkExistsOfSettings();
     if (exist && "content" in exist.data) {
       return syncRemoteSettings(exist.data.content);

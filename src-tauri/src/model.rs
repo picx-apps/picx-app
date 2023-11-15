@@ -66,3 +66,16 @@ pub struct UserToken {
     pub scope: Option<String>,
     pub token_type: Option<String>,
 }
+
+#[derive(Deserialize, Serialize, Debug, Clone)]
+pub struct SchemePayload {
+    pub base: String,
+    pub query: String,
+}
+
+#[derive(Debug, Serialize, Deserialize)]
+pub struct Claims {
+    pub iat: i64,
+    pub exp: i64,
+    pub iss: String,
+}

@@ -1,8 +1,13 @@
 <script lang="ts" setup>
 const route = useRoute();
-const code = route.query.code as string;
+const setup_action = route.query.setup_action as string;
+
 onMounted(() => {
-  location.href = "picx://?code=" + code;
+  if (setup_action && setup_action === "install") {
+    location.href = "picx://installations" + location.search;
+    return;
+  }
+  location.href = "picx://authorization" + location.search;
 });
 </script>
 

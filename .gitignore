@@ -32,3 +32,6 @@ dist-ssr
 
 # nuxt
 .nuxt
+
+# pem
+*.pem

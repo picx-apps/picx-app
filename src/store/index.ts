@@ -2,6 +2,7 @@ import { merge } from "lodash-es";
 import type { UserToken, User } from "../types";
 import { Octokit } from "octokit";
 import { CompressionQuality } from "../enum";
+import { invoke } from "@tauri-apps/api";
 
 export interface Repository {
   repo_name: string;
@@ -62,13 +63,13 @@ export const useGlobalState = createGlobalState(() => {
 
   watch(
     [authorize, userinfo],
-    async ([authorize, userinfo]) => {
-      if (authorize.access_token) {
+    async ([auth, userinfo]) => {
+      if (auth.access_token) {
         octokit.value = new Octokit({
-          auth: authorize.access_token,
+          auth: auth.access_token,
         });
       }
-      if (authorize.access_token && !userinfo) {
+      if (auth.access_token && !userinfo) {
         const res = await octokit.value!.request("GET /user");
         if (res.status === 200) {
           set_userinfo(res.data);
@@ -79,8 +80,23 @@ export const useGlobalState = createGlobalState(() => {
   );
 
   // actions
+  function init_octokit() {
+    if (authorize.value.access_token) {
+      octokit.value = new Octokit({
+        auth: authorize.value.access_token,
+      });
+    }
+  }
   function set_authorize(value: UserToken) {
     authorize.value = value;
+    init_octokit();
+  }
+  async function get_userinfo() {
+    const res = await octokit.value!.request("GET /user");
+    if (res.status === 200) {
+      set_userinfo(res.data);
+    }
+    return res.data;
   }
   function set_userinfo(value: User) {
     userinfo.value = value;
@@ -97,6 +113,23 @@ export const useGlobalState = createGlobalState(() => {
       imagePath.value.splice(index, 1);
     }
   }
+  async function checkUserInstallApps(username: string) {
+    const token = await invoke("sign_jwt");
+    const octokit = new Octokit({
+      auth: token,
+    });
+    const installations = await octokit.request("GET /app/installations", {
+      headers: {
+        "X-GitHub-Api-Version": "2022-11-28",
+      },
+    });
+    if (installations.status === 200) {
+      return installations.data.some(
+        (item) => item.account?.login === username
+      );
+    }
+    return false;
+  }
 
   return {
     access_token,
@@ -110,9 +143,11 @@ export const useGlobalState = createGlobalState(() => {
     repository,
     compress,
     set_authorize,
+    get_userinfo,
     set_userinfo,
     set_repository,
     addImagePath,
     removeImagePath,
+    checkUserInstallApps,
   };
 });

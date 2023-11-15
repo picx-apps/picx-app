@@ -33,7 +33,10 @@
   "welcome": "欢迎来到 Picx",
   "login": {
     "detail": "开始你的愉快旅途.",
-    "github_login": "登陆Github"
+    "github_login": "登陆Github",
+    "install": "安装",
+    "install_app": "安装Github Apps",
+    "install-detail": "我们需要安装picx应用程序来授权"
   },
   "init": {
     "init_repo_info": "让我们一起初始化你的个性图库",

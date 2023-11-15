@@ -12,3 +12,8 @@ export interface UserToken {
   scope: string;
   token_type: string;
 }
+
+export interface SchemePayload {
+  base: string;
+  query: string;
+}
