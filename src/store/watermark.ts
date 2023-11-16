@@ -1,22 +1,20 @@
 export interface Watermark {
+  enable: boolean;
   text: string;
   top: number;
   left: number;
   size: number;
   fontColor: string;
-  backgroundColor: string;
-  opacity: number;
 }
 
 export const useWatermarkState = createGlobalState(() => {
   const [form, reset] = useResetRef<Watermark>({
-    text: "PICX",
-    top: 0,
-    left: 0,
-    size: 16,
-    fontColor: "#ffffff",
-    backgroundColor: "#ffffff",
-    opacity: 0.2,
+    enable: false,
+    text: "Hello Picx",
+    top: 10,
+    left: 10,
+    size: 30,
+    fontColor: "#F4FAFFFF",
   });
   const watermark = useStorage<Watermark>(
     "picx-watermark",

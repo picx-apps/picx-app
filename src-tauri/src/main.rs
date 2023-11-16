@@ -8,7 +8,7 @@ mod utils;
 
 use auth::{get_access_token, login_uri, sign_jwt, sign_out};
 use dotenv::dotenv;
-use image::compression_image;
+use image::{compression_image, watermark_image};
 use model::SchemePayload;
 use tauri::Manager;
 use utils::{binary_to_base64, rand_string};
@@ -51,7 +51,8 @@ fn main() {
             binary_to_base64,
             compression_image,
             rand_string,
-            sign_jwt
+            sign_jwt,
+            watermark_image
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

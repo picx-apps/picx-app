@@ -78,12 +78,16 @@
     "complete": "确认修改"
   },
   "system_config": {
-    "title": "系统配置",
+    "title": "系统配置"
+  },
+  "watermark": {
+    "title": "图片水印",
     "watermark_text": "文本",
-    "top": "距离上",
-    "left": "距离左",
-    "size": "大小",
-    "background_color": "背景色",
-    "opacity": "透明度"
+    "top": "距离上方",
+    "left": "距离左方",
+    "size": "字体大小",
+    "font_color": "字体颜色",
+    "enable": "启用",
+    "enable_info": "是否启用图像水印"
   }
 }

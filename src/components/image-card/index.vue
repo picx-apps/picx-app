@@ -7,7 +7,9 @@ const emit = defineEmits<{
   (e: "delete"): void;
 }>();
 
-const src = computed(() => "data:image/png;base64," + props.content);
+const src = computed(
+  () => "data:image/png;base64," + props.compression_content
+);
 const size = computed(() =>
   props.size >= 1024 * 1024
     ? `${(props.size / 1024 / 1024).toFixed(2)} mb`

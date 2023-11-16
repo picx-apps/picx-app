@@ -26,6 +26,8 @@ rand = "0.8.5"
 tauri-plugin-deep-link = "0.1.2"
 chrono = "0.4.31"
 jsonwebtoken = "9.1.0"
+imageproc = "0.23.0"
+rusttype = "0.9.3"
 
 [features]
 # this feature is used for production builds or when `devPath` points to the filesystem

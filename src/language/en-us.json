@@ -82,12 +82,12 @@
   },
   "watermark": {
     "title": "Image Watermark",
-    "watermark_text": "TEXT",
-    "top": "TOP",
-    "left": "LEFT",
-    "size": "SIZE",
-    "font_color": "COLOR",
-    "background_color": "BG COLOR",
-    "opacity": "Opacity"
+    "watermark_text": "Text",
+    "top": "Leave top",
+    "left": "Leave left",
+    "size": "Font size",
+    "font_color": "Font color",
+    "enable": "Enable",
+    "enable_info": "whether enable image watermark"
   }
 }

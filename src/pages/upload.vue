@@ -7,6 +7,7 @@ import type { UploadContent } from "../types/upload";
 import { invoke } from "@tauri-apps/api";
 import { useGlobalState } from "../store";
 import { NInput } from "naive-ui";
+import { useWatermarkState } from "../store/watermark";
 
 const tempContents = ref<UploadContent[]>([]);
 const waitContents = ref<UploadContent[]>([]);
@@ -30,6 +31,7 @@ const [DefineTemplate, ReusableTemplate] = createReusableTemplate<{
   isLink: boolean;
 }>();
 const folderNameInput = ref<InstanceType<typeof NInput>>();
+const { watermark } = useWatermarkState();
 
 async function handleClickUpload() {
   const selected = (await open({
@@ -46,6 +48,7 @@ async function handleClickUpload() {
   showSelectDir.value = true;
 }
 async function handleImages(paths: string[]) {
+  const watermark_setting = toValue(watermark);
   for (const path of paths) {
     console.time("compress time");
     const {
@@ -64,6 +67,21 @@ async function handleImages(paths: string[]) {
         ? compress.value.compress_type
         : undefined,
     });
+    let watermark_image: string = "";
+    if (watermark_setting.enable) {
+      const image: string = await invoke("watermark_image", {
+        image: compression_buffer,
+        options: {
+          text: watermark_setting.text,
+          top: watermark_setting.top,
+          left: watermark_setting.left,
+          size: watermark_setting.size,
+          font_color: watermark_setting.fontColor,
+        },
+      });
+      watermark_image = image;
+    }
+
     console.timeEnd("compress time");
     let filename = path.split("/").pop() as string;
     const random: string = await invoke("rand_string");
@@ -78,7 +96,7 @@ async function handleImages(paths: string[]) {
       content: base64,
       size: buffer.length,
       compression_size: compression_buffer.length,
-      compression_content: compression_base64,
+      compression_content: watermark_image ? watermark_image : compression_base64,
     });
   }
 }
