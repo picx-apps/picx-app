@@ -4,6 +4,7 @@ import { Octokit } from "octokit";
 import { Repository, useGlobalState } from "../store";
 import { Icon } from "@iconify/vue";
 import { isEmpty } from "lodash-es";
+import SystemUiconsSearch from "~icons/system-uicons/search";
 
 const props = defineProps<{
   modelValue: Repository;
@@ -30,13 +31,17 @@ const [DefineOption, ReuseOption] = createReusableTemplate<{
   value?: string;
 }>();
 const { t } = useI18n();
+const search_name = ref("");
+const loading = ref(false);
 
 async function initRepo() {
+  loading.value = true;
   const { data } = await octokit.request("GET /search/repositories", {
-    q: `user:${user.value?.login}+`,
+    q: `${search_name.value}+user:${user.value?.login}+`,
     sort: "stars",
     per_page: 100,
   });
+  loading.value = false;
   repoOptions.value = data.items;
 }
 async function initBranches() {
@@ -132,6 +137,18 @@ onMounted(() => {
       <div class="px-10px text-1.5rem py-10px font-bold">
         {{ t("init.select_repo") }}
       </div>
+      <n-input
+        round
+        v-model:value="search_name"
+        :placeholder="t('init.select_repo')"
+        :loading="loading"
+        @blur="initRepo"
+        class="mb-10px"
+      >
+        <template #prefix>
+          <n-icon :component="SystemUiconsSearch" />
+        </template>
+      </n-input>
       <ReuseOption
         v-for="item in repoOptions"
         icon="fluent-emoji:bread"
