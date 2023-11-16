@@ -3,4 +3,6 @@ export default defineNuxtConfig({
   devServer: {
     port: 8110,
   },
+
+  modules: ["@unocss/nuxt"],
 });
