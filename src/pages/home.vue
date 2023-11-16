@@ -198,12 +198,12 @@ name: home
 
       <n-collapse-transition :show="showDirs">
         <n-scrollbar x-scrollable>
-          <div class="scroll-content h-80px">
+          <div class="scroll-content h-100px">
             <div
               class="dir-container disabled ml-4px color-primary-100"
               v-show="!dirs.length"
             >
-              <Icon icon="ic:round-folder-open" class="text-4rem" />
+              <Icon icon="ic:round-folder-open" class="text-4.8rem" />
               <div class="dir-name">{{ t("empty") }}</div>
             </div>
 
@@ -213,7 +213,7 @@ name: home
               class="dir-container"
               @click="handleClickDir(item)"
             >
-              <Icon icon="ic:round-folder" class="text-4rem color-blue-400" />
+              <Icon icon="ic:round-folder" class="text-4.8rem color-blue-400" />
               <div class="dir-name">
                 {{ item.name }}
               </div>
@@ -391,8 +391,8 @@ name: home
   }
 }
 .dir-container {
-  width: 80px;
-  height: 80px;
+  width: 100px;
+  height: 100px;
   display: inline-flex;
   flex-direction: column;
   justify-content: center;
@@ -415,8 +415,8 @@ name: home
   .dir-name {
     line-height: 12px;
     height: 24px;
-    width: 63px;
-    font-size: 10px;
+    width: 78px;
+    font-size: 12px;
     color: #5d5d5d;
     text-align: center;
     overflow: hidden;
