@@ -1,26 +1,9 @@
 <script lang="ts" setup>
 import { Icon } from "@iconify/vue";
-
-interface Watermark {
-  text: string;
-  top: number;
-  left: number;
-  size: number;
-  fontColor: string;
-  backgroundColor: string;
-  opacity: number;
-}
+import { useWatermarkState } from "../../store/watermark";
 
 const { t } = useI18n();
-const [form, reset] = useResetRef<Watermark>({
-  text: "PICX",
-  top: 0,
-  left: 0,
-  size: 16,
-  fontColor: "#ffffff",
-  backgroundColor: "#ffffff",
-  opacity: 0.2,
-});
+const { watermark: form } = useWatermarkState();
 </script>
 
 <template>
@@ -127,6 +110,10 @@ const [form, reset] = useResetRef<Watermark>({
           />
         </n-form-item>
       </n-form>
+
+      <n-button type="primary" ghost class="w-full" @click="">
+        {{ t("repositories.complete") }}
+      </n-button>
     </div>
   </n-scrollbar>
 </template>
