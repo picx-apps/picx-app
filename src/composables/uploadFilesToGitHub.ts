@@ -11,11 +11,11 @@ export async function uploadFilesToGitHub(files: UploadContent[]) {
   const branch = branch_name.value;
   const tree: Tree = [];
   for (const file of files) {
-    file.path = file.path.slice(1);
+    file.path = file.path[0] === "/" ? file.path.slice(1) : file.path;
     const { data } = await octokit.value.rest.git.createBlob({
       owner,
       repo,
-      content: file.content,
+      content: file.compression_content,
       encoding: "base64",
     });
     tree.push({
@@ -25,28 +25,36 @@ export async function uploadFilesToGitHub(files: UploadContent[]) {
       sha: data.sha,
     });
   }
-
+  const lastCommit = await octokit.value.request(
+    "GET /repos/{owner}/{repo}/branches/{branch}",
+    {
+      owner,
+      repo,
+      branch,
+    }
+  );
   const treeResponse = await octokit.value.rest.git.createTree({
     owner,
     repo,
     tree,
-    base_tree: branch,
+    base_tree: lastCommit.data.commit.commit.tree.sha,
   });
 
   const commitResponse = await octokit.value.rest.git.createCommit({
     owner,
     repo,
+    parents: [lastCommit.data.commit.sha],
     message: "Picx app to Upload files",
     tree: treeResponse.data.sha,
   });
 
-  await octokit.value.rest.git.updateRef({
+  let res = await octokit.value.rest.git.updateRef({
     owner,
     repo,
     ref: "heads/" + branch,
     sha: commitResponse.data.sha,
-    force: true,
+    force: false,
   });
 
-  return commitResponse;
+  return res;
 }

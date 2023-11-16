@@ -88,15 +88,17 @@ async function handleImages(paths: string[]) {
     const _filename = filename.split(".");
     filename =
       _filename.length > 1
-        ? `${_filename[0]}_${random}.${_filename[1]}`
-        : filename + random;
+        ? `${_filename[0]}_${random}.${_filename.pop()}`
+        : `${filename}_${random}`;
 
     tempContents.value.push({
       path: filename,
       content: base64,
       size: buffer.length,
       compression_size: compression_buffer.length,
-      compression_content: watermark_image ? watermark_image : compression_base64,
+      compression_content: watermark_image
+        ? watermark_image
+        : compression_base64,
     });
   }
 }
@@ -123,7 +125,7 @@ async function handleUpload() {
     path: item.dir + "/" + item.path,
   }));
   const res = await uploadFilesToGitHub(contents);
-  if (res?.status === 201) {
+  if (res?.status === 200) {
     message.warning("上传成功");
     waitContents.value = [];
   }

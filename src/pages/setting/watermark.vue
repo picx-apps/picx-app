@@ -8,9 +8,8 @@ const form = reactive<Watermark>({ ...watermark.value });
 const isUpdater = computed(() =>
   Object.keys(form).some(
     (key) =>
-      key !== "enable" &&
       form[key as keyof typeof form] !==
-        watermark.value[key as keyof typeof form]
+      watermark.value[key as keyof typeof form]
   )
 );
 </script>
