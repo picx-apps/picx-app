@@ -1,12 +1,11 @@
 use std::fs::File;
-use std::io::{BufWriter, Cursor, Read};
+use std::io::{Cursor, Read};
 
 use crate::utils::{binary_to_base64, hex_to_rgba};
 use image::codecs::jpeg::JpegEncoder;
 use image::codecs::png::{CompressionType, FilterType, PngEncoder};
-use image::{DynamicImage, GenericImage, ImageBuffer, ImageFormat, Rgba};
-use imageproc::drawing::{draw_text_mut, text_size};
-use imageproc::rect::Rect;
+use image::{GenericImage, ImageBuffer, ImageFormat, Rgba};
+use imageproc::drawing::draw_text_mut;
 use rusttype::{Font, Scale};
 use serde::{Deserialize, Serialize};
 
