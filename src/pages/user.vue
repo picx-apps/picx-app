@@ -101,7 +101,11 @@ name: user
           :text="t('user.folder_manage')"
           @click="router.push('/setting/folder_manage')"
         />
-        <ReuseTemplate icon="fluent-emoji:ghost" :text="t('user.watermark')" />
+        <ReuseTemplate
+          icon="fluent-emoji:ghost"
+          :text="t('user.watermark')"
+          @click="router.push('/setting/watermark')"
+        />
         <ReuseTemplate
           icon="fluent-emoji:flexed-biceps"
           :text="t('user.compress')"

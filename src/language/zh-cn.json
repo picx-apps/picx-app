@@ -78,6 +78,12 @@
     "complete": "确认修改"
   },
   "system_config": {
-    "title": "系统配置"
+    "title": "系统配置",
+    "watermark_text": "文本",
+    "top": "距离上",
+    "left": "距离左",
+    "size": "大小",
+    "background_color": "背景色",
+    "opacity": "透明度"
   }
 }

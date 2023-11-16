@@ -79,5 +79,15 @@
   },
   "system_config": {
     "title": "System Config"
+  },
+  "watermark": {
+    "title": "Image Watermark",
+    "watermark_text": "TEXT",
+    "top": "TOP",
+    "left": "LEFT",
+    "size": "SIZE",
+    "font_color": "COLOR",
+    "background_color": "BG COLOR",
+    "opacity": "Opacity"
   }
 }
