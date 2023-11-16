@@ -7,6 +7,7 @@ import { NaiveUiResolver } from "unplugin-vue-components/resolvers";
 import Icons from "unplugin-icons/vite";
 import Pages from "vite-plugin-pages";
 import vueJsx from "@vitejs/plugin-vue-jsx";
+import I18n from "@intlify/unplugin-vue-i18n/vite";
 
 // https://vitejs.dev/config/
 export default defineConfig(() => ({
@@ -15,6 +16,7 @@ export default defineConfig(() => ({
     vueJsx(),
     Pages(),
     UnoCSS(),
+    I18n({}),
     AutoImport({
       vueTemplate: true,
       dirs: ["./src/composables"],
