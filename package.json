@@ -5,9 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "dev:auth": "pnpm run -C auth dev",
     "build": "vite build",
-    "build:auth": "pnpm run -C auth build",
     "preview": "vite preview",
     "tauri": "tauri"
   },
