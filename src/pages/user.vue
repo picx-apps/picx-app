@@ -97,7 +97,7 @@ name: user
           @click="router.push('/setting/repo')"
         />
         <ReuseTemplate
-          icon="fluent-emoji:books"
+          icon="fluent-emoji:bubbles"
           :text="t('user.folder_manage')"
           @click="router.push('/setting/folder_manage')"
         />
