@@ -7,7 +7,8 @@ import { SchemePayload } from "../types";
 import { Icon } from "@iconify/vue";
 
 const router = useRouter();
-const { set_authorize, get_userinfo, checkUserInstallApps } = useGlobalState();
+const { set_authorize, get_userinfo, checkUserInstallApps, access_token } =
+  useGlobalState();
 
 event.listen("scheme-request-received", async (event) => {
   const payload = event.payload as SchemePayload;
@@ -25,6 +26,7 @@ event.listen("scheme-request-received", async (event) => {
   }
 });
 async function handleSign() {
+  if (!access_token.value) return;
   const userinfo = await get_userinfo();
   if (await checkUserInstallApps(userinfo.login)) {
     router.push({ name: "lead" });
