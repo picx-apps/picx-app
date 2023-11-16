@@ -112,6 +112,11 @@ name: user
           :text="t('user.theme')"
         />
         <ReuseTemplate
+          icon="fluent-emoji:face-with-peeking-eye"
+          :text="t('user.config')"
+          @click="router.push('/setting/config')"
+        />
+        <ReuseTemplate
           icon="fluent-emoji:ab-button-blood-type"
           :text="t('user.language')"
           @click="router.push('/setting/language')"

@@ -27,8 +27,9 @@
     "theme": "Theme Setting",
     "followers": "followers",
     "following": "following",
-    "language": "Change language",
-    "folder_manage": "Folder Manage"
+    "language": "Change Language",
+    "folder_manage": "Folder Manage",
+    "config": "System Config"
   },
   "welcome": "Welcome Picx",
   "login": {
@@ -75,5 +76,8 @@
   "folder_manage": {
     "title": "Folder Manager",
     "complete": "Complete Updater"
+  },
+  "system_config": {
+    "title": "System Config"
   }
 }

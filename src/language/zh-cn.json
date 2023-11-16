@@ -28,7 +28,8 @@
     "followers": "被关注",
     "following": "关注",
     "language": "切换语言",
-    "folder_manage": "文件夹管理"
+    "folder_manage": "文件夹管理",
+    "config": "系统配置文件"
   },
   "welcome": "欢迎来到 Picx",
   "login": {
@@ -75,5 +76,8 @@
   "folder_manage": {
     "title": "文件夹",
     "complete": "确认修改"
+  },
+  "system_config": {
+    "title": "系统配置"
   }
 }

@@ -20,6 +20,9 @@ dependencies:
   '@vueuse/core':
     specifier: ^10.5.0
     version: 10.5.0(vue@3.3.4)
+  highlight.js:
+    specifier: ^11.9.0
+    version: 11.9.0
   lodash-es:
     specifier: ^4.17.21
     version: 4.17.21
@@ -2239,7 +2242,6 @@ packages:
   /highlight.js@11.9.0:
     resolution: {integrity: sha512-fJ7cW7fQGCYAkgv4CPfwFHrfd/cLS4Hau96JuJ+ZTOWhjnhoeN1ub1tFmALm/+lW5z4WCAuAV9bm05AP0mS6Gw==}
     engines: {node: '>=12.0.0'}
-    dev: true
 
   /html-tags@3.3.1:
     resolution: {integrity: sha512-ztqyC3kLto0e9WbNp0aeP+M3kTt+nbaIveGmUxAtZa+8iFgKLUOD4YKM5j+f3QD89bra7UeumolZHKuOXnTmeQ==}

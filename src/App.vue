@@ -1,6 +1,11 @@
 <script setup lang="ts">
 import { themeOverrides } from "./theme";
 import { useSettingState } from "./store/setting";
+import hljs from "highlight.js/lib/core";
+import json from "highlight.js/lib/languages/json";
+
+hljs.registerLanguage("json", json);
+
 onMounted(() => {
   useSettingState().autoCreateOfSettings();
 });
@@ -9,7 +14,7 @@ onMounted(() => {
 <template>
   <RouterView v-slot="{ Component }">
     <template v-if="Component">
-      <n-config-provider :theme-overrides="themeOverrides">
+      <n-config-provider :theme-overrides="themeOverrides" :hljs="hljs">
         <n-notification-provider>
           <n-message-provider>
             <n-dialog-provider>
