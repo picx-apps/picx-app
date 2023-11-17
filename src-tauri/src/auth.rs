@@ -87,7 +87,8 @@ pub fn sign_jwt() -> String {
         exp: now.clone() + 600,
         iss: String::from("416113"),
     };
-    let private_key = EncodingKey::from_rsa_pem(include_bytes!("./private-key.pem")).unwrap();
+    let private_key =
+        EncodingKey::from_rsa_pem(include_bytes!("./assets/private-key.pem")).unwrap();
     let token = encode(&Header::new(Algorithm::RS256), &claims, &private_key).unwrap();
     token
 }
