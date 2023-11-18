@@ -38,3 +38,8 @@ body {
 div {
   box-sizing: border-box;
 }
+
+svg {
+  -webkit-user-select: none;
+  user-select: none;
+}

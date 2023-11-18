@@ -17,6 +17,7 @@ const ImagePreview = defineComponent(
   (props: ImagePreviewOptions) => {
     const { images } = toRefs(props);
     const position = ref(props.startPosition || 0);
+    const zoom = ref(1);
     const currentImage = computed(() => images.value[position.value]);
 
     const handleBack = () =>
@@ -30,6 +31,16 @@ const ImagePreview = defineComponent(
       await useWriteBinaryFile(data, currentImage.value);
     }
 
+    useEventListener("keydown", (event) => {
+      if (event.key === "Escape") {
+        state.show = false;
+      }
+    });
+
+    watch(position, () => {
+      zoom.value = 1;
+    });
+
     watch(
       () => state.show,
       (v) => {
@@ -37,15 +48,33 @@ const ImagePreview = defineComponent(
       }
     );
     return () => (
-      <div
-        class="image-preview absolute top-0 left-0 w-screen h-screen bg-#29292952 flex items-center justify-center overflow-auto"
-        onClick={withModifiers(() => (state.show = false), ["self"])}
-      >
-        <div class="image-container">
-          <img src={currentImage.value} class="w-full object-cover" />
+      <div class="image-preview absolute top-0 left-0 w-screen h-screen bg-#29292952 flex items-center justify-center overflow-hidden">
+        <div
+          class="image-container h-full flex items-center justify-center"
+          onClick={withModifiers(() => (state.show = false), ["self"])}
+        >
+          <img
+            src={currentImage.value}
+            class="h-50% object-cover"
+            style={{ transform: `scale(${zoom.value}, ${zoom.value})` }}
+          />
         </div>
 
         <div class="absolute bottom-40px right-20px h-48px px-10px bg-#00000059 rounded-10px color-#e6e6e6 flex items-center">
+          <Icon
+            icon="typcn:zoom-in"
+            class="w-24px h-24px mr-10px cursor-pointer"
+            onClick={() => {
+              if (zoom.value <= 3) zoom.value += 0.5;
+            }}
+          />
+          <Icon
+            icon="typcn:zoom-out"
+            class="w-24px h-24px mr-10px cursor-pointer"
+            onClick={() => {
+              if (zoom.value > 0.5) zoom.value -= 0.5;
+            }}
+          />
           <Icon
             icon="ion:chevron-back"
             class="w-24px h-24px mr-10px cursor-pointer"
