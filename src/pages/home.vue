@@ -35,7 +35,6 @@ const dropDownPosition = reactive({
   y: 0,
 });
 const message = useMessage();
-const time = useStorage("picx-update-key", Date.now()); //缓存更新时间
 const path = computed(() =>
   imagePaths.value.length > 0
     ? imagePaths.value[imagePaths.value.length - 1]
@@ -54,6 +53,7 @@ const toLocaleUpperCasePath = computed(() =>
   path.value.split("/")[path.value.split("/").length - 1].toLocaleUpperCase()
 );
 const { t } = useI18n();
+const refresh = ref(false);
 
 async function contents() {
   const res = await octokit.request(
@@ -74,6 +74,7 @@ async function contents() {
     showDirs.value = true;
     showLatest.value = true;
     showImages.value = true;
+    refresh.value = false;
   }
 }
 watch(
@@ -151,7 +152,7 @@ async function handleDeleteImage() {
           icon: "icon-park-solid:grinning-face-with-squinting-eyes",
         }),
     });
-    contents();
+    updateNow();
   }
 }
 function handleImage(index: number) {
@@ -171,12 +172,13 @@ name: home
       {{ t("home.title") }}
       <template #optional>
         <Icon
-          icon="ic:round-refresh"
+          :icon="refresh ? 'line-md:loading-loop' : 'ic:round-refresh'"
           class="text-26px ml-6px cursor-pointer"
           @click="
             () => {
-              time = Date.now();
-              contents();
+              if (refresh) return;
+              refresh = true;
+              updateNow();
             }
           "
         />
