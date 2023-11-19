@@ -8,6 +8,8 @@ import { invoke } from "@tauri-apps/api";
 import { useGlobalState } from "../store";
 import { NInput } from "naive-ui";
 import { useWatermarkState } from "../store/watermark";
+import SystemUiconsUpload from "~icons/system-uicons/upload";
+import LineMdLoadingLoop from "~icons/line-md/loading-loop";
 
 const tempContents = ref<UploadContent[]>([]);
 const waitContents = ref<UploadContent[]>([]);
@@ -32,6 +34,7 @@ const [DefineTemplate, ReusableTemplate] = createReusableTemplate<{
 }>();
 const folderNameInput = ref<InstanceType<typeof NInput>>();
 const { watermark } = useWatermarkState();
+const uploading = ref(false);
 
 async function handleClickUpload() {
   const selected = (await open({
@@ -120,6 +123,7 @@ function handleQueue() {
 }
 //上传
 async function handleUpload() {
+  uploading.value = true;
   const contents = waitContents.value.map((item) => ({
     ...item,
     path: item.dir + "/" + item.path,
@@ -129,6 +133,7 @@ async function handleUpload() {
     message.warning("上传成功");
     waitContents.value = [];
   }
+  uploading.value = false;
 }
 //立即上传
 async function handleBeginUpload() {
@@ -333,9 +338,13 @@ name: upload
     class="text-center fixed bottom-100px w-full"
     v-show="waitContents.length"
   >
-    <n-button type="primary" @click="handleUpload">{{
-      t("node.button.upload")
-    }}</n-button>
+    <n-button
+      type="primary"
+      @click="handleUpload"
+      :render-icon="() => h(uploading ? LineMdLoadingLoop : SystemUiconsUpload)"
+      :disabled="uploading"
+      >{{ t("node.button.upload") }}
+    </n-button>
   </div>
 </template>
 
