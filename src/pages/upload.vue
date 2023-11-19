@@ -197,7 +197,7 @@ name: upload
 
       <div v-else>
         <div
-          class="text-1.1rem font-bold color-gray-8 mb-20px flex items-center"
+          class="text-1.1rem font-bold color-gray-8 dark:color-gray-4 mb-20px flex items-center"
         >
           <Icon icon="ph:circle-notch-bold" />
           <span class="ml-10px">

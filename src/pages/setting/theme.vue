@@ -31,9 +31,9 @@ const themeOptions = [
 
     <DefineTemplate v-slot="{ label, value }">
       <div
-        class="transition-all px-10px py-6px flex items-center justify-between cursor-pointer hover:bg-#f7f7f7 rounded-lg"
+        class="transition-all px-10px py-6px flex items-center justify-between cursor-pointer hover:bg-#f7f7f7 dark:hover:bg-gray-7 rounded-lg"
       >
-        <div class="text-.9rem color-gray-6">{{ label }}</div>
+        <div class="text-.9rem color-gray-6 dark:color-white">{{ label }}</div>
         <Icon
           icon="charm:tick"
           class="color-primary text-1rem"

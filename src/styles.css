@@ -22,13 +22,6 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
-
-  --tabbar-background: linear-gradient(120deg, #cdf2ff, #e2e4ff, #ece1ff);
-  --base-color: #5e14ff;
-  --base-color-light-3: #6e44f9;
-  --base-color-light-5: #8e70f1;
-  --base-color-light-7: #b29fef;
-  --base-color-light-9: #e6e0fb;
 }
 
 body {
@@ -47,9 +40,27 @@ svg {
 html {
   background: white;
   color: #0f0f0f;
+
+  --tabbar-background: linear-gradient(120deg, #cdf2ff, #e2e4ff, #ece1ff);
+  --tabbar-item-color: var(--base-color-light-5);
+  --tabbar-item-color-active: var(--base-color);
+  --base-color: #5e14ff;
+  --base-color-light-3: #6e44f9;
+  --base-color-light-5: #8e70f1;
+  --base-color-light-7: #b29fef;
+  --base-color-light-9: #e6e0fb;
 }
 
 html.dark {
-  background: #2a2a2a;
+  background: #1f2122;
   color: white;
+
+  --tabbar-background: linear-gradient(120deg, #49c7fc, #9369f8, #c05cf8);
+  --tabbar-item-color: #492891;
+  --tabbar-item-color-active: #ffffff;
+  --base-color: #210f49;
+  --base-color-light-3: #2d1c52;
+  --base-color-light-5: #33274e;
+  --base-color-light-7: #3a324d;
+  --base-color-light-9: #524c5f;
 }

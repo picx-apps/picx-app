@@ -29,7 +29,7 @@ const isActive = computed(() => route.name === props.name);
 <style lang="less" scoped>
 .tabbar-item__text,
 .tabbar-item {
-  color: var(--base-color-light-5);
+  color: var(--tabbar-item-color);
 }
 .tabbar-item {
   border-radius: 100%;
@@ -46,9 +46,9 @@ const isActive = computed(() => route.name === props.name);
 }
 .tabbar-item.current {
   transform: scale(1.1, 1.1);
-  color: var(--base-color);
+  color: var(--tabbar-item-color-active);
   .tabbar-item__text {
-    color: var(--base-color);
+    color: var(--tabbar-item-color-active);
   }
 }
 

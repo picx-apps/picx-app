@@ -42,8 +42,10 @@ watchEffect(() => {
     </Header>
 
     <DefineTemplate v-slot="{ label, value }">
-      <div class="transition-all hover:bg-#f7f7f7 option">
-        <div class="text-.9rem color-gray-6">{{ t(label) }}</div>
+      <div class="transition-all hover:bg-#f7f7f7 dark:hover:bg-gray-7 option">
+        <div class="text-.9rem color-gray-6 dark:color-white">
+          {{ t(label) }}
+        </div>
         <Icon
           icon="charm:tick"
           class="color-primary text-1rem"
@@ -55,7 +57,7 @@ watchEffect(() => {
     <div class="px-16px">
       <div class="option">
         <div class="flex flex-col">
-          <span class="text-.9rem color-gray-6">{{
+          <span class="text-.9rem color-gray-6 dark:color-white">{{
             $t("compress.enable")
           }}</span>
           <span class="text-.8rem color-gray-4">{{

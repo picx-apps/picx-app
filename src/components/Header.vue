@@ -13,7 +13,7 @@ defineSlots<{
       <h1 class="m-0"><slot></slot></h1>
     </div>
 
-    <div class="flex-1 text-center text-1.1rem color-gray-600">
+    <div class="flex-1 text-center text-1.1rem color-gray-600 dark:color-white">
       <slot name="title">{{ title }}</slot>
     </div>
 

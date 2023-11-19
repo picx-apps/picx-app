@@ -33,13 +33,13 @@ const compression_size = computed(() =>
     />
     <div class="h-80px ml-20px flex-1 flex flex-col justify-between">
       <div
-        class="lh-24px text-1.1rem color-#505050 font-bold truncate max-w-200px"
+        class="lh-24px text-1.1rem color-#505050 dark:color-white font-bold truncate max-w-200px"
       >
         {{ path }}
       </div>
 
       <div
-        class="text-10px color-#707070 truncate max-w-200px mb-3px flex items-center"
+        class="text-10px color-#707070 dark:color-gray-4 truncate max-w-200px mb-3px flex items-center"
       >
         <Icon
           icon="material-symbols:attach-file-rounded"
@@ -51,11 +51,11 @@ const compression_size = computed(() =>
       <div>
         <div class="flex items-center">
           <Icon icon="iconoir:compress" class="mr-4px text-16px" />
-          <span class="color-#5c5c5c text-10px">
+          <span class="color-#5c5c5c text-10px dark:color-gray-4">
             {{ size }}
           </span>
           <Icon icon="material-symbols:arrow-right-alt" class="mx-4px" />
-          <span class="color-#5c5c5c text-10px">
+          <span class="color-#5c5c5c text-10px dark:color-gray-4">
             {{ compression_size }}
           </span>
         </div>
@@ -65,7 +65,7 @@ const compression_size = computed(() =>
     <div>
       <Icon
         icon="material-symbols:delete"
-        class="text-1.5rem color-#8c8c8c hover:color-#487aef cursor-pointer"
+        class="text-1.5rem color-#8c8c8c dark:color-white hover:color-#487aef cursor-pointer"
         @click="emit('delete')"
       />
     </div>
@@ -80,8 +80,5 @@ const compression_size = computed(() =>
   & + & {
     margin-top: 20px;
   }
-}
-.a {
-  color: #f4f4f4;
 }
 </style>

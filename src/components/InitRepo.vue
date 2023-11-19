@@ -18,11 +18,13 @@ const { t } = useI18n();
 <template>
   <DefineTemplate v-slot="{ icon, title, label, value }">
     <div
-      class="flex items-center cursor-pointer rounded-10px hover:bg-#fafafa px-10px py-12px mb-10px"
+      class="flex items-center cursor-pointer rounded-10px hover:bg-#fafafa dark:hover:bg-gray-7 px-10px py-12px mb-10px"
     >
       <Icon :icon="icon" class="w-40px h-40px color-#aaaaaa" />
       <div class="flex-1 ml-20px">
-        <div class="text-1rem font-600 color-#5d5d5d">{{ title }}</div>
+        <div class="text-1rem font-600 color-#5d5d5d dark:color-white">
+          {{ title }}
+        </div>
         <div class="text-10px color-#757575">{{ label }}</div>
       </div>
       <div class="flex items-center">

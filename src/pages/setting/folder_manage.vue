@@ -142,5 +142,8 @@ function handleContextmenuFolder(event: MouseEvent, item: RepoContents[0]) {
   margin: 15px 0 10px 0;
   display: flex;
   align-items: center;
+  .dark & {
+    color: white;
+  }
 }
 </style>
