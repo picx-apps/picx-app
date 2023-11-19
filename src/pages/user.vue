@@ -114,6 +114,7 @@ name: user
         <ReuseTemplate
           icon="fluent-emoji:first-quarter-moon"
           :text="t('user.theme')"
+          @click="router.push('/setting/theme')"
         />
         <!-- <ReuseTemplate
           icon="fluent-emoji:face-with-peeking-eye"

@@ -43,3 +43,13 @@ svg {
   -webkit-user-select: none;
   user-select: none;
 }
+
+html {
+  background: white;
+  color: #0f0f0f;
+}
+
+html.dark {
+  background: #2a2a2a;
+  color: white;
+}

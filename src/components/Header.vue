@@ -23,12 +23,4 @@ defineSlots<{
   </div>
 </template>
 
-<style lang="less" scoped>
-.bio {
-  margin-top: 4px;
-  font-size: 11px;
-  line-height: 16px;
-  color: #959595;
-  border-radius: 10px;
-}
-</style>
+<style lang="less" scoped></style>

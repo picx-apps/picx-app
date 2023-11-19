@@ -89,5 +89,10 @@
     "font_color": "Font color",
     "enable": "Enable",
     "enable_info": "whether enable image watermark"
+  },
+  "theme": {
+    "title": "Theme",
+    "light": "Light",
+    "dark": "Dark"
   }
 }

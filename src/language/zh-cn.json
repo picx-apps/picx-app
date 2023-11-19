@@ -89,5 +89,10 @@
     "font_color": "字体颜色",
     "enable": "启用",
     "enable_info": "是否启用图像水印"
+  },
+  "theme": {
+    "title": "主题",
+    "light": "明亮",
+    "dark": "暗黑"
   }
 }
