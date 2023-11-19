@@ -162,7 +162,11 @@ async function handleCreateFolder() {
     enableFolder.value = false;
     return;
   }
-  const res = await useCreateFolder(currentPath.value + "/" + folderName.value);
+  const res = await useCreateFolder(
+    currentPath.value
+      ? `${currentPath.value}/`
+      : currentPath.value + folderName.value
+  );
   if (res?.status === 201) {
     enableFolder.value = false;
     folderName.value = "";
