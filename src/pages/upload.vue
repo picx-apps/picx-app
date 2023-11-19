@@ -132,6 +132,7 @@ async function handleUpload() {
   if (res?.status === 200) {
     message.warning("上传成功");
     waitContents.value = [];
+    updateNow();
   }
   uploading.value = false;
 }
@@ -166,6 +167,7 @@ async function handleCreateFolder() {
     enableFolder.value = false;
     folderName.value = "";
     await updateDirs();
+    updateNow();
   } else {
     message.error("创建失败");
   }

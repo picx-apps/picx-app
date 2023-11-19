@@ -51,6 +51,7 @@ declare global {
   const makeDestructurable: typeof import('@vueuse/core')['makeDestructurable']
   const markRaw: typeof import('vue')['markRaw']
   const nextTick: typeof import('vue')['nextTick']
+  const now: typeof import('./src/composables/now')['now']
   const onActivated: typeof import('vue')['onActivated']
   const onBeforeMount: typeof import('vue')['onBeforeMount']
   const onBeforeRouteLeave: typeof import('vue-router')['onBeforeRouteLeave']
@@ -115,6 +116,7 @@ declare global {
   const unref: typeof import('vue')['unref']
   const unrefElement: typeof import('@vueuse/core')['unrefElement']
   const until: typeof import('@vueuse/core')['until']
+  const updateNow: typeof import('./src/composables/now')['updateNow']
   const uploadFilesToGitHub: typeof import('./src/composables/uploadFilesToGitHub')['uploadFilesToGitHub']
   const useActiveElement: typeof import('@vueuse/core')['useActiveElement']
   const useAnimate: typeof import('@vueuse/core')['useAnimate']
@@ -358,6 +360,7 @@ declare module 'vue' {
     readonly makeDestructurable: UnwrapRef<typeof import('@vueuse/core')['makeDestructurable']>
     readonly markRaw: UnwrapRef<typeof import('vue')['markRaw']>
     readonly nextTick: UnwrapRef<typeof import('vue')['nextTick']>
+    readonly now: UnwrapRef<typeof import('./src/composables/now')['now']>
     readonly onActivated: UnwrapRef<typeof import('vue')['onActivated']>
     readonly onBeforeMount: UnwrapRef<typeof import('vue')['onBeforeMount']>
     readonly onBeforeRouteLeave: UnwrapRef<typeof import('vue-router')['onBeforeRouteLeave']>
@@ -421,6 +424,7 @@ declare module 'vue' {
     readonly unref: UnwrapRef<typeof import('vue')['unref']>
     readonly unrefElement: UnwrapRef<typeof import('@vueuse/core')['unrefElement']>
     readonly until: UnwrapRef<typeof import('@vueuse/core')['until']>
+    readonly updateNow: UnwrapRef<typeof import('./src/composables/now')['updateNow']>
     readonly uploadFilesToGitHub: UnwrapRef<typeof import('./src/composables/uploadFilesToGitHub')['uploadFilesToGitHub']>
     readonly useActiveElement: UnwrapRef<typeof import('@vueuse/core')['useActiveElement']>
     readonly useAnimate: UnwrapRef<typeof import('@vueuse/core')['useAnimate']>
@@ -657,6 +661,7 @@ declare module '@vue/runtime-core' {
     readonly makeDestructurable: UnwrapRef<typeof import('@vueuse/core')['makeDestructurable']>
     readonly markRaw: UnwrapRef<typeof import('vue')['markRaw']>
     readonly nextTick: UnwrapRef<typeof import('vue')['nextTick']>
+    readonly now: UnwrapRef<typeof import('./src/composables/now')['now']>
     readonly onActivated: UnwrapRef<typeof import('vue')['onActivated']>
     readonly onBeforeMount: UnwrapRef<typeof import('vue')['onBeforeMount']>
     readonly onBeforeRouteLeave: UnwrapRef<typeof import('vue-router')['onBeforeRouteLeave']>
@@ -720,6 +725,7 @@ declare module '@vue/runtime-core' {
     readonly unref: UnwrapRef<typeof import('vue')['unref']>
     readonly unrefElement: UnwrapRef<typeof import('@vueuse/core')['unrefElement']>
     readonly until: UnwrapRef<typeof import('@vueuse/core')['until']>
+    readonly updateNow: UnwrapRef<typeof import('./src/composables/now')['updateNow']>
     readonly uploadFilesToGitHub: UnwrapRef<typeof import('./src/composables/uploadFilesToGitHub')['uploadFilesToGitHub']>
     readonly useActiveElement: UnwrapRef<typeof import('@vueuse/core')['useActiveElement']>
     readonly useAnimate: UnwrapRef<typeof import('@vueuse/core')['useAnimate']>

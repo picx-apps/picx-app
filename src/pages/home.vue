@@ -63,7 +63,7 @@ async function contents() {
       repo: repo_name.value,
       ref: branch_name.value,
       path: path.value,
-      t: time.value,
+      t: now.value,
     }
   );
   if (res.status === 200) {
@@ -76,6 +76,13 @@ async function contents() {
     showImages.value = true;
   }
 }
+watch(
+  now,
+  () => {
+    contents();
+  },
+  { immediate: true }
+);
 function handleClickDir(item: (typeof repoContent.value)[0]) {
   repoContent.value = [];
   addImagePath(item.path);
@@ -152,10 +159,6 @@ function handleImage(index: number) {
   const images = files.value.map((item) => item.download_url!);
   showImagePreview({ images, startPosition: index });
 }
-
-onMounted(() => {
-  contents();
-});
 </script>
 
 <route lang="yaml">
