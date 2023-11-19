@@ -20,7 +20,7 @@
       "env": {
         "GITHUB_STATE": "",
         "CLIENT_ID": "Iv1.274fe6f96551b91f",
-        "REDIRECT_URI": "http://120.55.73.242:8110/authorization",
+        "REDIRECT_URI": "https://picx.qzzhu.cn/authorization",
         "CLIENT_SECRET": "760951d571e461d2cfb4f91689ae7e7bc54bbaf5"
       }
     },

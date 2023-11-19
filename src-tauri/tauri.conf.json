@@ -32,6 +32,17 @@
         "save": true,
         "open": true,
         "confirm": true
+      },
+      "window": {
+        "all": false,
+        "close": true,
+        "hide": true,
+        "show": true,
+        "maximize": true,
+        "minimize": true,
+        "unmaximize": true,
+        "unminimize": true,
+        "startDragging": true
       }
     },
     "bundle": {
@@ -53,9 +64,9 @@
       {
         "fullscreen": false,
         "resizable": true,
-        "title": "PicX",
-        "width": 414,
-        "height": 896
+        "title": "Welcome to picx",
+        "width": 1125,
+        "height": 835
       }
     ]
   }
