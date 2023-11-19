@@ -10,11 +10,14 @@ const BASE_AUTHORIZE: &str = "https://github.com/login/oauth/access_token";
 
 fn read_auth_env() -> AuthConfig {
     let mut auth_config = AuthConfig::default();
-    auth_config.client_id = env::var("VITE_CLIENT_ID").unwrap_or(String::new());
-    auth_config.client_secret = env::var("VITE_CLIENT_SECRET").unwrap_or(String::new());
-    auth_config.redirect_uri = env::var("VITE_REDIRECT_URI").unwrap_or(String::new());
-    auth_config.state = env::var("VITE_STATE").unwrap_or(String::new());
-
+    auth_config.client_id =
+        env::var("VITE_CLIENT_ID").unwrap_or(String::from("Iv1.274fe6f96551b91f"));
+    auth_config.client_secret = env::var("VITE_CLIENT_SECRET")
+        .unwrap_or(String::from("760951d571e461d2cfb4f91689ae7e7bc54bbaf5"));
+    auth_config.redirect_uri = env::var("VITE_REDIRECT_URI")
+        .unwrap_or(String::from("https://picx.qzzhu.cn/authorization"));
+    auth_config.state = env::var("VITE_STATE").unwrap_or(String::from("picx-app"));
+    println!("{:?}", auth_config);
     auth_config
 }
 
