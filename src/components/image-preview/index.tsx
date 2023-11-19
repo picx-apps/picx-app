@@ -17,15 +17,28 @@ const ImagePreview = defineComponent(
   (props: ImagePreviewOptions) => {
     const { images } = toRefs(props);
     const position = ref(props.startPosition || 0);
-    const zoom = ref(1);
+    const zoom = ref(0);
     const currentImage = computed(() => images.value[position.value]);
 
-    const handleBack = () =>
-      images.value.length > 1 && position.value !== 0 && (position.value -= 1);
-    const handleNext = () =>
-      images.value.length > 1 &&
-      position.value !== images.value.length - 1 &&
-      (position.value += 1);
+    function unsetZoom() {
+      zoom.value = 0;
+      setTimeout(() => {
+        zoom.value = 1;
+      }, 100);
+    }
+    const handleBack = () => {
+      if (images.value.length > 1 && position.value !== 0) {
+        position.value -= 1;
+      }
+    };
+    const handleNext = () => {
+      if (
+        images.value.length > 1 &&
+        position.value !== images.value.length - 1
+      ) {
+        position.value += 1;
+      }
+    };
     async function handleDownload() {
       const data = await useImageToBinary(currentImage.value);
       await useWriteBinaryFile(data, currentImage.value);
@@ -37,9 +50,13 @@ const ImagePreview = defineComponent(
       }
     });
 
-    watch(position, () => {
-      zoom.value = 1;
-    });
+    watch(
+      position,
+      () => {
+        unsetZoom();
+      },
+      { immediate: true }
+    );
 
     watch(
       () => state.show,
@@ -47,16 +64,26 @@ const ImagePreview = defineComponent(
         v === false && unmount && unmount();
       }
     );
+
     return () => (
-      <div class="image-preview absolute top-0 left-0 w-screen h-screen bg-#29292952 flex items-center justify-center overflow-hidden">
+      <div
+        class="absolute top-0 left-0 w-screen h-screen bg-#29292952 flex items-center justify-center overflow-hidden"
+        onClick={withModifiers(() => (state.show = false), ["self"])}
+      >
         <div
-          class="image-container h-full flex items-center justify-center"
+          class="h-full flex items-center justify-center"
           onClick={withModifiers(() => (state.show = false), ["self"])}
         >
           <img
             src={currentImage.value}
-            class="h-50% object-cover"
-            style={{ transform: `scale(${zoom.value}, ${zoom.value})` }}
+            class={[
+              "h-50%",
+              "object-cover",
+              "transition-all",
+              "duration-500",
+              "ease-in-out",
+            ]}
+            style={{ transform: `scale(${zoom.value})` }}
           />
         </div>
 

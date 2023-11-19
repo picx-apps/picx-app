@@ -76,7 +76,7 @@ name: user
 
       <DefineTemplate v-slot="{ icon, text }">
         <div
-          class="flex items-center py-16px px-10px rounded-10px cursor-pointer hover:bg-#fafafa dark:hover:bg-gray-7"
+          class="flex items-center py-16px px-10px rounded-10px cursor-pointer hover:bg-#fafafa dark:hover:bg-gray-7 transition duration-150"
         >
           <div class="flex items-center flex-1">
             <Icon :icon="icon" class="text-1.5rem mr-10px color-#b6b6b6" />

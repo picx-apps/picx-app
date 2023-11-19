@@ -44,10 +44,10 @@ const path = computed(() =>
 const currentImage = ref<(typeof repoContent.value)[0] | null>(null);
 const activeImageDelete = ref(false);
 const { width } = useWindowSize();
-const maxRowNumber = computed(() => Math.floor(width.value / 115));
+const maxRowNumber = computed(() => Math.floor(width.value / 130));
 const gridColGap = computed(
   () =>
-    Math.floor((width.value - maxRowNumber.value * 110) / maxRowNumber.value) +
+    Math.floor((width.value - maxRowNumber.value * 120) / maxRowNumber.value) +
     "px"
 );
 const toLocaleUpperCasePath = computed(() =>
@@ -432,11 +432,16 @@ name: home
   grid-template-columns: repeat(v-bind(maxRowNumber), minmax(0, 1fr));
   grid-row-gap: 15px;
   grid-column-gap: v-bind(gridColGap);
+  cursor: pointer;
 }
 :deep(.image-list-container) .n-image img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  transition: all 0.3s;
+  &:hover {
+    transform: scale(1.1);
+  }
 }
 
 .scroll-content {
