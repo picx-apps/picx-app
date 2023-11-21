@@ -29,7 +29,8 @@
     "following": "关注",
     "language": "切换语言",
     "folder_manage": "文件夹管理",
-    "config": "系统配置文件"
+    "config": "系统配置文件",
+    "cdn_config": "CDN 配置"
   },
   "welcome": "欢迎来到 Picx",
   "login": {
@@ -94,5 +95,16 @@
     "title": "主题",
     "light": "明亮",
     "dark": "暗黑"
+  },
+  "default": "默认",
+  "custom": "自定义",
+  "cdn_config": {
+    "title": "CDN配置",
+    "current": "当前选择",
+    "key": "规则Key",
+    "value": "规则Value",
+    "placeholder_key": "请输入规则 key",
+    "placeholder_value": "请输入规则 value",
+    "placeholder_key_exist": "Key 已经存在"
   }
 }

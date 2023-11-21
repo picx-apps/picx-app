@@ -102,6 +102,11 @@ name: user
           @click="router.push('/setting/folder_manage')"
         />
         <ReuseTemplate
+          icon="fluent-emoji:globe-showing-europe-africa"
+          :text="t('user.cdn_config')"
+          @click="router.push('/setting/cdn_config')"
+        />
+        <ReuseTemplate
           icon="fluent-emoji:ghost"
           :text="t('user.watermark')"
           @click="router.push('/setting/watermark')"

@@ -1,11 +1,29 @@
 const setting_filename = ".settings.json";
+import { mergeWith } from "lodash-es";
 import { useGlobalState } from ".";
+import { CDNDefaultOptions } from "../constant";
 import { MessageKeys } from "../language";
+
+export type CDNKey =
+  | "GitHub"
+  | "JsDelivr"
+  | "ChinaJsDelivr"
+  | "Statically"
+  | string
+  | "";
+
+export interface CDN {
+  key: CDNKey;
+  value: string;
+  isDefault?: boolean;
+}
 
 export interface RepoSetting {
   lastModifyTime: number;
   language: MessageKeys;
   theme: string;
+  cdn: CDN[];
+  currentCDNKey: CDNKey;
   recycleBin: {
     [path: string]: boolean;
   };
@@ -15,22 +33,33 @@ const defaultsSettings: RepoSetting = {
   recycleBin: {},
   theme: "auto",
   language: "en-US",
+  currentCDNKey: "JsDelivr",
+  cdn: CDNDefaultOptions,
   lastModifyTime: Date.now(),
 };
 
 const { octokit, user, repo_name, branch_name } = useGlobalState();
 
 export const useSettingState = createGlobalState(() => {
-  const settings = useStorage<RepoSetting>("picx-settings", {
-    ...defaultsSettings,
-  });
+  const settings = useStorage<RepoSetting>(
+    "picx-settings",
+    {
+      ...defaultsSettings,
+    },
+    undefined,
+    { mergeDefaults: true }
+  );
   const settingsSerializer = computed(() =>
     btoa(JSON.stringify(settings.value))
+  );
+  const currentCDN = computed(() =>
+    settings.value.cdn.find((item) => item.key === settings.value.currentCDNKey)
   );
 
   //同步远程配置
   function syncRemoteSettings(content: string) {
-    settings.value = JSON.parse(atob(content)) satisfies RepoSetting;
+    const result = JSON.parse(atob(content)) satisfies RepoSetting;
+    settings.value = mergeWith(settings.value, result);
   }
   //获取远程
   async function getRemoteSettings() {
@@ -79,7 +108,6 @@ export const useSettingState = createGlobalState(() => {
       message: `chore: Create ${setting_filename}`,
       content: settingsSerializer.value,
     });
-    autoCreateOfSettings();
   }
   //检查远程是否存在该文件，如果存在直接与本地同步，如果不存在则创建
   async function autoCreateOfSettings() {
@@ -90,9 +118,21 @@ export const useSettingState = createGlobalState(() => {
     }
     createSettingsFile();
   }
+  //新添加的规则都属于自定义
+  function addCDN(key: CDNKey, value: string) {
+    settings.value.cdn.push({ key, value, isDefault: false });
+  }
+  //不能删除默认规则
+  function removeCDN(key: string) {
+    const index = settings.value.cdn.findIndex((item) => item.key === key);
+    const result = settings.value.cdn[index];
+    if (index !== -1 && result.isDefault !== true)
+      settings.value.cdn.splice(index, 1);
+  }
 
   return {
     settings,
+    currentCDN,
     settingsSerializer,
     getRemoteSettings,
     syncRemoteSettings,
@@ -100,5 +140,7 @@ export const useSettingState = createGlobalState(() => {
     checkExistsOfSettings,
     createSettingsFile,
     updateSettingsFile,
+    addCDN,
+    removeCDN,
   };
 });

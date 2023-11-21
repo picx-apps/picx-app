@@ -29,7 +29,8 @@
     "following": "following",
     "language": "Change Language",
     "folder_manage": "Folder Manage",
-    "config": "System Config"
+    "config": "System Config",
+    "cdn_config": "CDN Config"
   },
   "welcome": "Welcome Picx",
   "login": {
@@ -94,5 +95,16 @@
     "title": "Theme",
     "light": "Light",
     "dark": "Dark"
+  },
+  "default": "默认",
+  "custom": "自定义",
+  "cdn_config": {
+    "title": "CDN Configure",
+    "current": "Current Select",
+    "key": "Rule Key",
+    "value": "Rule Value",
+    "placeholder_key": "Please input rule key",
+    "placeholder_value": "Please input rule value",
+    "placeholder_key_exist": "Key is exist"
   }
 }

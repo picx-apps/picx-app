@@ -1,4 +1,5 @@
 import { DropdownOption } from "naive-ui";
+import { CDN } from "../store/setting";
 
 export const HomeImageDropDownOptions: DropdownOption[] = [
   {
@@ -19,5 +20,29 @@ export const FolderDropDownOptions: DropdownOption[] = [
   {
     label: "删除",
     key: "delete",
+  },
+];
+
+export const CDNDefaultOptions: CDN[] = [
+  {
+    key: "GitHub",
+    value: "https://github.com/{{owner}}/{{repo}}/raw/{{branch}}/{{path}}",
+    isDefault: true,
+  },
+  {
+    key: "JsDelivr",
+    value: "https://cdn.jsdelivr.net/gh/{{owner}}/{{repo}}@{{branch}}/{{path}}",
+    isDefault: true,
+  },
+  {
+    key: "ChinaJsDelivr",
+    value: "https://jsd.cdn.zzko.cn/gh/{{owner}}/{{repo}}@{{branch}}/{{path}}",
+    isDefault: true,
+  },
+  {
+    key: "Statically",
+    value:
+      "https://cdn.statically.io/gh/{{owner}}/{{repo}}@{{branch}}/{{path}}",
+    isDefault: true,
   },
 ];
