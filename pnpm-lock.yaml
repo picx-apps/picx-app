@@ -52,6 +52,9 @@ devDependencies:
   '@tauri-apps/cli':
     specifier: ^1.5.0
     version: 1.5.0
+  '@types/node':
+    specifier: ^20.9.3
+    version: 20.9.3
   '@vitejs/plugin-vue':
     specifier: ^4.2.3
     version: 4.2.3(vite@4.4.4)(vue@3.3.4)
@@ -81,7 +84,7 @@ devDependencies:
     version: 0.25.2(vue@3.3.4)
   vite:
     specifier: ^4.4.4
-    version: 4.4.4(less@4.2.0)
+    version: 4.4.4(@types/node@20.9.3)(less@4.2.0)
   vite-plugin-pages:
     specifier: ^0.31.0
     version: 0.31.0(vite@4.4.4)
@@ -1170,7 +1173,7 @@ packages:
   /@types/jsonwebtoken@9.0.5:
     resolution: {integrity: sha512-VRLSGzik+Unrup6BsouBeHsf4d1hOEgYWTm/7Nmw1sXoN1+tRly/Gy/po3yeahnP4jfnQWWAhQAqcNfH7ngOkA==}
     dependencies:
-      '@types/node': 20.9.0
+      '@types/node': 20.9.3
     dev: false
 
   /@types/katex@0.16.6:
@@ -1189,11 +1192,10 @@ packages:
     resolution: {integrity: sha512-nG96G3Wp6acyAgJqGasjODb+acrI7KltPiRxzHPXnP3NgI28bpQDRv53olbqGXbfcgF5aiiHmO3xpwEpS5Ld9g==}
     dev: true
 
-  /@types/node@20.9.0:
-    resolution: {integrity: sha512-nekiGu2NDb1BcVofVcEKMIwzlx4NjHlcjhoxxKBNLtz15Y1z7MYf549DFvkHSId02Ax6kGwWntIBPC3l/JZcmw==}
+  /@types/node@20.9.3:
+    resolution: {integrity: sha512-nk5wXLAXGBKfrhLB0cyHGbSqopS+nz0BUgZkUQqSHSSgdee0kssp1IAqlQOu333bW+gMNs2QREx7iynm19Abxw==}
     dependencies:
       undici-types: 5.26.5
-    dev: false
 
   /@types/web-bluetooth@0.0.18:
     resolution: {integrity: sha512-v/ZHEj9xh82usl8LMR3GarzFY1IrbXJw5L4QfQhokjRV91q+SelFqxQWSep1ucXEZ22+dSTwLFkXeur25sPIbw==}
@@ -1209,7 +1211,7 @@ packages:
       '@unocss/core': 0.57.1
       '@unocss/reset': 0.57.1
       '@unocss/vite': 0.57.1(vite@4.4.4)
-      vite: 4.4.4(less@4.2.0)
+      vite: 4.4.4(@types/node@20.9.3)(less@4.2.0)
     transitivePeerDependencies:
       - rollup
     dev: true
@@ -1401,7 +1403,7 @@ packages:
       chokidar: 3.5.3
       fast-glob: 3.3.2
       magic-string: 0.30.5
-      vite: 4.4.4(less@4.2.0)
+      vite: 4.4.4(@types/node@20.9.3)(less@4.2.0)
     transitivePeerDependencies:
       - rollup
     dev: true
@@ -1416,7 +1418,7 @@ packages:
       '@babel/core': 7.23.3
       '@babel/plugin-transform-typescript': 7.23.3(@babel/core@7.23.3)
       '@vue/babel-plugin-jsx': 1.1.5(@babel/core@7.23.3)
-      vite: 4.4.4(less@4.2.0)
+      vite: 4.4.4(@types/node@20.9.3)(less@4.2.0)
       vue: 3.3.4
     transitivePeerDependencies:
       - supports-color
@@ -1429,7 +1431,7 @@ packages:
       vite: ^4.0.0
       vue: ^3.2.25
     dependencies:
-      vite: 4.4.4(less@4.2.0)
+      vite: 4.4.4(@types/node@20.9.3)(less@4.2.0)
       vue: 3.3.4
     dev: true
 
@@ -3136,7 +3138,6 @@ packages:
 
   /undici-types@5.26.5:
     resolution: {integrity: sha512-JlCMO+ehdEIKqlFxk6IfVoAUVmgz7cU7zD/h9XZ0qzeosSHmUJVOzSQvvYSYWXkFXC+IfLKSIffhv0sVZup6pA==}
-    dev: false
 
   /unimport@3.5.0:
     resolution: {integrity: sha512-0Ei1iTeSYxs7oxxUf79/KaBc2dPjZxe7qdVpw7yIz5YcdTZjmBYO6ToLDW+fX9QOHiueZ3xtwb5Z/wqaSfXx6A==}
@@ -3199,7 +3200,7 @@ packages:
       '@unocss/transformer-directives': 0.57.1
       '@unocss/transformer-variant-group': 0.57.1
       '@unocss/vite': 0.57.1(vite@4.4.4)
-      vite: 4.4.4(less@4.2.0)
+      vite: 4.4.4(@types/node@20.9.3)(less@4.2.0)
     transitivePeerDependencies:
       - postcss
       - rollup
@@ -3336,13 +3337,13 @@ packages:
       json5: 2.2.3
       local-pkg: 0.4.3
       picocolors: 1.0.0
-      vite: 4.4.4(less@4.2.0)
+      vite: 4.4.4(@types/node@20.9.3)(less@4.2.0)
       yaml: 2.3.4
     transitivePeerDependencies:
       - supports-color
     dev: true
 
-  /vite@4.4.4(less@4.2.0):
+  /vite@4.4.4(@types/node@20.9.3)(less@4.2.0):
     resolution: {integrity: sha512-4mvsTxjkveWrKDJI70QmelfVqTm+ihFAb6+xf4sjEU2TmUCTlVX87tmg/QooPEMQb/lM9qGHT99ebqPziEd3wg==}
     engines: {node: ^14.18.0 || >=16.0.0}
     hasBin: true
@@ -3370,6 +3371,7 @@ packages:
       terser:
         optional: true
     dependencies:
+      '@types/node': 20.9.3
       esbuild: 0.18.20
       less: 4.2.0
       postcss: 8.4.31

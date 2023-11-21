@@ -8,6 +8,7 @@ import Icons from "unplugin-icons/vite";
 import Pages from "vite-plugin-pages";
 import vueJsx from "@vitejs/plugin-vue-jsx";
 import I18n from "@intlify/unplugin-vue-i18n/vite";
+import { resolve } from "path";
 
 // https://vitejs.dev/config/
 export default defineConfig(() => ({
@@ -46,6 +47,9 @@ export default defineConfig(() => ({
       autoInstall: true,
     }),
   ],
+  resolve: {
+    alias: [{ find: "~/", replacement: `${resolve(__dirname, "src")}/` }],
+  },
 
   // Vite options tailored for Tauri development and only applied in `tauri dev` or `tauri build`
   //
