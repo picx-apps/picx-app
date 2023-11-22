@@ -10,7 +10,7 @@ import { isArray } from "lodash-es";
 import { Octokit } from "octokit";
 
 const { user, access_token, repo_name, branch_name, imagePaths, addImagePath, removeImagePath } = useGlobalState();
-const { settings } = useSettingState();
+const { settings, currentCDN } = useSettingState();
 const repoContent = ref<RepoContents>([]);
 const octokit = new Octokit({
   auth: access_token.value,
@@ -85,9 +85,15 @@ function handleImageOutside() {
 }
 async function handleImageDropDownSelect(key: string) {
   showDropdown.value = false;
-  const { download_url, name } = currentImage.value!;
-  if (key === "copy" && download_url) {
-    await writeText(download_url);
+  const { download_url, name, path } = currentImage.value!;
+  const replace_url = replacePlaceholder(currentCDN.value?.value!, {
+    owner: user.value?.login!,
+    repo: repo_name.value,
+    branch: branch_name.value,
+    path,
+  });
+  if (key === "copy" && replace_url) {
+    await writeText(replace_url);
     message.warning("复制成功", {
       icon: () => h(Icon, { icon: "icon-park-solid:grinning-face-with-squinting-eyes" }),
     });
