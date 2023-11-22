@@ -64,6 +64,8 @@ VITE_CLIENT_SECRET="your github app client secret"
 VITE_INSTALL_URL="your github app install uri" // 例如 https://github.com/apps/picx-app
 ```
 
+#### 添加 github [private-key.pem](https://docs.github.com/zh/apps/creating-github-apps/authenticating-with-a-github-app/about-authentication-with-a-github-app#generating-a-private-key) 然后把生成出来的文件放在 src-tauri/src/assets/private-key.pem
+
 #### git commit 规范遵循 [@commitlint/config-conventional](https://github.com/conventional-changelog/commitlint/tree/master/@commitlint/config-conventional)
 
 #### 代码风格遵循 prettier + eslint
