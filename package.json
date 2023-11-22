@@ -10,7 +10,9 @@
     "tauri": "tauri",
     "format": "prettier --write ./src",
     "lint": "eslint . --ext .vue,.js,.ts,.jsx,.tsx",
-    "lint:fix": "eslint . --ext .vue,.js,.ts,.jsx,.tsx --fix"
+    "lint:fix": "eslint . --ext .vue,.js,.ts,.jsx,.tsx --fix",
+    "commitlint": "commitlint --edit",
+    "prepare": "husky install"
   },
   "dependencies": {
     "@iconify/vue": "^4.1.1",
@@ -27,6 +29,8 @@
     "vue-router": "^4.2.5"
   },
   "devDependencies": {
+    "@commitlint/cli": "^18.4.3",
+    "@commitlint/config-conventional": "^18.4.3",
     "@ianvs/prettier-plugin-sort-imports": "^4.1.1",
     "@iconify/json": "^2.2.135",
     "@octokit/openapi-types": "^19.0.2",
@@ -40,7 +44,9 @@
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-prettier": "^5.0.1",
     "eslint-plugin-vue": "^9.18.1",
+    "husky": "^8.0.3",
     "less": "^4.2.0",
+    "lint-staged": "^15.1.0",
     "naive-ui": "^2.35.0",
     "prettier": "^3.1.0",
     "typescript": "^5.0.2",
@@ -51,5 +57,10 @@
     "vite": "^4.4.4",
     "vite-plugin-pages": "^0.31.0",
     "vue-tsc": "^1.8.5"
+  },
+  "lint-staged": {
+    "*.{js,ts,tsx,vue,md}": [
+      "eslint --fix"
+    ]
   }
 }
