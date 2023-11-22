@@ -7,7 +7,10 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "tauri": "tauri"
+    "tauri": "tauri",
+    "format": "prettier --write ./src",
+    "lint": "eslint . --ext .vue,.js,.ts,.jsx,.tsx",
+    "lint:fix": "eslint . --ext .vue,.js,.ts,.jsx,.tsx --fix"
   },
   "dependencies": {
     "@iconify/vue": "^4.1.1",
@@ -24,14 +27,22 @@
     "vue-router": "^4.2.5"
   },
   "devDependencies": {
+    "@ianvs/prettier-plugin-sort-imports": "^4.1.1",
     "@iconify/json": "^2.2.135",
     "@octokit/openapi-types": "^19.0.2",
     "@tauri-apps/cli": "^1.5.0",
     "@types/node": "^20.9.3",
+    "@typescript-eslint/eslint-plugin": "^6.12.0",
+    "@typescript-eslint/parser": "^6.12.0",
     "@vitejs/plugin-vue": "^4.2.3",
     "@vitejs/plugin-vue-jsx": "^3.0.2",
+    "eslint": "^8.54.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-prettier": "^5.0.1",
+    "eslint-plugin-vue": "^9.18.1",
     "less": "^4.2.0",
     "naive-ui": "^2.35.0",
+    "prettier": "^3.1.0",
     "typescript": "^5.0.2",
     "unocss": "^0.57.1",
     "unplugin-auto-import": "^0.16.7",
