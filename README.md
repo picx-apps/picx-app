@@ -1,16 +1,69 @@
-# Tauri + Vue 3 + TypeScript
+# PicX-APP
 
-This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+[![License](https://img.shields.io/github/license/XPoet/picx.svg)](https://github.com/XPoet/picx/blob/master/LICENSE)
 
-## Recommended IDE Setup
 
-- [VS Code](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) + [Tauri](https://marketplace.visualstudio.com/items?itemName=tauri-apps.tauri-vscode) + [rust-analyzer](https://marketplace.visualstudio.com/items?itemName=rust-lang.rust-analyzer)
+官方网站 https://picx.xpoet.cn/
 
-## Type Support For `.vue` Imports in TS
+**基于 GitHub API 开发的图床神器。** 图片外链使用 jsDelivr 自动进行 CDN 加速。
 
-Since TypeScript cannot handle type information for `.vue` imports, they are shimmed to be a generic Vue component type by default. In most cases this is fine if you don't really care about component prop types outside of templates. However, if you wish to get actual prop types in `.vue` imports (for example to get props validation when using manual `h(...)` calls), you can enable Volar's Take Over mode by following these steps:
+### Tauri + Vue3
 
-1. Run `Extensions: Show Built-in Extensions` from VS Code's command palette, look for `TypeScript and JavaScript Language Features`, then right click and select `Disable (Workspace)`. By default, Take Over mode will enable itself if the default TypeScript extension is disabled.
-2. Reload the VS Code window by running `Developer: Reload Window` from the command palette.
+- [Tauri](https://tauri.app/zh-cn/) 构建跨平台的快速、安全、前端隔离应用
+- [Vue3](https://cn.vuejs.org/) 渐进式 JavaScript 框架
 
-You can learn more about Take Over mode [here](https://github.com/johnsoncodehk/volar/discussions/471).
+
+### Icons
+
+- [Iconify](https://iconify.design) - use icons from any icon sets [🔍Icônes](https://icones.netlify.app/)
+- [Pure CSS Icons via UnoCSS](https://github.com/antfu/unocss/tree/main/packages/preset-icons)
+
+### Plugins
+
+- [Vue Router](https://github.com/vuejs/vue-router)
+  - [`unplugin-vue-router`](https://github.com/posva/unplugin-vue-router) - file system based routing
+- [`unplugin-auto-import`](https://github.com/antfu/unplugin-auto-import) - Directly use Vue Composition API and others without importing
+- [`unplugin-vue-components`](https://github.com/antfu/unplugin-vue-components) - components auto import
+- [VueUse](https://github.com/antfu/vueuse) - collection of useful composition APIs
+
+## 开发规范
+
+#### 下载源码
+```shell
+git clone git@github.com:picx-dev/picx-app.git
+```
+
+#### 安装rust. 查看官方文档 [rust 官方文档](https://www.rust-lang.org/tools/install)
+
+#### 安装相关依赖
+
+```shell
+pnpm install
+```
+
+#### 启动项目Dev
+with [cargo](https://doc.rust-lang.org/cargo/)
+```shell
+cargo tauri dev
+```
+
+with node >= v18.17.0
+```
+pnpm tauri dev
+```
+
+#### 设置环境变量
+在根目录下 添加 .env ,并添加以下内容
+
+```ts
+VITE_STATE="picx-app" //随机字符
+VITE_SCOPE="user repo project" //授权范围
+VITE_CLIENT_ID="your github app client id"
+VITE_REDIRECT_URI="https://picx.qzzhu.cn/authorization" //授权回调地址
+VITE_CLIENT_SECRET="your github app client secret"
+VITE_INSTALL_URL="your github app install uri" // 例如 https://github.com/apps/picx-app
+```
+
+#### git commit 规范遵循 [@commitlint/config-conventional](https://github.com/conventional-changelog/commitlint/tree/master/@commitlint/config-conventional)
+
+#### 代码风格遵循 prettier + eslint
