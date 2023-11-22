@@ -105,6 +105,7 @@
     "value": "Rule Value",
     "placeholder_key": "Please input rule key",
     "placeholder_value": "Please input rule value",
-    "placeholder_key_exist": "Key is exist"
+    "placeholder_key_exist": "Key is exist",
+    "no_delete_current": "You can't delete the currently selected one."
   }
 }

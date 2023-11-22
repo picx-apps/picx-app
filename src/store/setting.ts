@@ -120,6 +120,11 @@ export const useSettingState = createGlobalState(() => {
       updateSettingsFile();
     }
   }
+  //设置当前选择的CDN key
+  function setCurrentCDN(key: string) {
+    settings.value.currentCDNKey = key;
+    updateSettingsFile();
+  }
 
   return {
     settings,
@@ -133,5 +138,6 @@ export const useSettingState = createGlobalState(() => {
     updateSettingsFile,
     addCDN,
     removeCDN,
+    setCurrentCDN,
   };
 });

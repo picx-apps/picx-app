@@ -105,6 +105,7 @@
     "value": "规则Value",
     "placeholder_key": "请输入规则 key",
     "placeholder_value": "请输入规则 value",
-    "placeholder_key_exist": "Key 已经存在"
+    "placeholder_key_exist": "Key 已经存在",
+    "no_delete_current": "你不能删除当前选择的"
   }
 }

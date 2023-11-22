@@ -3,17 +3,25 @@ import { Icon } from "@iconify/vue";
 import { useSettingState } from "~/store/setting";
 
 const { t } = useI18n();
-const { settings, currentCDN, removeCDN } = useSettingState();
+const { settings, currentCDN, removeCDN, setCurrentCDN } = useSettingState();
 const [DefineOption, ReuseOption] = createReusableTemplate<{
   icon: string;
-  title: string;
-  label: string;
+  title?: string;
+  label?: string;
   isDefault?: boolean;
 }>();
+const notification = useNotification();
 const defaultCDN = computed(() => settings.value.cdn.filter((item) => item.isDefault === true));
 const customCDN = computed(() => settings.value.cdn.filter((item) => !item.isDefault));
 
-function handleDelete(key: string) {
+function handleDelete(key?: string) {
+  if (!key) return;
+  if (key === currentCDN.value?.key) {
+    return notification.warning({
+      content: t("cdn_config.no_delete_current"),
+      duration: 1000,
+    });
+  }
   removeCDN(key);
 }
 </script>
@@ -71,8 +79,8 @@ name: cdn_config
           <div>
             <ReuseOption
               icon="fluent-emoji:globe-showing-europe-africa"
-              :title="currentCDN!.key"
-              :label="currentCDN!.value"
+              :title="currentCDN?.key"
+              :label="currentCDN?.value"
               :is-default="true"
             />
           </div>
@@ -93,7 +101,7 @@ name: cdn_config
               :title="item.key"
               :label="item.value"
               :is-default="true"
-              @click="() => (settings.currentCDNKey = item.key)"
+              @click="() => setCurrentCDN(item.key)"
             />
           </div>
         </div>
@@ -113,7 +121,7 @@ name: cdn_config
               :title="item.key"
               :label="item.value"
               :is-default="item.isDefault"
-              @click="() => (settings.currentCDNKey = item.key)"
+              @click="() => setCurrentCDN(item.key)"
             />
           </div>
         </div>
