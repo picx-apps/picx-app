@@ -109,12 +109,16 @@ export const useSettingState = createGlobalState(() => {
   //新添加的规则都属于自定义
   function addCDN(key: CDNKey, value: string) {
     settings.value.cdn.push({ key, value, isDefault: false });
+    updateSettingsFile();
   }
   //不能删除默认规则
   function removeCDN(key: string) {
     const index = settings.value.cdn.findIndex((item) => item.key === key);
     const result = settings.value.cdn[index];
-    if (index !== -1 && result.isDefault !== true) settings.value.cdn.splice(index, 1);
+    if (index !== -1 && result.isDefault !== true) {
+      settings.value.cdn.splice(index, 1);
+      updateSettingsFile();
+    }
   }
 
   return {
