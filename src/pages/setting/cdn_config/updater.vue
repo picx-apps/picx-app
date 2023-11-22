@@ -1,8 +1,8 @@
 <script lang="ts" setup>
 import { Icon } from "@iconify/vue";
-import { FormInst, FormItemRule, FormRules } from "naive-ui";
 import { language } from "~/language";
 import { CDN, useSettingState } from "~/store/setting";
+import { FormInst, FormItemRule, FormRules } from "naive-ui";
 
 const router = useRouter();
 const { t } = useI18n();
@@ -16,7 +16,7 @@ const [form, reset] = useResetRef<CDN>({
 const message = computed(() =>
   language.value === "zh-CN"
     ? "可使用的变量 owner(作者), repo(仓库名), branch(分支名), path(文件路径)。变量名用{{}}包裹, 例如{{owner}}"
-    : "Available variables owner (author), repo (warehouse name), branch (branch name), path (file path). Wrap the variable name in {{}}, for example {{owner}}"
+    : "Available variables owner (author), repo (warehouse name), branch (branch name), path (file path). Wrap the variable name in {{}}, for example {{owner}}",
 );
 const rules = reactive<FormRules>({
   key: [
@@ -30,9 +30,7 @@ const rules = reactive<FormRules>({
       max: 20,
       trigger: "blur",
       validator: (_rule: FormItemRule, value: string) => {
-        const index = settings.value.cdn.findIndex(
-          (item) => item.key === value
-        );
+        const index = settings.value.cdn.findIndex((item) => item.key === value);
         if (index !== -1) {
           return new Error(t("cdn_config.placeholder_key_exist"));
         }
@@ -90,18 +88,10 @@ name: cdn_updater
 
       <n-form :model="form" ref="formInstance" :rules="rules">
         <n-form-item path="key" :label="t('cdn_config.key')">
-          <n-input
-            v-model:value="form.key"
-            @keydown.enter.prevent
-            :placeholder="t('cdn_config.placeholder_key')"
-          />
+          <n-input v-model:value="form.key" @keydown.enter.prevent :placeholder="t('cdn_config.placeholder_key')" />
         </n-form-item>
         <n-form-item path="value" :label="t('cdn_config.value')">
-          <n-input
-            v-model:value="form.value"
-            @keydown.enter.prevent
-            :placeholder="t('cdn_config.placeholder_value')"
-          />
+          <n-input v-model:value="form.value" @keydown.enter.prevent :placeholder="t('cdn_config.placeholder_value')" />
         </n-form-item>
       </n-form>
 

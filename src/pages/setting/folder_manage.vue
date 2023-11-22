@@ -1,13 +1,13 @@
 <script setup lang="ts">
-import { Icon } from "@iconify/vue";
-import { useUploadState } from "../../store/upload";
-import { useSettingState } from "../../store/setting";
-const { t } = useI18n();
 import { FolderDropDownOptions } from "../../constant";
+import { useSettingState } from "../../store/setting";
+import { useUploadState } from "../../store/upload";
 import { RepoContents } from "../../types";
+import { Icon } from "@iconify/vue";
 
-const { currentPath, currentDirs, addUploadPath, removeUploadPath } =
-  useUploadState();
+const { t } = useI18n();
+
+const { currentPath, currentDirs, addUploadPath, removeUploadPath } = useUploadState();
 const { settings, updateSettingsFile } = useSettingState();
 const [DefineTemplate, ReusableTemplate] = createReusableTemplate<{
   icon: string;
@@ -15,9 +15,7 @@ const [DefineTemplate, ReusableTemplate] = createReusableTemplate<{
   label?: string;
 }>();
 const toLocaleUpperCasePath = computed(() =>
-  currentPath.value
-    .split("/")
-    [currentPath.value.split("/").length - 1].toLocaleUpperCase()
+  currentPath.value.split("/")[currentPath.value.split("/").length - 1].toLocaleUpperCase(),
 );
 const currentFolder = ref<RepoContents[0] | null>(null);
 const showDropdown = ref(false);
@@ -66,11 +64,7 @@ function handleContextmenuFolder(event: MouseEvent, item: RepoContents[0]) {
     <DefineTemplate v-slot="{ $slots, icon, label, iconColor }">
       <div class="flex items-center cursor-pointer py-6px">
         <div class="flex-1 flex items-center">
-          <Icon
-            :icon="icon"
-            class="text-3rem mr-10px"
-            :class="[iconColor ? iconColor : 'color-blue-400']"
-          />
+          <Icon :icon="icon" class="text-3rem mr-10px" :class="[iconColor ? iconColor : 'color-blue-400']" />
           <div class="max-w-200px">
             <div class="color-gray-6" v-if="!$slots.input">
               {{ label }}
@@ -112,12 +106,7 @@ function handleContextmenuFolder(event: MouseEvent, item: RepoContents[0]) {
       </template>
 
       <!-- 空文件夹 -->
-      <ReusableTemplate
-        v-else
-        label="Empty"
-        icon="ic:round-folder-open"
-        icon-color="color-blue-100"
-      />
+      <ReusableTemplate v-else label="Empty" icon="ic:round-folder-open" icon-color="color-blue-100" />
     </div>
 
     <n-dropdown

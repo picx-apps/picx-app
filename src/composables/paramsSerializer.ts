@@ -2,9 +2,7 @@ interface StringLike {
   toString(): string;
 }
 
-export function paramsSerializer(
-  params: Record<string, StringLike | undefined> | object
-) {
+export function paramsSerializer(params: Record<string, StringLike | undefined> | object) {
   if (!params) return;
   const query = new URLSearchParams();
   Object.entries(params).forEach(([k, v]) => {

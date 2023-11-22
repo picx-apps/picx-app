@@ -1,16 +1,12 @@
 <script lang="ts" setup>
-import { Icon } from "@iconify/vue";
 import { useWatermarkState, Watermark } from "../../store/watermark";
+import { Icon } from "@iconify/vue";
 
 const { t } = useI18n();
 const { watermark } = useWatermarkState();
 const form = reactive<Watermark>({ ...watermark.value });
 const isUpdater = computed(() =>
-  Object.keys(form).some(
-    (key) =>
-      form[key as keyof typeof form] !==
-      watermark.value[key as keyof typeof form]
-  )
+  Object.keys(form).some((key) => form[key as keyof typeof form] !== watermark.value[key as keyof typeof form]),
 );
 </script>
 
@@ -29,23 +25,13 @@ const isUpdater = computed(() =>
     <div class="px-26px">
       <div class="option">
         <div class="flex flex-col">
-          <span class="text-.9rem color-gray-6">{{
-            $t("watermark.enable")
-          }}</span>
-          <span class="text-.8rem color-gray-4">{{
-            $t("watermark.enable_info")
-          }}</span>
+          <span class="text-.9rem color-gray-6">{{ $t("watermark.enable") }}</span>
+          <span class="text-.8rem color-gray-4">{{ $t("watermark.enable_info") }}</span>
         </div>
         <n-switch v-model:value="form.enable"></n-switch>
       </div>
 
-      <n-form
-        ref="formRef"
-        :label-width="50"
-        :model="form"
-        label-placement="top"
-        class="pt-10px"
-      >
+      <n-form ref="formRef" :label-width="50" :model="form" label-placement="top" class="pt-10px">
         <n-form-item path="text">
           <template #label>
             <div class="flex items-center">
@@ -105,13 +91,7 @@ const isUpdater = computed(() =>
         </n-form-item>
       </n-form>
 
-      <n-button
-        type="primary"
-        ghost
-        class="w-full"
-        @click="watermark = { ...form }"
-        v-show="isUpdater"
-      >
+      <n-button type="primary" ghost class="w-full" @click="watermark = { ...form }" v-show="isUpdater">
         {{ t("repositories.complete") }}
       </n-button>
     </div>

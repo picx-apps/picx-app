@@ -80,9 +80,7 @@ name: lead
   <div class="flex justify-center h-screen">
     <div class="px-16px max-w-500px min-w-350px">
       <div class="mt-100px w-full mb-50px">
-        <div
-          class="my-4px text-2rem font-bold lh-38px color-#545454 base-text-color"
-        >
+        <div class="my-4px text-2rem font-bold lh-38px color-#545454 base-text-color">
           {{ t("welcome") }}
         </div>
         <p class="my-0 color-gray">
@@ -104,27 +102,11 @@ name: lead
         <CreateRepo v-else ref="stepCreateInstance" />
       </div>
 
-      <div
-        class="absolute bottom-40px left-50% translate-x--50% w-200px flex justify-center"
-        v-show="step === 2"
-      >
-        <n-button
-          type="primary"
-          round
-          ghost
-          size="large"
-          class="mx-10px"
-          @click="handlePrev"
-        >
+      <div class="absolute bottom-40px left-50% translate-x--50% w-200px flex justify-center" v-show="step === 2">
+        <n-button type="primary" round ghost size="large" class="mx-10px" @click="handlePrev">
           {{ t("back") }}
         </n-button>
-        <n-button
-          type="primary"
-          round
-          size="large"
-          class="mx-10px"
-          @click="handleNext"
-        >
+        <n-button type="primary" round size="large" class="mx-10px" @click="handleNext">
           {{ t("complete") }}
         </n-button>
       </div>

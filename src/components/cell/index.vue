@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { Icon } from "@iconify/vue";
+
 defineProps<{
   icon?: string | null;
   isLink?: boolean | null;
@@ -25,9 +26,7 @@ defineSlots<{ prefix: void; suffix: void }>();
       <Icon
         class="cell__link"
         v-if="isLink"
-        :icon="
-          linkIcon ? linkIcon : 'material-symbols:arrow-forward-ios-rounded'
-        "
+        :icon="linkIcon ? linkIcon : 'material-symbols:arrow-forward-ios-rounded'"
       />
     </slot>
   </div>

@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-import { Icon } from "@iconify/vue";
 import { useSettingState } from "../../store/setting";
+import { Icon } from "@iconify/vue";
 
 const { settings } = useSettingState();
 </script>

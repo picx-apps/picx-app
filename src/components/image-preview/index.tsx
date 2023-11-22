@@ -1,6 +1,6 @@
+import { Icon } from "@iconify/vue";
 import { isArray } from "lodash-es";
 import { withModifiers } from "vue";
-import { Icon } from "@iconify/vue";
 
 export interface ImagePreviewOptions {
   images: string[];
@@ -32,10 +32,7 @@ const ImagePreview = defineComponent(
       }
     };
     const handleNext = () => {
-      if (
-        images.value.length > 1 &&
-        position.value !== images.value.length - 1
-      ) {
+      if (images.value.length > 1 && position.value !== images.value.length - 1) {
         position.value += 1;
       }
     };
@@ -55,14 +52,14 @@ const ImagePreview = defineComponent(
       () => {
         unsetZoom();
       },
-      { immediate: true }
+      { immediate: true },
     );
 
     watch(
       () => state.show,
       (v) => {
         v === false && unmount && unmount();
-      }
+      },
     );
 
     return () => (
@@ -76,13 +73,7 @@ const ImagePreview = defineComponent(
         >
           <img
             src={currentImage.value}
-            class={[
-              "h-50%",
-              "object-cover",
-              "transition-all",
-              "duration-500",
-              "ease-in-out",
-            ]}
+            class={["h-50%", "object-cover", "transition-all", "duration-500", "ease-in-out"]}
             style={{ transform: `scale(${zoom.value})` }}
           />
         </div>
@@ -102,11 +93,7 @@ const ImagePreview = defineComponent(
               if (zoom.value > 0.5) zoom.value -= 0.5;
             }}
           />
-          <Icon
-            icon="ion:chevron-back"
-            class="w-24px h-24px mr-10px cursor-pointer"
-            onClick={() => handleBack()}
-          />
+          <Icon icon="ion:chevron-back" class="w-24px h-24px mr-10px cursor-pointer" onClick={() => handleBack()} />
           <Icon
             icon="ion:ios-arrow-forward"
             class="w-24px h-24px mr-10px cursor-pointer"
@@ -117,11 +104,7 @@ const ImagePreview = defineComponent(
             class="w-24px h-24px mr-10px cursor-pointer"
             onClick={() => handleDownload()}
           />
-          <Icon
-            icon="mdi:close"
-            class="w-24px h-24px cursor-pointer"
-            onClick={() => (state.show = false)}
-          />
+          <Icon icon="mdi:close" class="w-24px h-24px cursor-pointer" onClick={() => (state.show = false)} />
         </div>
       </div>
     );
@@ -137,7 +120,7 @@ const ImagePreview = defineComponent(
         default: 0,
       },
     },
-  }
+  },
 );
 
 function showImagePreview(option: string[] | ImagePreviewOptions) {

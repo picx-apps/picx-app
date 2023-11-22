@@ -16,17 +16,12 @@ export const useWatermarkState = createGlobalState(() => {
     size: 30,
     fontColor: "#F4FAFFFF",
   });
-  const watermark = useStorage<Watermark>(
-    "picx-watermark",
-    form,
-    localStorage,
-    {
-      serializer: {
-        read: (v) => (v ? JSON.parse(v) : null),
-        write: (v) => JSON.stringify(v),
-      },
-    }
-  );
+  const watermark = useStorage<Watermark>("picx-watermark", form, localStorage, {
+    serializer: {
+      read: (v) => (v ? JSON.parse(v) : null),
+      write: (v) => JSON.stringify(v),
+    },
+  });
 
   return {
     watermark,

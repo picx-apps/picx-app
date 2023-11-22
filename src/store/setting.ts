@@ -1,16 +1,11 @@
-const setting_filename = ".settings.json";
-import { mergeWith } from "lodash-es";
 import { useGlobalState } from ".";
 import { CDNDefaultOptions } from "../constant";
 import { MessageKeys } from "../language";
+import { mergeWith } from "lodash-es";
 
-export type CDNKey =
-  | "GitHub"
-  | "JsDelivr"
-  | "ChinaJsDelivr"
-  | "Statically"
-  | string
-  | "";
+const setting_filename = ".settings.json";
+
+export type CDNKey = "GitHub" | "JsDelivr" | "ChinaJsDelivr" | "Statically" | string | "";
 
 export interface CDN {
   key: CDNKey;
@@ -47,14 +42,10 @@ export const useSettingState = createGlobalState(() => {
       ...defaultsSettings,
     },
     undefined,
-    { mergeDefaults: true }
+    { mergeDefaults: true },
   );
-  const settingsSerializer = computed(() =>
-    btoa(JSON.stringify(settings.value))
-  );
-  const currentCDN = computed(() =>
-    settings.value.cdn.find((item) => item.key === settings.value.currentCDNKey)
-  );
+  const settingsSerializer = computed(() => btoa(JSON.stringify(settings.value)));
+  const currentCDN = computed(() => settings.value.cdn.find((item) => item.key === settings.value.currentCDNKey));
 
   //同步远程配置
   function syncRemoteSettings(content: string) {
@@ -81,17 +72,14 @@ export const useSettingState = createGlobalState(() => {
   }
   //创建文件
   async function createSettingsFile() {
-    return await octokit.value.request(
-      "PUT /repos/{owner}/{repo}/contents/{path}",
-      {
-        owner: user.value?.login!,
-        repo: repo_name.value,
-        ref: branch_name.value,
-        path: setting_filename,
-        message: `chore: Create ${setting_filename}`,
-        content: settingsSerializer.value,
-      }
-    );
+    return await octokit.value.request("PUT /repos/{owner}/{repo}/contents/{path}", {
+      owner: user.value?.login!,
+      repo: repo_name.value,
+      ref: branch_name.value,
+      path: setting_filename,
+      message: `chore: Create ${setting_filename}`,
+      content: settingsSerializer.value,
+    });
   }
   //更新文件
   async function updateSettingsFile() {
@@ -126,8 +114,7 @@ export const useSettingState = createGlobalState(() => {
   function removeCDN(key: string) {
     const index = settings.value.cdn.findIndex((item) => item.key === key);
     const result = settings.value.cdn[index];
-    if (index !== -1 && result.isDefault !== true)
-      settings.value.cdn.splice(index, 1);
+    if (index !== -1 && result.isDefault !== true) settings.value.cdn.splice(index, 1);
   }
 
   return {

@@ -1,8 +1,8 @@
-import { merge } from "lodash-es";
-import type { UserToken, User } from "../types";
-import { Octokit } from "octokit";
 import { CompressionQuality } from "../enum";
+import type { User, UserToken } from "../types";
 import { invoke } from "@tauri-apps/api";
+import { merge } from "lodash-es";
+import { Octokit } from "octokit";
 
 export interface Repository {
   repo_name: string;
@@ -23,7 +23,7 @@ export const useGlobalState = createGlobalState(() => {
       scope: "",
       token_type: "",
     },
-    localStorage
+    localStorage,
   );
   const userinfo = useStorage<User | null>("picx-userinfo", null, undefined, {
     serializer: {
@@ -39,7 +39,7 @@ export const useGlobalState = createGlobalState(() => {
       repo_name: "",
       branch_name: "",
     },
-    localStorage
+    localStorage,
   );
   const imagePath = useStorage<string[]>("picx-image-path", [], localStorage);
   const octokit = ref(new Octokit({}));
@@ -49,7 +49,7 @@ export const useGlobalState = createGlobalState(() => {
       enable: true,
       compress_type: CompressionQuality.Default,
     },
-    localStorage
+    localStorage,
   );
 
   // getters
@@ -76,7 +76,7 @@ export const useGlobalState = createGlobalState(() => {
         }
       }
     },
-    { immediate: true }
+    { immediate: true },
   );
 
   // actions
@@ -124,9 +124,7 @@ export const useGlobalState = createGlobalState(() => {
       },
     });
     if (installations.status === 200) {
-      return installations.data.some(
-        (item) => item.account?.login === username
-      );
+      return installations.data.some((item) => item.account?.login === username);
     }
     return false;
   }

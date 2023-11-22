@@ -1,50 +1,33 @@
 <script lang="ts" setup>
-import { Icon } from "@iconify/vue";
 import { UploadContent } from "../../types/upload";
+import { Icon } from "@iconify/vue";
 
 const props = defineProps<UploadContent>();
 const emit = defineEmits<{
   (e: "delete"): void;
 }>();
 
-const src = computed(
-  () => "data:image/png;base64," + props.compression_content
-);
+const src = computed(() => "data:image/png;base64," + props.compression_content);
 const size = computed(() =>
-  props.size >= 1024 * 1024
-    ? `${(props.size / 1024 / 1024).toFixed(2)} mb`
-    : `${(props.size / 1024).toFixed(0)} kb`
+  props.size >= 1024 * 1024 ? `${(props.size / 1024 / 1024).toFixed(2)} mb` : `${(props.size / 1024).toFixed(0)} kb`,
 );
 const compression_size = computed(() =>
   props.compression_size >= 1024 * 1024
     ? `${(props.compression_size / 1024 / 1024).toFixed(2)} mb`
-    : `${(props.compression_size / 1024).toFixed(0)} kb`
+    : `${(props.compression_size / 1024).toFixed(0)} kb`,
 );
 </script>
 
 <template>
   <div class="image-card__container">
-    <n-image
-      :src="src"
-      width="80"
-      height="80"
-      object-fit="cover"
-      class="rounded-lg"
-    />
+    <n-image :src="src" width="80" height="80" object-fit="cover" class="rounded-lg" />
     <div class="h-80px ml-20px flex-1 flex flex-col justify-between">
-      <div
-        class="lh-24px text-1.1rem color-#505050 dark:color-white font-bold truncate max-w-200px"
-      >
+      <div class="lh-24px text-1.1rem color-#505050 dark:color-white font-bold truncate max-w-200px">
         {{ path }}
       </div>
 
-      <div
-        class="text-10px color-#707070 dark:color-gray-4 truncate max-w-200px mb-3px flex items-center"
-      >
-        <Icon
-          icon="material-symbols:attach-file-rounded"
-          class="mr-4px text-16px"
-        />
+      <div class="text-10px color-#707070 dark:color-gray-4 truncate max-w-200px mb-3px flex items-center">
+        <Icon icon="material-symbols:attach-file-rounded" class="mr-4px text-16px" />
         <span>{{ dir ? dir : "root" }}</span>
       </div>
 

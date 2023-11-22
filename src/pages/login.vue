@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-import { Icon } from "@iconify/vue";
 import image from "../assets/images/login.png?url";
+import { Icon } from "@iconify/vue";
 import { shell } from "@tauri-apps/api";
 
 const { t } = useI18n();
@@ -31,9 +31,7 @@ meta:
     <div class="pt-100px text-center">
       <div class="mb-30px w-full flex flex-col items-center">
         <n-image :src="image" width="200" />
-        <div
-          class="my-4px text-2rem font-bold lh-38px color-#545454 base-text-color"
-        >
+        <div class="my-4px text-2rem font-bold lh-38px color-#545454 base-text-color">
           {{ t("welcome") }}
         </div>
         <p class="my-0 color-gray">{{ t("login.detail") }}</p>
@@ -52,11 +50,7 @@ meta:
       </n-button> -->
 
       <div>
-        <n-button
-          quaternary
-          @click="handleLogin"
-          class="w-300px h-45px login-button"
-        >
+        <n-button quaternary @click="handleLogin" class="w-300px h-45px login-button">
           <Icon icon="mdi:github" class="text-20px mr-10px" />
           <span class="max-w-120px"> {{ t("login.github_login") }} </span>
         </n-button>

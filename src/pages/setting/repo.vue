@@ -1,6 +1,7 @@
 <script lang="ts" setup>
-import { Icon } from "@iconify/vue";
 import { useGlobalState } from "../../store";
+import { Icon } from "@iconify/vue";
+
 const { t } = useI18n();
 const { repository } = useGlobalState();
 const tempRepository = ref({ ...repository.value });

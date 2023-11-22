@@ -1,8 +1,8 @@
 <script lang="ts" setup>
-import { Octokit } from "octokit";
 import { useGlobalState } from "../store";
 import { CreateRepoContents } from "../types";
 import { Icon } from "@iconify/vue";
+import { Octokit } from "octokit";
 
 const { access_token } = useGlobalState();
 const octokit = new Octokit({
@@ -39,10 +39,7 @@ defineExpose({
       <template #label>
         <div class="flex items-center">
           <span>Name</span>
-          <Icon
-            icon="fluent-emoji:carrot"
-            class="w-30px h-30px color-#aaaaaa"
-          />
+          <Icon icon="fluent-emoji:carrot" class="w-30px h-30px color-#aaaaaa" />
         </div>
       </template>
       <n-input v-model:value="form.name" type="text" placeholder="新建仓库名" />
@@ -51,10 +48,7 @@ defineExpose({
       <template #label>
         <div class="flex items-center">
           <span>Desc</span>
-          <Icon
-            icon="fluent-emoji:feather"
-            class="w-30px h-30px color-#aaaaaa"
-          />
+          <Icon icon="fluent-emoji:feather" class="w-30px h-30px color-#aaaaaa" />
         </div>
       </template>
       <n-input

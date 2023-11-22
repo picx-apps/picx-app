@@ -1,7 +1,7 @@
 <script lang="ts" setup>
-import { Icon } from "@iconify/vue";
 import { CompressionQuality } from "../../enum";
 import { useGlobalState } from "../../store";
+import { Icon } from "@iconify/vue";
 import { useI18n } from "vue-i18n";
 
 const { t } = useI18n({
@@ -46,23 +46,15 @@ watchEffect(() => {
         <div class="text-.9rem color-gray-6 dark:color-white">
           {{ t(label) }}
         </div>
-        <Icon
-          icon="charm:tick"
-          class="color-primary text-1rem"
-          v-if="compress.compress_type === value"
-        />
+        <Icon icon="charm:tick" class="color-primary text-1rem" v-if="compress.compress_type === value" />
       </div>
     </DefineTemplate>
 
     <div class="px-16px">
       <div class="option">
         <div class="flex flex-col">
-          <span class="text-.9rem color-gray-6 dark:color-white">{{
-            $t("compress.enable")
-          }}</span>
-          <span class="text-.8rem color-gray-4">{{
-            $t("compress.enable_info")
-          }}</span>
+          <span class="text-.9rem color-gray-6 dark:color-white">{{ $t("compress.enable") }}</span>
+          <span class="text-.8rem color-gray-4">{{ $t("compress.enable_info") }}</span>
         </div>
         <n-switch v-model:value="compress.enable"></n-switch>
       </div>
@@ -70,6 +62,7 @@ watchEffect(() => {
       <div v-show="compress.enable">
         <ReuseTemplate
           v-for="(item, key) in CompressionQuality"
+          :key="key"
           :label="item"
           :value="key"
           @click="() => (compress.compress_type = key)"

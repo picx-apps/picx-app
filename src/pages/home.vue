@@ -1,23 +1,15 @@
 <script lang="ts" setup>
-import { Icon } from "@iconify/vue";
-import { useGlobalState } from "../store";
-import { Octokit } from "octokit";
-import { isArray } from "lodash-es";
-import { RepoContents } from "../types";
-import { HomeImageDropDownOptions } from "../constant";
-import { writeText } from "@tauri-apps/api/clipboard";
 import { showImagePreview } from "../components/image-preview";
+import { HomeImageDropDownOptions } from "../constant";
+import { useGlobalState } from "../store";
 import { useSettingState } from "../store/setting";
+import { RepoContents } from "../types";
+import { Icon } from "@iconify/vue";
+import { writeText } from "@tauri-apps/api/clipboard";
+import { isArray } from "lodash-es";
+import { Octokit } from "octokit";
 
-const {
-  user,
-  access_token,
-  repo_name,
-  branch_name,
-  imagePaths,
-  addImagePath,
-  removeImagePath,
-} = useGlobalState();
+const { user, access_token, repo_name, branch_name, imagePaths, addImagePath, removeImagePath } = useGlobalState();
 const { settings } = useSettingState();
 const repoContent = ref<RepoContents>([]);
 const octokit = new Octokit({
@@ -35,42 +27,29 @@ const dropDownPosition = reactive({
   y: 0,
 });
 const message = useMessage();
-const path = computed(() =>
-  imagePaths.value.length > 0
-    ? imagePaths.value[imagePaths.value.length - 1]
-    : ""
-);
+const path = computed(() => (imagePaths.value.length > 0 ? imagePaths.value[imagePaths.value.length - 1] : ""));
 const currentImage = ref<(typeof repoContent.value)[0] | null>(null);
 const activeImageDelete = ref(false);
 const { width } = useWindowSize();
 const maxRowNumber = computed(() => Math.floor(width.value / 130));
-const gridColGap = computed(
-  () =>
-    Math.floor((width.value - maxRowNumber.value * 120) / maxRowNumber.value) +
-    "px"
-);
+const gridColGap = computed(() => Math.floor((width.value - maxRowNumber.value * 120) / maxRowNumber.value) + "px");
 const toLocaleUpperCasePath = computed(() =>
-  path.value.split("/")[path.value.split("/").length - 1].toLocaleUpperCase()
+  path.value.split("/")[path.value.split("/").length - 1].toLocaleUpperCase(),
 );
 const { t } = useI18n();
 const refresh = ref(false);
 
 async function contents() {
-  const res = await octokit.request(
-    "GET /repos/{owner}/{repo}/contents/{path}",
-    {
-      owner: user.value?.login!,
-      repo: repo_name.value,
-      ref: branch_name.value,
-      path: path.value,
-      t: now.value,
-    }
-  );
+  const res = await octokit.request("GET /repos/{owner}/{repo}/contents/{path}", {
+    owner: user.value?.login!,
+    repo: repo_name.value,
+    ref: branch_name.value,
+    path: path.value,
+    t: now.value,
+  });
   if (res.status === 200) {
     const data = isArray(res.data) ? res.data : [res.data];
-    repoContent.value = data.filter(
-      (item) => !settings.value.recycleBin[item.path]
-    );
+    repoContent.value = data.filter((item) => !settings.value.recycleBin[item.path]);
     showDirs.value = true;
     showLatest.value = true;
     showImages.value = true;
@@ -82,7 +61,7 @@ watch(
   () => {
     contents();
   },
-  { immediate: true }
+  { immediate: true },
 );
 function handleClickDir(item: (typeof repoContent.value)[0]) {
   repoContent.value = [];
@@ -93,10 +72,7 @@ function handleClickBackUp() {
   removeImagePath(path.value);
   contents();
 }
-function handleClickImage(
-  event: MouseEvent,
-  item: (typeof repoContent.value)[0]
-) {
+function handleClickImage(event: MouseEvent, item: (typeof repoContent.value)[0]) {
   event.preventDefault();
   currentImage.value = item;
   showDropdown.value = true;
@@ -113,8 +89,7 @@ async function handleImageDropDownSelect(key: string) {
   if (key === "copy" && download_url) {
     await writeText(download_url);
     message.warning("复制成功", {
-      icon: () =>
-        h(Icon, { icon: "icon-park-solid:grinning-face-with-squinting-eyes" }),
+      icon: () => h(Icon, { icon: "icon-park-solid:grinning-face-with-squinting-eyes" }),
     });
   }
   if (key === "download" && download_url) {
@@ -135,16 +110,13 @@ async function handleImageDropDownSelect(key: string) {
 async function handleDeleteImage() {
   activeImageDelete.value = false;
   const { name, path, sha } = currentImage.value!;
-  const res = await octokit.request(
-    "DELETE /repos/{owner}/{repo}/contents/{path}",
-    {
-      owner: user.value!.login,
-      repo: repo_name.value,
-      path,
-      sha,
-      message: "picx delete file " + name,
-    }
-  );
+  const res = await octokit.request("DELETE /repos/{owner}/{repo}/contents/{path}", {
+    owner: user.value!.login,
+    repo: repo_name.value,
+    path,
+    sha,
+    message: "picx delete file " + name,
+  });
   if (res.status === 200) {
     message.warning("删除成功", {
       icon: () =>
@@ -191,11 +163,7 @@ name: home
       <div class="title">
         <div flex-1>
           {{ path ? toLocaleUpperCasePath : t("root") }}
-          <span
-            class="text-10px ml-2px color-blue-500 cursor-pointer"
-            @click="handleClickBackUp"
-            v-if="path"
-          >
+          <span class="text-10px ml-2px color-blue-500 cursor-pointer" @click="handleClickBackUp" v-if="path">
             {{ t("back") }}
           </span>
         </div>
@@ -204,20 +172,12 @@ name: home
       <n-collapse-transition :show="showDirs">
         <n-scrollbar x-scrollable>
           <div class="scroll-content h-100px">
-            <div
-              class="dir-container disabled ml-4px color-primary-100"
-              v-show="!dirs.length"
-            >
+            <div class="dir-container disabled ml-4px color-primary-100" v-show="!dirs.length">
               <Icon icon="ic:round-folder-open" class="text-4.8rem" />
               <div class="dir-name">{{ t("empty") }}</div>
             </div>
 
-            <div
-              v-for="item in dirs"
-              :key="item.sha"
-              class="dir-container"
-              @click="handleClickDir(item)"
-            >
+            <div v-for="item in dirs" :key="item.sha" class="dir-container" @click="handleClickDir(item)">
               <Icon icon="ic:round-folder" class="text-4.8rem color-blue-400" />
               <div class="dir-name">
                 {{ item.name }}
@@ -243,11 +203,7 @@ name: home
         <n-scrollbar x-scrollable>
           <div class="scroll-content h-166px">
             <n-image-group>
-              <div
-                v-for="item in latestDebounced"
-                :key="item.sha"
-                class="image-container"
-              >
+              <div v-for="item in latestDebounced" :key="item.sha" class="image-container">
                 <n-image
                   width="260"
                   height="160"
@@ -257,18 +213,11 @@ name: home
                   class="rounded-lg"
                 />
                 <div class="text-overlay"></div>
-                <div
-                  class="absolute top-10px left-10px font-bold color-white text-11px flex items-center"
-                >
-                  <Icon
-                    icon="material-symbols:highlighter-size-1"
-                    class="text-16px"
-                  />
+                <div class="absolute top-10px left-10px font-bold color-white text-11px flex items-center">
+                  <Icon icon="material-symbols:highlighter-size-1" class="text-16px" />
                   {{ bytesToMB(item.size) }}mb
                 </div>
-                <div
-                  class="absolute bottom-10px left-10px color-white font-bold text-11px"
-                >
+                <div class="absolute bottom-10px left-10px color-white font-bold text-11px">
                   {{ item.name }}
                 </div>
               </div>
@@ -295,6 +244,7 @@ name: home
             <div
               class="w-110px h-130px relative"
               v-for="(item, index) in files"
+              :key="item.sha"
               @contextmenu="handleClickImage($event, item)"
             >
               <n-image
@@ -338,20 +288,10 @@ name: home
         <div class="text-14px color-#aaaaaa text-center mt-10px">
           {{ t("delete tip") }}
         </div>
-        <n-button
-          type="error"
-          ghost
-          class="w-100% my-20px"
-          @click="handleDeleteImage"
-        >
+        <n-button type="error" ghost class="w-100% my-20px" @click="handleDeleteImage">
           {{ t("confirm") }}
         </n-button>
-        <n-button
-          type="primary"
-          ghost
-          class="w-100%"
-          @click="activeImageDelete = false"
-        >
+        <n-button type="primary" ghost class="w-100%" @click="activeImageDelete = false">
           {{ t("cancel") }}
         </n-button>
       </n-drawer-content>

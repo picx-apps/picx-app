@@ -10,12 +10,8 @@ const [DefineOption, ReuseOption] = createReusableTemplate<{
   label: string;
   isDefault?: boolean;
 }>();
-const defaultCDN = computed(() =>
-  settings.value.cdn.filter((item) => item.isDefault === true)
-);
-const customCDN = computed(() =>
-  settings.value.cdn.filter((item) => !item.isDefault)
-);
+const defaultCDN = computed(() => settings.value.cdn.filter((item) => item.isDefault === true));
+const customCDN = computed(() => settings.value.cdn.filter((item) => !item.isDefault));
 
 function handleDelete(key: string) {
   removeCDN(key);

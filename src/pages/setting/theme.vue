@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { Icon } from "@iconify/vue";
+
 const { t } = useI18n();
 const [DefineTemplate, ReuseTemplate] = createReusableTemplate<{
   label: string;
@@ -34,17 +35,14 @@ const themeOptions = [
         class="transition-all px-10px py-6px flex items-center justify-between cursor-pointer hover:bg-#f7f7f7 dark:hover:bg-gray-7 rounded-lg"
       >
         <div class="text-.9rem color-gray-6 dark:color-white">{{ label }}</div>
-        <Icon
-          icon="charm:tick"
-          class="color-primary text-1rem"
-          v-if="value === isDark"
-        />
+        <Icon icon="charm:tick" class="color-primary text-1rem" v-if="value === isDark" />
       </div>
     </DefineTemplate>
 
     <div class="px-16px">
       <ReuseTemplate
         v-for="item in themeOptions"
+        :key="item.label"
         v-bind="item"
         @click="
           () => {

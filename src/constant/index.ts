@@ -1,5 +1,5 @@
-import { DropdownOption } from "naive-ui";
 import { CDN } from "../store/setting";
+import { DropdownOption } from "naive-ui";
 
 export const HomeImageDropDownOptions: DropdownOption[] = [
   {
@@ -41,8 +41,7 @@ export const CDNDefaultOptions: CDN[] = [
   },
   {
     key: "Statically",
-    value:
-      "https://cdn.statically.io/gh/{{owner}}/{{repo}}@{{branch}}/{{path}}",
+    value: "https://cdn.statically.io/gh/{{owner}}/{{repo}}@{{branch}}/{{path}}",
     isDefault: true,
   },
 ];

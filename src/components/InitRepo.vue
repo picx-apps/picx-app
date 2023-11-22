@@ -28,13 +28,8 @@ const { t } = useI18n();
         <div class="text-10px color-#757575">{{ label }}</div>
       </div>
       <div class="flex items-center">
-        <span class="text-1rem mr-10px color-#2f2f2f font-600">{{
-          value
-        }}</span>
-        <Icon
-          icon="material-symbols:arrow-forward-ios-rounded"
-          class="color-#545454"
-        />
+        <span class="text-1rem mr-10px color-#2f2f2f font-600">{{ value }}</span>
+        <Icon icon="material-symbols:arrow-forward-ios-rounded" class="color-#545454" />
       </div>
     </div>
   </DefineTemplate>

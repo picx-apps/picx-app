@@ -1,25 +1,19 @@
 <script lang="ts" setup>
-import { Icon } from "@iconify/vue";
-import { open } from "@tauri-apps/api/dialog";
-import { useUploadState } from "../store/upload";
-import { cloneDeepWith } from "lodash-es";
-import type { UploadContent } from "../types/upload";
-import { invoke } from "@tauri-apps/api";
 import { useGlobalState } from "../store";
-import { NInput } from "naive-ui";
+import { useUploadState } from "../store/upload";
 import { useWatermarkState } from "../store/watermark";
-import SystemUiconsUpload from "~icons/system-uicons/upload";
+import type { UploadContent } from "../types/upload";
+import { Icon } from "@iconify/vue";
+import { invoke } from "@tauri-apps/api";
+import { open } from "@tauri-apps/api/dialog";
 import LineMdLoadingLoop from "~icons/line-md/loading-loop";
+import SystemUiconsUpload from "~icons/system-uicons/upload";
+import { cloneDeepWith } from "lodash-es";
+import { NInput } from "naive-ui";
 
 const tempContents = ref<UploadContent[]>([]);
 const waitContents = ref<UploadContent[]>([]);
-const {
-  currentPath,
-  currentDirs,
-  addUploadPath,
-  removeUploadPath,
-  updateDirs,
-} = useUploadState();
+const { currentPath, currentDirs, addUploadPath, removeUploadPath, updateDirs } = useUploadState();
 const { compress } = useGlobalState();
 const showSelectDir = ref(false);
 const message = useMessage();
@@ -66,9 +60,7 @@ async function handleImages(paths: string[]) {
       compression_base64: string;
     } = await invoke("compression_image", {
       path,
-      compressionQuality: compress.value.enable
-        ? compress.value.compress_type
-        : undefined,
+      compressionQuality: compress.value.enable ? compress.value.compress_type : undefined,
     });
     let watermark_image: string = "";
     if (watermark_setting.enable) {
@@ -89,19 +81,14 @@ async function handleImages(paths: string[]) {
     let filename = path.split("/").pop() as string;
     const random: string = await invoke("rand_string");
     const _filename = filename.split(".");
-    filename =
-      _filename.length > 1
-        ? `${_filename[0]}_${random}.${_filename.pop()}`
-        : `${filename}_${random}`;
+    filename = _filename.length > 1 ? `${_filename[0]}_${random}.${_filename.pop()}` : `${filename}_${random}`;
 
     tempContents.value.push({
       path: filename,
       content: base64,
       size: buffer.length,
       compression_size: compression_buffer.length,
-      compression_content: watermark_image
-        ? watermark_image
-        : compression_base64,
+      compression_content: watermark_image ? watermark_image : compression_base64,
     });
   }
 }
@@ -116,8 +103,8 @@ function handleQueue() {
       tempContents.value.map((item) => ({
         ...item,
         dir: currentPath.value,
-      }))
-    )
+      })),
+    ),
   );
   showSelectDir.value = false;
 }
@@ -144,8 +131,8 @@ async function handleBeginUpload() {
       tempContents.value.map((item) => ({
         ...item,
         dir: currentPath.value,
-      }))
-    )
+      })),
+    ),
   );
   showSelectDir.value = false;
   handleUpload();
@@ -162,11 +149,7 @@ async function handleCreateFolder() {
     enableFolder.value = false;
     return;
   }
-  const res = await useCreateFolder(
-    currentPath.value
-      ? `${currentPath.value}/`
-      : currentPath.value + folderName.value
-  );
+  const res = await useCreateFolder(currentPath.value ? `${currentPath.value}/` : currentPath.value + folderName.value);
   if (res?.status === 201) {
     enableFolder.value = false;
     folderName.value = "";
@@ -187,11 +170,7 @@ name: upload
     <Header>
       {{ t("node.title") }}
       <template #optional>
-        <Icon
-          @click="handleClickUpload"
-          icon="majesticons:camera"
-          class="text-1.6rem cursor-pointer"
-        />
+        <Icon @click="handleClickUpload" icon="majesticons:camera" class="text-1.6rem cursor-pointer" />
       </template>
     </Header>
 
@@ -207,9 +186,7 @@ name: upload
       </div>
 
       <div v-else>
-        <div
-          class="text-1.1rem font-bold color-gray-8 dark:color-gray-4 mb-20px flex items-center"
-        >
+        <div class="text-1.1rem font-bold color-gray-8 dark:color-gray-4 mb-20px flex items-center">
           <Icon icon="ph:circle-notch-bold" />
           <span class="ml-10px">
             {{ t("node.wait_upload_number", { number: waitContents.length }) }}
@@ -227,11 +204,7 @@ name: upload
     <DefineTemplate v-slot="{ $slots, icon, label, isLink, iconColor }">
       <div class="flex items-center cursor-pointer py-6px">
         <div class="flex-1 flex items-center">
-          <Icon
-            :icon="icon"
-            class="text-3rem mr-10px"
-            :class="[iconColor ? iconColor : 'color-blue-400']"
-          />
+          <Icon :icon="icon" class="text-3rem mr-10px" :class="[iconColor ? iconColor : 'color-blue-400']" />
           <div class="max-w-200px">
             <div class="color-gray-6" v-if="!$slots.input">
               {{ label }}
@@ -240,11 +213,7 @@ name: upload
           </div>
         </div>
 
-        <Icon
-          v-show="isLink"
-          icon="material-symbols:arrow-forward-ios-rounded"
-          class="text-16px color-gray-6"
-        />
+        <Icon v-show="isLink" icon="material-symbols:arrow-forward-ios-rounded" class="text-16px color-gray-6" />
       </div>
     </DefineTemplate>
 
@@ -270,19 +239,12 @@ name: upload
 
         <n-scrollbar class="h[calc(100%-140px)]">
           <div class="flex justify-between">
-            <span
-              class="cursor-pointer color-primary-300"
-              @click="handleOpenEnableFolder"
-            >
+            <span class="cursor-pointer color-primary-300" @click="handleOpenEnableFolder">
               {{ t("new_folder") }}
             </span>
 
             <div>
-              <span
-                v-if="currentPath"
-                class="cursor-pointer color-primary-300"
-                @click="removeUploadPath(currentPath)"
-              >
+              <span v-if="currentPath" class="cursor-pointer color-primary-300" @click="removeUploadPath(currentPath)">
                 {{ t("back") }}
               </span>
             </div>
@@ -318,32 +280,19 @@ name: upload
           </template>
 
           <!-- 空文件夹 -->
-          <ReusableTemplate
-            v-else
-            label="Empty"
-            icon="ic:round-folder-open"
-            icon-color="color-blue-100"
-            is-link
-          />
+          <ReusableTemplate v-else label="Empty" icon="ic:round-folder-open" icon-color="color-blue-100" is-link />
         </n-scrollbar>
 
         <div class="w-full text-center">
-          <n-button type="primary" ghost class="mr-10px" @click="handleQueue">{{
-            t("node.button.queue")
-          }}</n-button>
-          <n-button type="primary" @click="handleBeginUpload">{{
-            t("node.button.immediately")
-          }}</n-button>
+          <n-button type="primary" ghost class="mr-10px" @click="handleQueue">{{ t("node.button.queue") }}</n-button>
+          <n-button type="primary" @click="handleBeginUpload">{{ t("node.button.immediately") }}</n-button>
         </div>
       </n-drawer-content>
     </n-drawer>
 
     <Tabbar />
   </n-scrollbar>
-  <div
-    class="text-center fixed bottom-100px w-full"
-    v-show="waitContents.length"
-  >
+  <div class="text-center fixed bottom-100px w-full" v-show="waitContents.length">
     <n-button
       type="primary"
       @click="handleUpload"

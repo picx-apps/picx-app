@@ -1,17 +1,11 @@
 import "./styles.css";
 import "uno.css";
-
-import { createApp } from "vue";
 import App from "./App.vue";
-import { createPinia } from "pinia";
+import { language, MessageKeys, default as messages, MessageSchema } from "./language";
 import router from "./router";
+import { createPinia } from "pinia";
+import { createApp } from "vue";
 import { createI18n } from "vue-i18n";
-import {
-  default as messages,
-  MessageSchema,
-  MessageKeys,
-  language,
-} from "./language";
 
 const pinia = createPinia();
 const i18n = createI18n<[MessageSchema], MessageKeys>({

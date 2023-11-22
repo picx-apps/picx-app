@@ -1,10 +1,10 @@
 <script lang="ts" setup>
-import type { BranchInfo, RepoInfo } from "../types";
-import { Octokit } from "octokit";
 import { Repository, useGlobalState } from "../store";
+import type { BranchInfo, RepoInfo } from "../types";
 import { Icon } from "@iconify/vue";
-import { isEmpty } from "lodash-es";
 import SystemUiconsSearch from "~icons/system-uicons/search";
+import { isEmpty } from "lodash-es";
+import { Octokit } from "octokit";
 
 const props = defineProps<{
   modelValue: Repository;
@@ -46,13 +46,10 @@ async function initRepo() {
 }
 async function initBranches() {
   if (modelValue.value.repo_name) {
-    const { data } = await octokit.request(
-      "GET /repos/{owner}/{repo}/branches",
-      {
-        owner: user.value?.login!,
-        repo: modelValue.value.repo_name,
-      }
-    );
+    const { data } = await octokit.request("GET /repos/{owner}/{repo}/branches", {
+      owner: user.value?.login!,
+      repo: modelValue.value.repo_name,
+    });
     branchOptions.value = data;
   }
 }
@@ -85,10 +82,7 @@ onMounted(() => {
         <div class="text-10px color-#757575">{{ label }}</div>
       </div>
       <div class="flex items-center">
-        <Icon
-          icon="material-symbols:arrow-forward-ios-rounded"
-          class="color-#545454"
-        />
+        <Icon icon="material-symbols:arrow-forward-ios-rounded" class="color-#545454" />
       </div>
     </div>
   </DefineTemplate>
@@ -151,6 +145,7 @@ onMounted(() => {
       </n-input>
       <ReuseOption
         v-for="item in repoOptions"
+        :key="item.id"
         icon="fluent-emoji:bread"
         :title="item.name"
         :label="item.description ? item.description : item.name"
@@ -171,6 +166,7 @@ onMounted(() => {
       </div>
       <ReuseOption
         v-for="item in branchOptions"
+        :key="item.name"
         icon="fluent-emoji:crown"
         :title="item.name"
         @click="handleClickBranch(item)"

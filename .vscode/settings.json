@@ -31,7 +31,9 @@
   ],
   "typescript.tsdk": "node_modules/typescript/lib",
   "editor.formatOnSave": true,
-  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.codeActionsOnSave": {
+     "source.fixAll.eslint": true
+   },
   "vue.codeActions.enabled": true,
   "[xml]": {
     "editor.defaultFormatter": "redhat.vscode-xml"

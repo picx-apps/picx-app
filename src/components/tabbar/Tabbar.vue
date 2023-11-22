@@ -7,10 +7,7 @@ const { t } = useI18n();
 <template>
   <div class="tabbar">
     <TabbarItem name="home" :text="t('home.title')">
-      <Icon
-        icon="material-symbols:home-rounded"
-        class="text-26px select-none"
-      ></Icon>
+      <Icon icon="material-symbols:home-rounded" class="text-26px select-none"></Icon>
     </TabbarItem>
     <TabbarItem name="upload" :text="t('node.title')">
       <Icon icon="mdi:cloud" class="text-26px select-none"></Icon>

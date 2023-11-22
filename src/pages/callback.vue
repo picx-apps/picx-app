@@ -1,14 +1,12 @@
 <script lang="ts" setup>
-import { invoke } from "@tauri-apps/api";
-import type { UserToken } from "../types/auth";
 import { useGlobalState } from "../store";
-import { event } from "@tauri-apps/api";
 import { SchemePayload } from "../types";
+import type { UserToken } from "../types/auth";
 import { Icon } from "@iconify/vue";
+import { event, invoke } from "@tauri-apps/api";
 
 const router = useRouter();
-const { set_authorize, get_userinfo, checkUserInstallApps, access_token } =
-  useGlobalState();
+const { set_authorize, get_userinfo, checkUserInstallApps, access_token } = useGlobalState();
 
 event.listen("scheme-request-received", async (event) => {
   const payload = event.payload as SchemePayload;

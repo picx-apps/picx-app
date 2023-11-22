@@ -1,14 +1,14 @@
-import { defineConfig } from "vite";
-import vue from "@vitejs/plugin-vue";
-import UnoCSS from "unocss/vite";
-import Components from "unplugin-vue-components/vite";
-import AutoImport from "unplugin-auto-import/vite";
-import { NaiveUiResolver } from "unplugin-vue-components/resolvers";
-import Icons from "unplugin-icons/vite";
-import Pages from "vite-plugin-pages";
-import vueJsx from "@vitejs/plugin-vue-jsx";
-import I18n from "@intlify/unplugin-vue-i18n/vite";
 import { resolve } from "path";
+import I18n from "@intlify/unplugin-vue-i18n/vite";
+import vue from "@vitejs/plugin-vue";
+import vueJsx from "@vitejs/plugin-vue-jsx";
+import UnoCSS from "unocss/vite";
+import AutoImport from "unplugin-auto-import/vite";
+import Icons from "unplugin-icons/vite";
+import { NaiveUiResolver } from "unplugin-vue-components/resolvers";
+import Components from "unplugin-vue-components/vite";
+import { defineConfig } from "vite";
+import Pages from "vite-plugin-pages";
 
 // https://vitejs.dev/config/
 export default defineConfig(() => ({
@@ -26,17 +26,12 @@ export default defineConfig(() => ({
         "vue-router",
         "@vueuse/core",
         {
-          "naive-ui": [
-            "useDialog",
-            "useMessage",
-            "useNotification",
-            "useLoadingBar",
-          ],
+          "naive-ui": ["useDialog", "useMessage", "useNotification", "useLoadingBar"],
         },
       ],
       eslintrc: {
         enabled: true, // Default `false`
-        filepath: './.eslintrc-auto-import.json', // Default `./.eslintrc-auto-import.json`
+        filepath: "./.eslintrc-auto-import.json", // Default `./.eslintrc-auto-import.json`
         globalsPropValue: true, // Default `true`, (true | false | 'readonly' | 'readable' | 'writable' | 'writeable')
       },
     }),

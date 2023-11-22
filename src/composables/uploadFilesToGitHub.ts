@@ -25,14 +25,11 @@ export async function uploadFilesToGitHub(files: UploadContent[]) {
       sha: data.sha,
     });
   }
-  const lastCommit = await octokit.value.request(
-    "GET /repos/{owner}/{repo}/branches/{branch}",
-    {
-      owner,
-      repo,
-      branch,
-    }
-  );
+  const lastCommit = await octokit.value.request("GET /repos/{owner}/{repo}/branches/{branch}", {
+    owner,
+    repo,
+    branch,
+  });
   const treeResponse = await octokit.value.rest.git.createTree({
     owner,
     repo,
@@ -48,7 +45,7 @@ export async function uploadFilesToGitHub(files: UploadContent[]) {
     tree: treeResponse.data.sha,
   });
 
-  let res = await octokit.value.rest.git.updateRef({
+  const res = await octokit.value.rest.git.updateRef({
     owner,
     repo,
     ref: "heads/" + branch,
