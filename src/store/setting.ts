@@ -82,7 +82,7 @@ export const useSettingState = createGlobalState(() => {
     });
   }
   //更新文件
-  async function updateSettingsFile() {
+  const updateSettingsFile = useDebounceFn(async () => {
     const res = await getRemoteSettings().catch(() => ({
       data: { sha: undefined as string | undefined },
     }));
@@ -96,7 +96,7 @@ export const useSettingState = createGlobalState(() => {
       message: `chore: Create ${setting_filename}`,
       content: settingsSerializer.value,
     });
-  }
+  }, 1000);
   //检查远程是否存在该文件，如果存在直接与本地同步，如果不存在则创建
   async function autoCreateOfSettings() {
     if (!repo_name.value || !branch_name.value) return;
