@@ -1,7 +1,7 @@
 import { useGlobalState } from ".";
 import { CDNDefaultOptions } from "../constant";
 import { MessageKeys } from "../language";
-import { mergeWith } from "lodash-es";
+import { cloneDeepWith, mergeWith } from "lodash-es";
 
 const setting_filename = ".settings.json";
 
@@ -13,12 +13,22 @@ export interface CDN {
   isDefault?: boolean;
 }
 
+export interface Watermark {
+  enable: boolean;
+  text: string;
+  top: number;
+  left: number;
+  size: number;
+  fontColor: string;
+}
+
 export interface RepoSetting {
   lastModifyTime: number;
   language: MessageKeys;
   theme: string;
   cdn: CDN[];
   currentCDNKey: CDNKey;
+  watermark: Watermark;
   recycleBin: {
     [path: string]: boolean;
   };
@@ -30,6 +40,14 @@ const defaultsSettings: RepoSetting = {
   language: "en-US",
   currentCDNKey: "JsDelivr",
   cdn: CDNDefaultOptions,
+  watermark: {
+    enable: false,
+    text: "Picx",
+    top: 10,
+    left: 10,
+    size: 30,
+    fontColor: "#F4FAFF",
+  },
   lastModifyTime: Date.now(),
 };
 
@@ -125,6 +143,11 @@ export const useSettingState = createGlobalState(() => {
     settings.value.currentCDNKey = key;
     updateSettingsFile();
   }
+  //设置水印配置
+  function setWatermark(value: Watermark) {
+    settings.value.watermark = cloneDeepWith(value);
+    updateSettingsFile();
+  }
 
   return {
     settings,
@@ -139,5 +162,6 @@ export const useSettingState = createGlobalState(() => {
     addCDN,
     removeCDN,
     setCurrentCDN,
+    setWatermark,
   };
 });

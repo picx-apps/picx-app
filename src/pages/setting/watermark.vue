@@ -1,12 +1,14 @@
 <script lang="ts" setup>
-import { useWatermarkState, Watermark } from "../../store/watermark";
 import { Icon } from "@iconify/vue";
+import { useSettingState, Watermark } from "~/store/setting";
 
 const { t } = useI18n();
-const { watermark } = useWatermarkState();
-const form = reactive<Watermark>({ ...watermark.value });
+const { settings, setWatermark } = useSettingState();
+const form = reactive<Watermark>({ ...settings.value.watermark });
 const isUpdater = computed(() =>
-  Object.keys(form).some((key) => form[key as keyof typeof form] !== watermark.value[key as keyof typeof form]),
+  Object.keys(form).some(
+    (key) => form[key as keyof typeof form] !== settings.value.watermark[key as keyof typeof form],
+  ),
 );
 </script>
 
@@ -51,7 +53,7 @@ const isUpdater = computed(() =>
               <span>{{ t("watermark.font_color") }}</span>
             </div>
           </template>
-          <n-color-picker v-model:value="form.fontColor" />
+          <n-color-picker v-model:value="form.fontColor" :show-alpha="false" />
         </n-form-item>
         <n-form-item path="size">
           <template #label>
@@ -91,7 +93,7 @@ const isUpdater = computed(() =>
         </n-form-item>
       </n-form>
 
-      <n-button type="primary" ghost class="w-full" @click="watermark = { ...form }" v-show="isUpdater">
+      <n-button type="primary" ghost class="w-full" @click="() => setWatermark(form)" v-show="isUpdater">
         {{ t("repositories.complete") }}
       </n-button>
     </div>

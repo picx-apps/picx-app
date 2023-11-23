@@ -1,11 +1,11 @@
 <script lang="ts" setup>
 import { useGlobalState } from "../store";
 import { useUploadState } from "../store/upload";
-import { useWatermarkState } from "../store/watermark";
 import type { UploadContent } from "../types/upload";
 import { Icon } from "@iconify/vue";
 import { invoke } from "@tauri-apps/api";
 import { open } from "@tauri-apps/api/dialog";
+import { useSettingState } from "~/store/setting";
 import LineMdLoadingLoop from "~icons/line-md/loading-loop";
 import SystemUiconsUpload from "~icons/system-uicons/upload";
 import { cloneDeepWith } from "lodash-es";
@@ -14,6 +14,7 @@ import { NInput } from "naive-ui";
 const tempContents = ref<UploadContent[]>([]);
 const waitContents = ref<UploadContent[]>([]);
 const { currentPath, currentDirs, addUploadPath, removeUploadPath, updateDirs } = useUploadState();
+const { settings } = useSettingState();
 const { compress } = useGlobalState();
 const showSelectDir = ref(false);
 const message = useMessage();
@@ -27,7 +28,6 @@ const [DefineTemplate, ReusableTemplate] = createReusableTemplate<{
   isLink: boolean;
 }>();
 const folderNameInput = ref<InstanceType<typeof NInput>>();
-const { watermark } = useWatermarkState();
 const uploading = ref(false);
 
 async function handleClickUpload() {
@@ -45,7 +45,7 @@ async function handleClickUpload() {
   showSelectDir.value = true;
 }
 async function handleImages(paths: string[]) {
-  const watermark_setting = toValue(watermark);
+  const watermark_setting = settings.value.watermark;
   for (const path of paths) {
     console.time("compress time");
     const {
