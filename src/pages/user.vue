@@ -75,7 +75,7 @@ name: user
       </DefineTemplate>
 
       <!-- 设置项 -->
-      <div class="mt-30px">
+      <div class="mt-30px mb-100px">
         <ReuseTemplate icon="fluent-emoji:bread" :text="t('user.repo')" @click="router.push('/setting/repo')" />
         <ReuseTemplate
           icon="fluent-emoji:bubbles"

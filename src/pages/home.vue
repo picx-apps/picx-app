@@ -234,7 +234,7 @@ name: home
     </div>
 
     <!-- 图库 -->
-    <div class="image-list px-16px mb-80px">
+    <div class="image-list px-16px mb-100px">
       <div class="title">
         <div flex-1>{{ t("home.library") }}</div>
         <!-- <Icon

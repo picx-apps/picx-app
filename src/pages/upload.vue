@@ -166,7 +166,7 @@ name: upload
 </route>
 
 <template>
-  <n-scrollbar style="height: 100vh">
+  <n-scrollbar style="height: calc(100vh - 90px)">
     <Header>
       {{ t("node.title") }}
       <template #optional>
@@ -185,7 +185,7 @@ name: upload
         </div>
       </div>
 
-      <div v-else>
+      <div v-else class="mb-40px">
         <div class="text-1.1rem font-bold color-gray-8 dark:color-gray-4 mb-20px flex items-center">
           <Icon icon="ph:circle-notch-bold" />
           <span class="ml-10px">
