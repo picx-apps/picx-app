@@ -56,6 +56,15 @@ async function contents() {
     refresh.value = false;
   }
 }
+function transformURL(path: string) {
+  const uri = replacePlaceholder(currentCDN.value?.value!, {
+    owner: user.value?.login!,
+    repo: repo_name.value,
+    branch: branch_name.value,
+    path,
+  });
+  return uri;
+}
 watch(
   now,
   () => {
@@ -213,7 +222,7 @@ name: home
                 <n-image
                   width="260"
                   height="160"
-                  :src="item.download_url!"
+                  :src="transformURL(item.path)"
                   lazy
                   object-fit="cover"
                   class="rounded-lg"
@@ -254,7 +263,7 @@ name: home
               @contextmenu="handleClickImage($event, item)"
             >
               <n-image
-                :src="item.download_url!"
+                :src="transformURL(item.path)"
                 lazy
                 object-fit="cover"
                 preview-disabled
