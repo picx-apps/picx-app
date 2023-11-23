@@ -144,7 +144,7 @@ async function handleDeleteImage() {
 }
 function handleImage(index: number) {
   if (!files.value.length) return;
-  const images = files.value.map((item) => item.download_url!);
+  const images = files.value.map((item) => transformURL(item.path));
   showImagePreview({ images, startPosition: index });
 }
 </script>
