@@ -130,6 +130,7 @@ export const useGlobalState = createGlobalState(() => {
   }
 
   return {
+    authorize,
     access_token,
     scope,
     token_type,

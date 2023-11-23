@@ -2,9 +2,12 @@
 import image from "../assets/images/login.png?url";
 import { Icon } from "@iconify/vue";
 import { shell } from "@tauri-apps/api";
+import { useGlobalState } from "~/store";
 
 const { t } = useI18n();
 const router = useRouter();
+const token = ref("");
+const { authorize } = useGlobalState();
 
 async function handleLogin() {
   const params = paramsSerializer({
@@ -16,6 +19,10 @@ async function handleLogin() {
   const uri = "https://github.com/login/oauth/authorize" + params;
   shell.open(uri);
   router.push("/callback");
+}
+function handleTokenSignIn() {
+  authorize.value.access_token = token.value;
+  router.push({ name: "lead" });
 }
 </script>
 
@@ -37,17 +44,15 @@ meta:
         <p class="my-0 color-gray">{{ t("login.detail") }}</p>
       </div>
 
-      <!-- <div class="my-4px text-.9rem font-500 color-#545454">Token</div>
-      <n-input
-        v-model="token"
-        type="password"
-        placeholder="Please enter"
-        class="mb-20px"
-      ></n-input> -->
-
-      <!-- <n-button type="primary" class="w-100% mb-20px" @click="handleSignToken">
-        Sign in
-      </n-button> -->
+      <div w-300px text-center m-auto mt-20px>
+        <n-input
+          v-model:value="token"
+          type="password"
+          placeholder="Please enter"
+          class="w-300px h-45px mb-20px"
+        ></n-input>
+      </div>
+      <n-button class="w-300px h-45px mb-20px" @click="handleTokenSignIn"> Sign in </n-button>
 
       <div>
         <n-button quaternary @click="handleLogin" class="w-300px h-45px login-button">
