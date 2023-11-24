@@ -7,7 +7,7 @@ import { useSettingState } from "~/store/setting";
 import { RepoContents } from "~/types";
 import { NInput } from "naive-ui";
 
-const [DefineFolder, ReusableFolder] = createReusableTemplate<{
+const [DefineLibrary, ReusableLibrary] = createReusableTemplate<{
   icon?: string;
   text?: string;
 }>();
@@ -53,10 +53,11 @@ function handleNewFolder() {
 }
 function handleContextmenuLibrary(event: MouseEvent, item: RepoContents[0]) {
   event.preventDefault();
+  const el = event.currentTarget as HTMLDivElement;
   currentLibrary.value = item;
   showDropdown.value = true;
-  dropDownPosition.x = event.clientX;
-  dropDownPosition.y = event.clientY;
+  dropDownPosition.x = el.offsetLeft + 20;
+  dropDownPosition.y = el.offsetTop + 50;
 }
 async function handleLibraryDropDownSelect(key: string) {
   showDropdown.value = false;
@@ -112,18 +113,20 @@ function handleBackLibrary() {
       </template>
     </Option>
 
-    <DefineFolder v-slot="{ $slots, text, icon }">
-      <div class="flex items-center p-8px rounded-8px cursor-pointer group select-none">
-        <Icon :icon="icon ? icon : 'ic:round-folder'" class="text-2rem color-blue-400" />
+    <DefineLibrary v-slot="{ $slots, text, icon }">
+      <div
+        class="flex items-center p-8px rounded-8px cursor-pointer group select-none hover:bg-#1d1d1d transition-all duration-50"
+      >
+        <Icon :icon="icon ? icon : 'ic:round-folder'" class="text-3rem color-blue-400" />
         <template v-if="$slots.default">
           <component :is="$slots.default" />
         </template>
         <div v-else class="ml-10px color-#989898 group-hover:color-white">{{ text }}</div>
       </div>
-    </DefineFolder>
+    </DefineLibrary>
 
     <template v-if="library.length">
-      <ReusableFolder
+      <ReusableLibrary
         v-for="item in library"
         :key="item.sha"
         :text="item.name"
