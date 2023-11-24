@@ -7,7 +7,7 @@
       <div class="w-300px">
         <LayoutAside />
       </div>
-      <div class="w[calc(100%-300px)] bg-#131313 rounded-8px ml-10px">
+      <div class="w[calc(100%-300px)] bg-#131313 rounded-8px ml-10px overflow-hidden">
         <slot></slot>
       </div>
     </div>

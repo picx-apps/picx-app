@@ -5,29 +5,22 @@ import type { UploadContent } from "../types/upload";
 import { Icon } from "@iconify/vue";
 import { invoke } from "@tauri-apps/api";
 import { open } from "@tauri-apps/api/dialog";
+import LibraryCard from "~/components/LibraryCard.vue";
 import { useSettingState } from "~/store/setting";
 import LineMdLoadingLoop from "~icons/line-md/loading-loop";
-import SystemUiconsUpload from "~icons/system-uicons/upload";
+import PhPlusBold from "~icons/ph/plus-bold";
+import PhUploadSimpleBold from "~icons/ph/upload-simple-bold";
 import { cloneDeepWith } from "lodash-es";
-import { NInput } from "naive-ui";
+import { NButton } from "naive-ui";
 
+const dialog = useDialog();
 const tempContents = ref<UploadContent[]>([]);
 const waitContents = ref<UploadContent[]>([]);
-const { currentPath, currentDirs, addUploadPath, removeUploadPath, updateDirs } = useUploadState();
+const { currentPath } = useUploadState();
 const { settings } = useSettingState();
 const { compress } = useGlobalState();
-const showSelectDir = ref(false);
 const message = useMessage();
 const { t } = useI18n();
-const enableFolder = ref(false);
-const folderName = ref("");
-const [DefineTemplate, ReusableTemplate] = createReusableTemplate<{
-  icon: string;
-  iconColor?: string;
-  label?: string;
-  isLink: boolean;
-}>();
-const folderNameInput = ref<InstanceType<typeof NInput>>();
 const uploading = ref(false);
 
 async function handleClickUpload() {
@@ -42,7 +35,46 @@ async function handleClickUpload() {
   })) as string[];
   if (!selected) return;
   await handleImages(selected);
-  showSelectDir.value = true;
+  const d = dialog.create({
+    title: t("node.select_upload_to_library"),
+    content: () => h(LibraryCard),
+    showIcon: false,
+    closable: false,
+    // negativeText: t("node.button.immediately"),
+    // positiveText: t("node.button.queue"),
+    action: () =>
+      h("div", { style: { display: "flex", alignItems: "center" } }, [
+        h(
+          NButton,
+          {
+            type: "default",
+            size: "large",
+            style: { marginRight: "10px" },
+            loading: uploading.value,
+            onClick: async () => {
+              d.loading = true;
+              uploading.value = true;
+              await handleBeginUpload();
+              d.destroy();
+            },
+          },
+          t("node.button.immediately"),
+        ),
+        h(
+          NButton,
+          {
+            type: "primary",
+            size: "large",
+            onClick: () => {
+              handleQueue();
+              d.destroy();
+            },
+          },
+          t("node.button.queue"),
+        ),
+      ]),
+    onAfterLeave: () => handleAfterLeave(),
+  });
 }
 async function handleImages(paths: string[]) {
   const watermark_setting = settings.value.watermark;
@@ -106,16 +138,15 @@ function handleQueue() {
       })),
     ),
   );
-  showSelectDir.value = false;
 }
 //上传
-async function handleUpload() {
+async function handleUpload(contents?: UploadContent[]) {
   uploading.value = true;
-  const contents = waitContents.value.map((item) => ({
+  const _contents = (contents ? contents : waitContents.value).map((item) => ({
     ...item,
     path: item.dir + "/" + item.path,
   }));
-  const res = await uploadFilesToGitHub(contents);
+  const res = await uploadFilesToGitHub(_contents);
   if (res?.status === 200) {
     message.warning("上传成功");
     waitContents.value = [];
@@ -125,39 +156,12 @@ async function handleUpload() {
 }
 //立即上传
 async function handleBeginUpload() {
-  //等待上传队列
-  waitContents.value.push(
-    ...cloneDeepWith(
-      tempContents.value.map((item) => ({
-        ...item,
-        dir: currentPath.value,
-      })),
-    ),
+  await handleUpload(
+    tempContents.value.map((item) => ({
+      ...item,
+      dir: currentPath.value,
+    })),
   );
-  showSelectDir.value = false;
-  handleUpload();
-}
-function handleOpenEnableFolder() {
-  enableFolder.value = !enableFolder.value;
-  nextTick(() => {
-    folderNameInput.value?.focus();
-  });
-}
-//创建文件夹
-async function handleCreateFolder() {
-  if (!folderName.value) {
-    enableFolder.value = false;
-    return;
-  }
-  const res = await useCreateFolder(currentPath.value ? `${currentPath.value}/` : currentPath.value + folderName.value);
-  if (res?.status === 201) {
-    enableFolder.value = false;
-    folderName.value = "";
-    await updateDirs();
-    updateNow();
-  } else {
-    message.error("创建失败");
-  }
 }
 </script>
 
@@ -166,17 +170,16 @@ name: upload
 </route>
 
 <template>
-  <n-scrollbar style="height: calc(100vh - 90px)">
-    <Header>
-      {{ t("node.title") }}
-      <template #optional>
-        <Icon @click="handleClickUpload" icon="majesticons:camera" class="text-1.6rem cursor-pointer" />
-      </template>
-    </Header>
+  <main ref="mainInstance" class="px-16px relative h-full flex flex-col">
+    <TopOperate></TopOperate>
 
-    <div class="px-16px pt-16px">
+    <n-scrollbar class="px-16px pt-16px flex-1">
       <div v-if="!waitContents.length">
-        <div class="text-center mt-0px">
+        <div
+          class="text-center mt-0px rounded-10px pb-20px cursor-pointer hover:b-#21214a select-none"
+          b="3px dashed gray-8"
+          @click="handleClickUpload"
+        >
           <Icon icon="fluent-emoji:astronaut-light" class="w-300px h-300px" />
 
           <div class="text-1.2rem font-bold color-gray-7">
@@ -185,7 +188,7 @@ name: upload
         </div>
       </div>
 
-      <div v-else class="mb-40px">
+      <template v-else>
         <div class="text-1.1rem font-bold color-gray-8 dark:color-gray-4 mb-20px flex items-center">
           <Icon icon="ph:circle-notch-bold" />
           <span class="ml-10px">
@@ -198,109 +201,29 @@ name: upload
           v-bind="item"
           @delete="() => waitContents.splice(index, 1)"
         />
-      </div>
+      </template>
+    </n-scrollbar>
+
+    <div class="text-center h-80px lh-80px" v-show="waitContents.length">
+      <n-button
+        type="primary"
+        size="large"
+        @click="handleClickUpload"
+        :render-icon="() => h(PhPlusBold)"
+        :disabled="uploading"
+        class="mr-10px"
+        >{{ t("node.button.continue_to_add") }}
+      </n-button>
+      <n-button
+        color="#3728b9"
+        size="large"
+        @click="handleUpload()"
+        :render-icon="() => h(uploading ? LineMdLoadingLoop : PhUploadSimpleBold)"
+        :disabled="uploading"
+        >{{ t("node.button.upload") }}
+      </n-button>
     </div>
-
-    <DefineTemplate v-slot="{ $slots, icon, label, isLink, iconColor }">
-      <div class="flex items-center cursor-pointer py-6px">
-        <div class="flex-1 flex items-center">
-          <Icon :icon="icon" class="text-3rem mr-10px" :class="[iconColor ? iconColor : 'color-blue-400']" />
-          <div class="max-w-200px">
-            <div class="color-gray-6" v-if="!$slots.input">
-              {{ label }}
-            </div>
-            <component :is="$slots.input" />
-          </div>
-        </div>
-
-        <Icon v-show="isLink" icon="material-symbols:arrow-forward-ios-rounded" class="text-16px color-gray-6" />
-      </div>
-    </DefineTemplate>
-
-    <n-drawer
-      v-model:show="showSelectDir"
-      placement="bottom"
-      height="80vh"
-      :drawer-style="{ borderRadius: '18px 18px 0 0' }"
-      @after-leave="handleAfterLeave"
-    >
-      <n-drawer-content>
-        <Icon
-          @click="() => (showSelectDir = false)"
-          icon="material-symbols:close"
-          class="float-right text-1.2rem cursor-pointer hover:color-primary-400 select-none"
-        />
-
-        <div class="my-20px">
-          <div class="text-1.1rem font-bold flex items-center">
-            {{ t("path") }}: {{ currentPath ? currentPath : "Root" }}
-          </div>
-        </div>
-
-        <n-scrollbar class="h[calc(100%-140px)]">
-          <div class="flex justify-between">
-            <span class="cursor-pointer color-primary-300" @click="handleOpenEnableFolder">
-              {{ t("new_folder") }}
-            </span>
-
-            <div>
-              <span v-if="currentPath" class="cursor-pointer color-primary-300" @click="removeUploadPath(currentPath)">
-                {{ t("back") }}
-              </span>
-            </div>
-          </div>
-
-          <!-- 新建文件夹 -->
-          <ReusableTemplate v-if="enableFolder" icon="ic:round-folder" is-link>
-            <template #input>
-              <n-input
-                v-if="enableFolder"
-                ref="folderNameInput"
-                v-model:value="folderName"
-                :placeholder="t('please_folder')"
-                @blur="handleCreateFolder"
-              />
-            </template>
-          </ReusableTemplate>
-
-          <!-- 文件夹列表 -->
-          <template v-if="currentDirs.length">
-            <ReusableTemplate
-              v-for="item in currentDirs"
-              :key="item.sha"
-              :label="item.name"
-              icon="ic:round-folder"
-              is-link
-              @click="
-                () => {
-                  addUploadPath(item.path);
-                }
-              "
-            />
-          </template>
-
-          <!-- 空文件夹 -->
-          <ReusableTemplate v-else label="Empty" icon="ic:round-folder-open" icon-color="color-blue-100" is-link />
-        </n-scrollbar>
-
-        <div class="w-full text-center">
-          <n-button type="primary" ghost class="mr-10px" @click="handleQueue">{{ t("node.button.queue") }}</n-button>
-          <n-button type="primary" @click="handleBeginUpload">{{ t("node.button.immediately") }}</n-button>
-        </div>
-      </n-drawer-content>
-    </n-drawer>
-
-    <Tabbar />
-  </n-scrollbar>
-  <div class="text-center fixed bottom-100px w-full" v-show="waitContents.length">
-    <n-button
-      type="primary"
-      @click="handleUpload"
-      :render-icon="() => h(uploading ? LineMdLoadingLoop : SystemUiconsUpload)"
-      :disabled="uploading"
-      >{{ t("node.button.upload") }}
-    </n-button>
-  </div>
+  </main>
 </template>
 
 <style lang="less" scoped></style>

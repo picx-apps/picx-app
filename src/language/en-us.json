@@ -15,12 +15,14 @@
   },
   "node": {
     "title": "Upload",
-    "info": "UPLOAD YOUR PHOTO",
+    "info": "Command + V / Drag / Click To Upload",
     "wait_upload_number": "Wait upload {number} draw",
+    "select_upload_to_library": "Select your upload to library",
     "button": {
-      "queue": "add queue",
-      "immediately": "immediately",
-      "upload": "upload"
+      "queue": "Add Queue",
+      "immediately": "Immediately",
+      "upload": "Upload",
+      "continue_to_add": "Continue to add"
     }
   },
   "user": {

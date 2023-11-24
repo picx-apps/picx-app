@@ -15,12 +15,14 @@
   },
   "node": {
     "title": "上传",
-    "info": "上传你的照片",
+    "info": "Command + V / 拖拽 / 点击上传",
     "wait_upload_number": "待上传 {number} 张",
+    "select_upload_to_library": "选择你的上传库",
     "button": {
       "queue": "添加队列",
       "immediately": "立即上传",
-      "upload": "上传"
+      "upload": "上传",
+      "continue_to_add": "继续添加"
     }
   },
   "user": {
