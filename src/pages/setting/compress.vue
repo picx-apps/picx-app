@@ -49,7 +49,7 @@ const [DefineTemplate, ReuseTemplate] = createReusableTemplate<{
     <div class="px-16px">
       <div class="option">
         <div class="flex flex-col">
-          <span class="text-.9rem color-gray-6 dark:color-white">{{ $t("compress.enable") }}</span>
+          <span class="text-1rem color-white font-bold mb-6px">{{ $t("compress.enable") }}</span>
           <span class="text-.8rem color-gray-4">{{ $t("compress.enable_info") }}</span>
         </div>
         <n-switch v-model:value="compress.enable"></n-switch>

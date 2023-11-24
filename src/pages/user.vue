@@ -31,13 +31,8 @@ name: user
 </route>
 
 <template>
-  <n-scrollbar style="height: 100vh">
-    <Header>
-      {{ t("user.name") }}
-      <template #optional>
-        <Icon icon="prime:inbox" class="text-26px ml-6px cursor-pointer" />
-      </template>
-    </Header>
+  <main class="px-16px">
+    <TopOperate />
 
     <div class="user-container mt-15px">
       <!-- 用户信息 -->
@@ -118,9 +113,7 @@ name: user
         }}</n-button>
       </div>
     </div>
-
-    <Tabbar />
-  </n-scrollbar>
+  </main>
 </template>
 
 <style lang="less" scoped>

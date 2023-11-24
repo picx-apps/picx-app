@@ -15,4 +15,7 @@ export const themeOverrides: GlobalThemeOverrides = {
     borderRadius: "6px",
     // color: "#1b153b",
   },
+  Switch: {
+    railColorActive: "#3DE673FF",
+  },
 };
