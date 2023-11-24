@@ -1,7 +1,6 @@
 <script lang="ts" setup>
 import { Icon } from "@iconify/vue";
 import { writeText } from "@tauri-apps/api/clipboard";
-import { useRouteQuery } from "@vueuse/router";
 import { showImagePreview } from "~/components/image-preview";
 import { HomeImageDropDownOptions } from "~/constant";
 import { useGlobalState } from "~/store";
@@ -15,7 +14,6 @@ const { currentCDN } = useSettingState();
 const { t } = useI18n();
 const message = useMessage();
 const dialog = useDialog();
-const path = useRouteQuery("path", "", { transform: String });
 const latest = computed(() => images.value.slice(0, 5));
 const latestDebounced = refDebounced(latest, 300);
 const mainInstance = ref<HTMLElement>();
@@ -120,8 +118,9 @@ name: home
 </route>
 
 <template>
-  <main ref="mainInstance">
-    <div class="latest px-16px">
+  <main ref="mainInstance" class="px-16px">
+    <TopOperate></TopOperate>
+    <div class="latest">
       <div class="title">
         <div flex-1>{{ t("home.latest") }}</div>
       </div>
@@ -153,7 +152,7 @@ name: home
     </div>
 
     <!-- 图库 -->
-    <div class="image-list px-16px mb-100px">
+    <div class="image-list mb-100px">
       <div class="title">
         <div flex-1>{{ t("home.library") }}</div>
         <!-- <Icon

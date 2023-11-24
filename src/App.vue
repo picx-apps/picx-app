@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { useRouteState } from "./store/route";
 import { useSettingState } from "./store/setting";
 import { themeOverrides } from "./theme";
 import hljs from "highlight.js/lib/core";
@@ -6,6 +7,12 @@ import json from "highlight.js/lib/languages/json";
 import { darkTheme, lightTheme } from "naive-ui";
 
 hljs.registerLanguage("json", json);
+const route = useRoute();
+const { addHistory } = useRouteState();
+
+watch(route, (value) => {
+  addHistory(value.path);
+});
 
 onMounted(() => {
   useSettingState().autoCreateOfSettings();

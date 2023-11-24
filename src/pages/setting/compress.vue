@@ -23,10 +23,6 @@ const [DefineTemplate, ReuseTemplate] = createReusableTemplate<{
   label: CompressionQuality;
   value: keyof typeof CompressionQuality;
 }>();
-
-watchEffect(() => {
-  console.log("compress", compress.value.enable);
-});
 </script>
 
 <template>

@@ -56,6 +56,15 @@ export const useLibraryState = createGlobalState(() => {
     }
     return false;
   }
+  function addImagePath(value: string) {
+    imagePath.value.push(value);
+  }
+  function removeImagePath(value: string) {
+    const index = imagePath.value.indexOf(value);
+    if (index !== -1) {
+      imagePath.value.splice(index, 1);
+    }
+  }
 
   watch(
     [now, currentPath],
@@ -65,5 +74,15 @@ export const useLibraryState = createGlobalState(() => {
     { immediate: true },
   );
 
-  return { library, images, imagePath, currentPath, contents, createLibrary, removeFile };
+  return {
+    library,
+    images,
+    imagePath,
+    currentPath,
+    contents,
+    createLibrary,
+    removeFile,
+    addImagePath,
+    removeImagePath,
+  };
 });

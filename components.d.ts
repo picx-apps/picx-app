@@ -27,7 +27,7 @@ declare module 'vue' {
     NDropdown: typeof import('naive-ui')['NDropdown']
     NForm: (typeof import("naive-ui"))["NForm"]
     NFormItem: (typeof import("naive-ui"))["NFormItem"]
-    NIcon: (typeof import("naive-ui"))["NIcon"]
+    NIcon: typeof import('naive-ui')['NIcon']
     NImage: typeof import('naive-ui')['NImage']
     NImageGroup: typeof import('naive-ui')['NImageGroup']
     NInput: typeof import('naive-ui')['NInput']
@@ -46,5 +46,7 @@ declare module 'vue' {
     TabbarItem: (typeof import("./src/components/tabbar/TabbarItem.vue"))["default"]
     TabbarTabbar: typeof import('./src/components/tabbar/Tabbar.vue')['default']
     TabbarTabbarItem: typeof import('./src/components/tabbar/TabbarItem.vue')['default']
+    TopOperate: typeof import('./src/components/TopOperate.vue')['default']
+    TopOptional: typeof import('./src/components/TopOptional.vue')['default']
   }
 }
