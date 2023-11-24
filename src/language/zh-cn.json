@@ -7,7 +7,10 @@
     "title": "首页",
     "latest": "最新",
     "library": "图库",
-    "library_empty": "暂无下级目录"
+    "library_empty": "暂无下级目录",
+    "new": "创建新图库",
+    "create_library": "创建图库",
+    "placeholder": "请输入名称"
   },
   "node": {
     "title": "上传",

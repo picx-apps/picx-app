@@ -1,4 +1,6 @@
 import { CDN } from "../store/setting";
+import PhShareNetworkFill from "~icons/ph/share-network-fill";
+import PhTrashSimpleFill from "~icons/ph/trash-simple-fill";
 import { DropdownOption } from "naive-ui";
 
 export const HomeImageDropDownOptions: DropdownOption[] = [
@@ -18,8 +20,14 @@ export const HomeImageDropDownOptions: DropdownOption[] = [
 
 export const FolderDropDownOptions: DropdownOption[] = [
   {
-    label: "删除",
+    icon: () => h(PhTrashSimpleFill),
+    label: "Delete",
     key: "delete",
+  },
+  {
+    icon: () => h(PhShareNetworkFill),
+    label: "Share Library",
+    key: "Share",
   },
 ];
 
