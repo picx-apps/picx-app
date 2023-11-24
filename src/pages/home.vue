@@ -1,61 +1,34 @@
 <script lang="ts" setup>
-import { showImagePreview } from "../components/image-preview";
-import { HomeImageDropDownOptions } from "../constant";
-import { useGlobalState } from "../store";
-import { useSettingState } from "../store/setting";
-import { RepoContents } from "../types";
 import { Icon } from "@iconify/vue";
 import { writeText } from "@tauri-apps/api/clipboard";
-import { isArray } from "lodash-es";
-import { Octokit } from "octokit";
+import { useRouteQuery } from "@vueuse/router";
+import { showImagePreview } from "~/components/image-preview";
+import { HomeImageDropDownOptions } from "~/constant";
+import { useGlobalState } from "~/store";
+import { useLibraryState } from "~/store/library";
+import { useSettingState } from "~/store/setting";
 
-const { user, access_token, repo_name, branch_name, imagePaths, addImagePath, removeImagePath } = useGlobalState();
-const { settings, currentCDN } = useSettingState();
-const repoContent = ref<RepoContents>([]);
-const octokit = new Octokit({
-  auth: access_token.value,
-});
-const [dirs, files] = useRepoContent(repoContent);
-const latest = computed(() => files.value.slice(0, 5));
+const { images, removeFile } = useLibraryState();
+const { user, repo_name, branch_name } = useGlobalState();
+const { currentCDN } = useSettingState();
+
+const { t } = useI18n();
+const message = useMessage();
+const dialog = useDialog();
+const path = useRouteQuery("path", "", { transform: String });
+const latest = computed(() => images.value.slice(0, 5));
 const latestDebounced = refDebounced(latest, 300);
-const showLatest = ref(false);
-const showDirs = ref(true);
-const showImages = ref(true);
+const mainInstance = ref<HTMLElement>();
+const { width } = useElementSize(mainInstance);
+const maxRowNumber = computed(() => Math.floor(width.value / 130));
+const gridColGap = computed(() => Math.floor((width.value - maxRowNumber.value * 120) / maxRowNumber.value) + "px");
+const currentImage = ref<(typeof images.value)[0] | null>(null);
 const showDropdown = ref(false);
 const dropDownPosition = reactive({
   x: 0,
   y: 0,
 });
-const message = useMessage();
-const path = computed(() => (imagePaths.value.length > 0 ? imagePaths.value[imagePaths.value.length - 1] : ""));
-const currentImage = ref<(typeof repoContent.value)[0] | null>(null);
-const activeImageDelete = ref(false);
-const { width } = useWindowSize();
-const maxRowNumber = computed(() => Math.floor(width.value / 130));
-const gridColGap = computed(() => Math.floor((width.value - maxRowNumber.value * 120) / maxRowNumber.value) + "px");
-const toLocaleUpperCasePath = computed(() =>
-  path.value.split("/")[path.value.split("/").length - 1].toLocaleUpperCase(),
-);
-const { t } = useI18n();
-const refresh = ref(false);
 
-async function contents() {
-  const res = await octokit.request("GET /repos/{owner}/{repo}/contents/{path}", {
-    owner: user.value?.login!,
-    repo: repo_name.value,
-    ref: branch_name.value,
-    path: path.value,
-    t: now.value,
-  });
-  if (res.status === 200) {
-    const data = isArray(res.data) ? res.data : [res.data];
-    repoContent.value = data.filter((item) => !settings.value.recycleBin[item.path]);
-    showDirs.value = true;
-    showLatest.value = true;
-    showImages.value = true;
-    refresh.value = false;
-  }
-}
 function transformURL(path: string) {
   const uri = replacePlaceholder(currentCDN.value?.value!, {
     owner: user.value?.login!,
@@ -65,32 +38,17 @@ function transformURL(path: string) {
   });
   return uri;
 }
-watch(
-  now,
-  () => {
-    contents();
-  },
-  { immediate: true },
-);
-function handleClickDir(item: (typeof repoContent.value)[0]) {
-  repoContent.value = [];
-  addImagePath(item.path);
-  contents();
-}
-function handleClickBackUp() {
-  removeImagePath(path.value);
-  contents();
-}
-function handleClickImage(event: MouseEvent, item: (typeof repoContent.value)[0]) {
+function handleClickImage(event: MouseEvent, item: (typeof images.value)[0]) {
   event.preventDefault();
   currentImage.value = item;
   showDropdown.value = true;
   dropDownPosition.x = event.clientX;
   dropDownPosition.y = event.clientY;
 }
-function handleImageOutside() {
-  showDropdown.value = false;
-  currentImage.value = null;
+function handleImage(index: number) {
+  if (!images.value.length) return;
+  const result = images.value.map((item) => transformURL(item.path));
+  showImagePreview({ images: result, startPosition: index });
 }
 async function handleImageDropDownSelect(key: string) {
   showDropdown.value = false;
@@ -119,33 +77,41 @@ async function handleImageDropDownSelect(key: string) {
       });
   }
   if (key === "delete") {
-    activeImageDelete.value = true;
+    handleDeleteImage();
   }
 }
-async function handleDeleteImage() {
-  activeImageDelete.value = false;
-  const { name, path, sha } = currentImage.value!;
-  const res = await octokit.request("DELETE /repos/{owner}/{repo}/contents/{path}", {
-    owner: user.value!.login,
-    repo: repo_name.value,
-    path,
-    sha,
-    message: "picx delete file " + name,
+function handleDeleteImage() {
+  const d = dialog.create({
+    title: "Warning",
+    content: t("home.delete_image_title"),
+    showIcon: false,
+    closable: false,
+    negativeText: "Cancel",
+    positiveText: "Ok",
+    positiveButtonProps: {
+      type: "primary",
+      size: "large",
+    },
+    negativeButtonProps: {
+      type: "primary",
+      size: "large",
+    },
+    onPositiveClick: async () => {
+      if (!currentImage.value) return;
+      d.loading = true;
+      const { path, sha } = currentImage.value;
+      await removeFile({
+        path,
+        sha,
+      });
+      updateNow();
+    },
+    onNegativeClick: () => {},
   });
-  if (res.status === 200) {
-    message.warning("删除成功", {
-      icon: () =>
-        h(Icon, {
-          icon: "icon-park-solid:grinning-face-with-squinting-eyes",
-        }),
-    });
-    updateNow();
-  }
 }
-function handleImage(index: number) {
-  if (!files.value.length) return;
-  const images = files.value.map((item) => transformURL(item.path));
-  showImagePreview({ images, startPosition: index });
+function handleImageOutside() {
+  showDropdown.value = false;
+  currentImage.value = null;
 }
 </script>
 
@@ -153,6 +119,158 @@ function handleImage(index: number) {
 name: home
 </route>
 
-<template><div>hello</div></template>
+<template>
+  <main ref="mainInstance">
+    <div class="latest px-16px">
+      <div class="title">
+        <div flex-1>{{ t("home.latest") }}</div>
+      </div>
 
-<style lang="less" scoped></style>
+      <n-scrollbar x-scrollable>
+        <div class="scroll-content h-166px">
+          <n-image-group>
+            <div v-for="item in latestDebounced" :key="item.sha" class="image-container">
+              <n-image
+                width="260"
+                height="160"
+                :src="transformURL(item.path)"
+                lazy
+                object-fit="cover"
+                class="rounded-lg"
+              />
+              <div class="text-overlay"></div>
+              <div class="absolute top-10px left-10px font-bold color-white text-11px flex items-center">
+                <Icon icon="material-symbols:highlighter-size-1" class="text-16px" />
+                {{ bytesToMB(item.size) }}mb
+              </div>
+              <div class="absolute bottom-10px left-10px color-white font-bold text-11px">
+                {{ item.name }}
+              </div>
+            </div>
+          </n-image-group>
+        </div>
+      </n-scrollbar>
+    </div>
+
+    <!-- 图库 -->
+    <div class="image-list px-16px mb-100px">
+      <div class="title">
+        <div flex-1>{{ t("home.library") }}</div>
+        <!-- <Icon
+            icon="material-symbols:arrow-drop-down-circle"
+            class="text-18px cursor-pointer select-none"
+            @click="showImages = !showImages"
+          /> -->
+      </div>
+
+      <n-collapse-transition>
+        <div class="image-list-container">
+          <n-image-group>
+            <div
+              class="w-110px h-130px relative"
+              v-for="(item, index) in images"
+              :key="item.sha"
+              @contextmenu="handleClickImage($event, item)"
+            >
+              <n-image
+                :src="transformURL(item.path)"
+                lazy
+                object-fit="cover"
+                preview-disabled
+                class="rounded-lg w-100% h-100%"
+                :intersection-observer-options="{
+                  root: '#app',
+                }"
+                @click="handleImage(index)"
+              />
+              <div class="image-list__filename">
+                {{ item.name }}
+              </div>
+            </div>
+          </n-image-group>
+        </div>
+      </n-collapse-transition>
+    </div>
+
+    <n-dropdown
+      placement="bottom-start"
+      trigger="manual"
+      :x="dropDownPosition.x"
+      :y="dropDownPosition.y"
+      :options="HomeImageDropDownOptions"
+      :show="showDropdown"
+      @select="handleImageDropDownSelect"
+      @clickoutside="handleImageOutside"
+    />
+  </main>
+</template>
+
+<style lang="less" scoped>
+.image-list__filename {
+  width: 80px;
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  color: white;
+  font-weight: bold;
+  font-size: 11px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.text-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(120deg, #dd62f943 16%, #9499ff78, #4d56fd5b);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 0.5rem;
+}
+.image-container {
+  width: 260px;
+  height: 160px;
+  position: relative;
+  display: inline-block;
+  & + & {
+    margin-left: 16px;
+  }
+}
+.image-list-container {
+  display: grid;
+  grid-template-columns: repeat(v-bind(maxRowNumber), minmax(0, 1fr));
+  grid-row-gap: 15px;
+  grid-column-gap: v-bind(gridColGap);
+  cursor: pointer;
+}
+:deep(.image-list-container) .n-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: all 0.3s;
+  &:hover {
+    transform: scale(1.1);
+  }
+}
+
+.scroll-content {
+  white-space: nowrap;
+  display: inline-block;
+}
+.latest .title,
+.image-list .title {
+  font-size: 18px;
+  font-weight: bold;
+  letter-spacing: 1px;
+  color: #252525;
+  margin: 15px 0 10px 0;
+  display: flex;
+  align-items: center;
+  .dark & {
+    color: white;
+  }
+}
+</style>

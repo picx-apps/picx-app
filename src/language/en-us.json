@@ -10,7 +10,8 @@
     "library_empty": "No more",
     "new": "New",
     "create_library": "Create Library",
-    "placeholder": "Please Input Name"
+    "placeholder": "Please Input Name",
+    "delete_image_title": "Whether to delete"
   },
   "node": {
     "title": "Upload",

@@ -3,6 +3,12 @@ import { useSettingState } from "./setting";
 import { RepoContents } from "~/types";
 import { isArray } from "lodash-es";
 
+export interface RemoveFileProps {
+  path: string;
+  sha: string;
+  message?: string;
+}
+
 const { user, octokit, repo_name, branch_name } = useGlobalState();
 const { settings } = useSettingState();
 
@@ -37,6 +43,19 @@ export const useLibraryState = createGlobalState(() => {
     }
     return false;
   }
+  async function removeFile(data: RemoveFileProps) {
+    const res = await octokit.value.request("DELETE /repos/{owner}/{repo}/contents/{path}", {
+      owner: user.value!.login,
+      repo: repo_name.value,
+      path: data.path,
+      sha: data.sha,
+      message: data.message ? data.message : "picx delete file " + data.path,
+    });
+    if (res.status === 200) {
+      return true;
+    }
+    return false;
+  }
 
   watch(
     [now, currentPath],
@@ -46,5 +65,5 @@ export const useLibraryState = createGlobalState(() => {
     { immediate: true },
   );
 
-  return { library, images, imagePath, currentPath, contents, createLibrary };
+  return { library, images, imagePath, currentPath, contents, createLibrary, removeFile };
 });

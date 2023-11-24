@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { Icon } from "@iconify/vue";
+import { useChangeCase } from "@vueuse/integrations/useChangeCase";
 import { FolderDropDownOptions } from "~/constant";
 import { useLibraryState } from "~/store/library";
 import { useSettingState } from "~/store/setting";
@@ -13,8 +14,9 @@ const [DefineFolder, ReusableFolder] = createReusableTemplate<{
 
 const name = ref("");
 const { t } = useI18n();
+const router = useRouter();
 const dialog = useDialog();
-const { library, imagePath, createLibrary } = useLibraryState();
+const { library, imagePath, currentPath, createLibrary } = useLibraryState();
 const { settings, updateSettingsFile } = useSettingState();
 const showDropdown = ref(false);
 const dropDownPosition = reactive({
@@ -29,7 +31,7 @@ function handleNewFolder() {
     title: t("home.create_library"),
     showIcon: false,
     closable: false,
-    positiveText: t("confirm"),
+    positiveText: useChangeCase(t("confirm"), "capitalCase").value,
     positiveButtonProps: {
       type: "primary",
       size: "large",
@@ -77,6 +79,14 @@ function handleLibraryOutside() {
   showDropdown.value = false;
   currentLibrary.value = null;
 }
+function handleClickLibrary(value: string) {
+  imagePath.value.push(value);
+  router.push({ name: "home", query: { path: currentPath.value } });
+}
+function handleBackLibrary() {
+  imagePath.value.pop();
+  router.push({ name: "home", query: { path: currentPath.value } });
+}
 </script>
 
 <template>
@@ -88,7 +98,7 @@ function handleLibraryOutside() {
             <Icon
               icon="ph:arrow-left-bold"
               class="text-1.3rem mr-10px hover:color-white cursor-pointer"
-              @click="() => imagePath.pop()"
+              @click="handleBackLibrary"
             />
           </template>
           <span> {{ t("back") }} </span>
@@ -117,7 +127,7 @@ function handleLibraryOutside() {
         v-for="item in library"
         :key="item.sha"
         :text="item.name"
-        @click="() => imagePath.push(item.path)"
+        @click="handleClickLibrary(item.path)"
         @contextmenu="handleContextmenuLibrary($event, item)"
       />
     </template>

@@ -10,7 +10,8 @@
     "library_empty": "暂无下级目录",
     "new": "创建新图库",
     "create_library": "创建图库",
-    "placeholder": "请输入名称"
+    "placeholder": "请输入名称",
+    "delete_image_title": "是否删除"
   },
   "node": {
     "title": "上传",
