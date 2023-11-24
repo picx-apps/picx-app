@@ -34,7 +34,7 @@ const menu = [
         :text="item.text"
         :is-current="route.name === item.name"
         @click="() => router.push({ name: item.name })"
-        class="hover:color-white"
+        class="hover:color-white cursor-pointer"
       />
     </div>
 

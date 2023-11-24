@@ -6,7 +6,8 @@
   "home": {
     "title": "Home",
     "latest": "LATEST",
-    "library": "LIBRARY"
+    "library": "LIBRARY",
+    "library_empty": "No more"
   },
   "node": {
     "title": "Upload",

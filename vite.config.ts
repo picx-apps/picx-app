@@ -7,13 +7,20 @@ import AutoImport from "unplugin-auto-import/vite";
 import Icons from "unplugin-icons/vite";
 import { NaiveUiResolver } from "unplugin-vue-components/resolvers";
 import Components from "unplugin-vue-components/vite";
+import { transformLazyShow } from "v-lazy-show";
 import { defineConfig } from "vite";
 import Pages from "vite-plugin-pages";
 
 // https://vitejs.dev/config/
 export default defineConfig(() => ({
   plugins: [
-    vue(),
+    vue({
+      template: {
+        compilerOptions: {
+          nodeTransforms: [transformLazyShow],
+        },
+      },
+    }),
     vueJsx(),
     Pages(),
     UnoCSS(),

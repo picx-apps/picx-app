@@ -6,7 +6,8 @@
   "home": {
     "title": "首页",
     "latest": "最新",
-    "library": "图库"
+    "library": "图库",
+    "library_empty": "暂无下级目录"
   },
   "node": {
     "title": "上传",

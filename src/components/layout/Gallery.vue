@@ -1,55 +1,33 @@
 <script lang="ts" setup>
 import { Icon } from "@iconify/vue";
-import { useGlobalState } from "~/store";
-import { useSettingState } from "~/store/setting";
-import { RepoContents } from "~/types";
-import { isArray } from "lodash-es";
+import { useGalleryState } from "~/store/gallery";
 
-const repoContent = ref<RepoContents>([]);
-const [dirs] = useRepoContent(repoContent);
-const { settings } = useSettingState();
-const { user, octokit, repo_name, branch_name, imagePaths } = useGlobalState();
-const path = computed(() => (imagePaths.value.length > 0 ? imagePaths.value[imagePaths.value.length - 1] : ""));
 const [DefineFolder, ReusableFolder] = createReusableTemplate<{
   icon?: string;
   text: string;
 }>();
 
-async function contents() {
-  const res = await octokit.value.request("GET /repos/{owner}/{repo}/contents/{path}", {
-    owner: user.value?.login!,
-    repo: repo_name.value,
-    ref: branch_name.value,
-    path: path.value,
-    t: now.value,
-  });
-  if (res.status === 200) {
-    const data = isArray(res.data) ? res.data : [res.data];
-    repoContent.value = data.filter((item) => !settings.value.recycleBin[item.path]);
-  }
-}
-watch(
-  now,
-  () => {
-    contents();
-  },
-  { immediate: true },
-);
+const { t } = useI18n();
+const { gallery, imagePath } = useGalleryState();
 </script>
 
 <template>
   <div>
-    <Option icon="ph:circles-four-fill" text="图库夹">
+    <Option icon="ph:circles-four-fill" :text="t('home.library')" class="cursor-default">
       <template #optional>
-        <n-tooltip placement="top" trigger="hover">
+        <n-tooltip placement="top" trigger="hover" v-if="imagePath.length">
           <template #trigger>
-            <Icon icon="ph:arrow-left-bold" class="text-1.3rem mr-10px hover:color-white" />
+            <Icon
+              icon="ph:arrow-left-bold"
+              class="text-1.3rem mr-10px hover:color-white cursor-pointer"
+              @click="() => imagePath.pop()"
+            />
           </template>
           <span> Back </span>
         </n-tooltip>
         <n-tooltip placement="top" trigger="hover">
           <template #trigger>
-            <Icon icon="ph:plus-bold" class="text-1.3rem hover:color-white" />
+            <Icon icon="ph:plus-bold" class="text-1.3rem hover:color-white cursor-pointer" />
           </template>
           <span> New </span>
         </n-tooltip>
@@ -59,12 +37,21 @@ watch(
     <DefineFolder v-slot="{ text, icon }">
       <div class="flex items-center p-8px rounded-8px cursor-pointer group">
         <Icon :icon="icon ? icon : 'ic:round-folder'" class="text-2rem color-blue-400" />
-        <div class="ml-10px color-#545454 group-hover:color-white">{{ text }}</div>
+        <div class="ml-10px color-#989898 group-hover:color-white">{{ text }}</div>
       </div>
     </DefineFolder>
 
-    <ReusableFolder icon="ph:star-duotone" text="Root" />
-    <ReusableFolder v-for="item in dirs" :key="item.sha" :text="item.name" />
+    <template v-if="gallery.length">
+      <ReusableFolder
+        v-for="item in gallery"
+        :key="item.sha"
+        :text="item.name"
+        @click="() => imagePath.push(item.path)"
+      />
+    </template>
+    <template v-else>
+      <div class="p-8px color-gray text-center">{{ t("home.library_empty") }}</div>
+    </template>
   </div>
 </template>
 
