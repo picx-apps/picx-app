@@ -40,8 +40,6 @@ async function handleClickUpload() {
     content: () => h(LibraryCard),
     showIcon: false,
     closable: false,
-    // negativeText: t("node.button.immediately"),
-    // positiveText: t("node.button.queue"),
     action: () =>
       h("div", { style: { display: "flex", alignItems: "center" } }, [
         h(

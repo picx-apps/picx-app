@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import { Icon } from "@iconify/vue";
-import { useChangeCase } from "@vueuse/integrations/useChangeCase";
 import { FolderDropDownOptions } from "~/constant";
 import { useLibraryState } from "~/store/library";
 import { useSettingState } from "~/store/setting";
@@ -31,7 +30,7 @@ function handleNewFolder() {
     title: t("home.create_library"),
     showIcon: false,
     closable: false,
-    positiveText: useChangeCase(t("confirm"), "capitalCase").value,
+    positiveText: t("confirm"),
     positiveButtonProps: {
       type: "primary",
       size: "large",
