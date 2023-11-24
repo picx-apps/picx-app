@@ -64,9 +64,11 @@
       {
         "fullscreen": false,
         "resizable": true,
-        "title": "Welcome to picx",
+        "title": "",
         "width": 1235,
-        "height": 930
+        "height": 930,
+        "theme": "Dark",
+        "titleBarStyle": "Overlay"
       }
     ]
   }

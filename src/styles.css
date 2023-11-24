@@ -52,7 +52,7 @@ html {
 }
 
 html.dark {
-  background: #1f2122;
+  background: #000000;
   color: white;
 
   --tabbar-background: linear-gradient(120deg, #49c7fc, #9369f8, #c05cf8);

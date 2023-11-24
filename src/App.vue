@@ -23,10 +23,12 @@ onMounted(() => {
               <KeepAlive>
                 <Suspense>
                   <!-- 主要内容 -->
-                  <component :is="Component"></component>
+                  <Layout>
+                    <component :is="Component"></component>
 
-                  <!-- 加载中状态 -->
-                  <template #fallback> 正在加载... </template>
+                    <!-- 加载中状态 -->
+                    <template #fallback> 正在加载... </template>
+                  </Layout>
                 </Suspense>
               </KeepAlive>
               <!-- </n-theme-editor> -->

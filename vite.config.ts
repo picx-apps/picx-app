@@ -42,6 +42,7 @@ export default defineConfig(() => ({
         /\.vue$/,
         /\.vue\?vue/, // .vue
       ],
+      directoryAsNamespace: true,
     }),
     Icons({
       autoInstall: true,
