@@ -19,19 +19,19 @@ onMounted(() => {
         <n-notification-provider>
           <n-message-provider>
             <n-dialog-provider>
-              <!-- <n-theme-editor> -->
-              <KeepAlive>
-                <Suspense>
-                  <!-- 主要内容 -->
-                  <Layout>
-                    <component :is="Component"></component>
+              <n-theme-editor>
+                <KeepAlive>
+                  <Suspense>
+                    <!-- 主要内容 -->
+                    <Layout>
+                      <component :is="Component"></component>
 
-                    <!-- 加载中状态 -->
-                    <template #fallback> 正在加载... </template>
-                  </Layout>
-                </Suspense>
-              </KeepAlive>
-              <!-- </n-theme-editor> -->
+                      <!-- 加载中状态 -->
+                      <template #fallback> 正在加载... </template>
+                    </Layout>
+                  </Suspense>
+                </KeepAlive>
+              </n-theme-editor>
             </n-dialog-provider>
           </n-message-provider>
         </n-notification-provider>

@@ -4,11 +4,11 @@ export const themeOverrides: GlobalThemeOverrides = {
   common: {
     borderRadius: "8px",
     heightMedium: "38px",
-    // baseColor: "#1b153b",
-    primaryColor: "#5e14ff",
-    primaryColorHover: "#6e44f9",
-    primaryColorPressed: "#5e14ff",
-    primaryColorSuppl: "#5e14ff",
+    baseColor: "#FFFFFFFF",
+    primaryColor: "#6F6F6FA6",
+    primaryColorHover: "#848484C7",
+    primaryColorPressed: "#484848A6",
+    primaryColorSuppl: "#848484A6",
   },
   Input: {
     heightLarge: "50px",

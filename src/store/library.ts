@@ -6,11 +6,11 @@ import { isArray } from "lodash-es";
 const { user, octokit, repo_name, branch_name } = useGlobalState();
 const { settings } = useSettingState();
 
-export const useGalleryState = createGlobalState(() => {
+export const useLibraryState = createGlobalState(() => {
   const imagePath = ref<string[]>([]);
   const contents = ref<RepoContents>([]);
-  const [gallery, images] = useRepoContent(contents);
-  const currentPath = computed(() => imagePath.value[imagePath.value.length - 1]);
+  const [library, images] = useRepoContent(contents);
+  const currentPath = computed(() => imagePath.value[imagePath.value.length - 1] || "");
 
   async function syncContents() {
     const res = await octokit.value.request("GET /repos/{owner}/{repo}/contents/{path}", {
@@ -26,6 +26,17 @@ export const useGalleryState = createGlobalState(() => {
       contents.value = data.filter((item) => !settings.value.recycleBin[item.path]);
     }
   }
+  async function createLibrary(name: string) {
+    if (!name) return;
+    const path = (currentPath.value ? `${currentPath.value}/` : currentPath.value) + name;
+    const res = await useCreateFolder(path);
+    if (res?.status === 201) {
+      await syncContents();
+      updateNow();
+      return true;
+    }
+    return false;
+  }
 
   watch(
     [now, currentPath],
@@ -35,5 +46,5 @@ export const useGalleryState = createGlobalState(() => {
     { immediate: true },
   );
 
-  return { gallery, images, imagePath, currentPath, contents };
+  return { library, images, imagePath, currentPath, contents, createLibrary };
 });
