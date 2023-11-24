@@ -45,7 +45,7 @@ const menu = [
         height: `calc(100% - ${height + 30}px)`,
       }"
     >
-      <LayoutGallery />
+      <LayoutLibrary />
     </div>
   </div>
 </template>

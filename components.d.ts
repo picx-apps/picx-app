@@ -15,6 +15,7 @@ declare module 'vue' {
     LayoutAside: typeof import('./src/components/layout/Aside.vue')['default']
     LayoutGallery: typeof import('./src/components/layout/Gallery.vue')['default']
     LayoutHeader: typeof import('./src/components/layout/Header.vue')['default']
+    LayoutLibrary: typeof import('./src/components/layout/Library.vue')['default']
     NButton: typeof import('naive-ui')['NButton']
     NCode: (typeof import("naive-ui"))["NCode"]
     NCollapseTransition: (typeof import("naive-ui"))["NCollapseTransition"]
