@@ -4,6 +4,10 @@ import { UserOptions, type UserOptionsKey } from "~/constant";
 import { useGlobalState } from "~/store";
 import { useRouteState } from "~/store/route";
 
+defineSlots<{
+  operate: void;
+}>();
+
 const router = useRouter();
 const dialog = useDialog();
 const { user } = useGlobalState();
@@ -61,7 +65,8 @@ function handleForward() {
       </n-button>
     </div>
 
-    <div class="flex-1 text-right">
+    <div class="flex-1 flex items-center justify-end">
+      <slot name="operate" />
       <n-dropdown :options="UserOptions" trigger="click" @select="handleSelect">
         <img :src="user?.avatar_url" class="w-24px h-24px rounded-full cursor-pointer" b="4px solid #d2d2d226" />
       </n-dropdown>

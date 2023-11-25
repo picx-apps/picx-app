@@ -19,6 +19,7 @@ export const useLibraryState = createGlobalState(() => {
   const currentPath = computed(() => imagePath.value[imagePath.value.length - 1] || "");
 
   async function syncContents() {
+    contents.value = [];
     const res = await octokit.value.request("GET /repos/{owner}/{repo}/contents/{path}", {
       owner: user.value?.login!,
       repo: repo_name.value,

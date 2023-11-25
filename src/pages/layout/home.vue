@@ -120,7 +120,15 @@ name: home
 
 <template>
   <main ref="mainInstance" class="px-16px">
-    <TopOperate></TopOperate>
+    <TopOperate>
+      <template #operate>
+        <n-button tertiary circle class="w-30px h-30px mr-10px">
+          <template #icon>
+            <Icon icon="ic:outline-refresh" class="text-1.1rem" @click="() => updateNow()" />
+          </template>
+        </n-button>
+      </template>
+    </TopOperate>
     <div class="latest">
       <div class="title">
         <div flex-1>{{ t("home.latest") }}</div>
