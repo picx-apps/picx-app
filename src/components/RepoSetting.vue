@@ -126,7 +126,7 @@ onMounted(() => {
     v-model:show="repoVisible"
     placement="bottom"
     height="80%"
-    :drawer-style="{ borderRadius: '18px 18px 0 0' }"
+    :style="{ borderRadius: '18px 18px 0 0' }"
     :to="to"
   >
     <n-drawer-content :native-scrollbar="false">
@@ -161,7 +161,7 @@ onMounted(() => {
     v-model:show="branchVisible"
     placement="bottom"
     height="80%"
-    :drawer-style="{ borderRadius: '18px 18px 0 0' }"
+    :style="{ borderRadius: '18px 18px 0 0' }"
     :to="to"
   >
     <n-drawer-content :native-scrollbar="false">
