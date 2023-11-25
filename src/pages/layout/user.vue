@@ -8,22 +8,8 @@ const [DefineTemplate, ReuseTemplate] = createReusableTemplate<{
   icon: string;
   text: string;
 }>();
-const dialog = useDialog();
 const router = useRouter();
 const { t } = useI18n();
-
-async function handleSignOut() {
-  dialog.warning({
-    title: "Sign Out",
-    content: "Are you sure you want to sign out?",
-    positiveText: "Yes",
-    negativeText: "No",
-    onPositiveClick: async () => {
-      localStorage.clear();
-      router.push("/login");
-    },
-  });
-}
 </script>
 
 <route lang="yaml">
@@ -72,11 +58,11 @@ name: user
       <!-- 设置项 -->
       <div class="mt-30px mb-100px">
         <ReuseTemplate icon="fluent-emoji:bread" :text="t('user.repo')" @click="router.push({ name: 'repo_manage' })" />
-        <ReuseTemplate
+        <!-- <ReuseTemplate
           icon="fluent-emoji:bubbles"
           :text="t('user.folder_manage')"
           @click="router.push({ name: 'folder_manage' })"
-        />
+        /> -->
         <ReuseTemplate
           icon="fluent-emoji:globe-showing-europe-africa"
           :text="t('user.cdn_config')"
@@ -107,10 +93,6 @@ name: user
           :text="t('user.language')"
           @click="router.push({ name: 'language_manage' })"
         />
-
-        <!-- <n-button class="w-full mt-10px" type="error" ghost @click="() => handleSignOut()">{{
-          t("sign_out")
-        }}</n-button> -->
       </div>
     </div>
   </main>
