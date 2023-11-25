@@ -139,6 +139,7 @@ onMounted(() => {
         :placeholder="t('init.select_repo')"
         :loading="loading"
         @blur="initRepo"
+        @change="initRepo"
         class="mb-10px"
       >
         <template #prefix>
