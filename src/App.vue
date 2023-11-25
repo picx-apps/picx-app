@@ -4,7 +4,7 @@ import { useSettingState } from "./store/setting";
 import { themeOverrides } from "./theme";
 import hljs from "highlight.js/lib/core";
 import json from "highlight.js/lib/languages/json";
-import { darkTheme, lightTheme } from "naive-ui";
+import { darkTheme } from "naive-ui";
 
 hljs.registerLanguage("json", json);
 const route = useRoute();
@@ -22,7 +22,7 @@ onMounted(() => {
 <template>
   <RouterView v-slot="{ Component }">
     <template v-if="Component">
-      <n-config-provider :theme-overrides="themeOverrides" :hljs="hljs" :theme="isDark ? darkTheme : lightTheme">
+      <n-config-provider :theme-overrides="themeOverrides" :hljs="hljs" :theme="darkTheme">
         <n-notification-provider>
           <n-message-provider>
             <n-dialog-provider>

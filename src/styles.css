@@ -14,9 +14,6 @@
   line-height: 24px;
   font-weight: 400;
 
-  color: #0f0f0f;
-  background-color: #fff;
-
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -38,20 +35,6 @@ svg {
 }
 
 html {
-  background: white;
-  color: #0f0f0f;
-
-  --tabbar-background: linear-gradient(120deg, #cdf2ff, #e2e4ff, #ece1ff);
-  --tabbar-item-color: var(--base-color-light-5);
-  --tabbar-item-color-active: var(--base-color);
-  --base-color: #5e14ff;
-  --base-color-light-3: #6e44f9;
-  --base-color-light-5: #8e70f1;
-  --base-color-light-7: #b29fef;
-  --base-color-light-9: #e6e0fb;
-}
-
-html.dark {
   background: #000000;
   color: white;
 
