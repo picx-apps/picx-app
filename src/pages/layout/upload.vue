@@ -1,12 +1,12 @@
 <script lang="ts" setup>
-import { useGlobalState } from "../store";
-import { useUploadState } from "../store/upload";
-import type { UploadContent } from "../types/upload";
 import { Icon } from "@iconify/vue";
 import { invoke } from "@tauri-apps/api";
 import { open } from "@tauri-apps/api/dialog";
 import LibraryCard from "~/components/LibraryCard.vue";
+import { useGlobalState } from "~/store";
 import { useSettingState } from "~/store/setting";
+import { useUploadState } from "~/store/upload";
+import type { UploadContent } from "~/types/upload";
 import LineMdLoadingLoop from "~icons/line-md/loading-loop";
 import PhPlusBold from "~icons/ph/plus-bold";
 import PhUploadSimpleBold from "~icons/ph/upload-simple-bold";

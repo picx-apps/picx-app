@@ -1,7 +1,7 @@
 <script lang="ts" setup>
-import { CompressionQuality } from "../../enum";
-import { useGlobalState } from "../../store";
 import { Icon } from "@iconify/vue";
+import { CompressionQuality } from "~/enum";
+import { useGlobalState } from "~/store";
 import { useI18n } from "vue-i18n";
 
 const { t } = useI18n({
@@ -25,6 +25,10 @@ const [DefineTemplate, ReuseTemplate] = createReusableTemplate<{
 }>();
 </script>
 
+<route lang="yaml">
+name: compress_manage
+</route>
+
 <template>
   <n-scrollbar style="height: 100vh">
     <Header :title="$t('compress.title')">
@@ -32,7 +36,7 @@ const [DefineTemplate, ReuseTemplate] = createReusableTemplate<{
         <Icon
           icon="material-symbols:arrow-back-ios-rounded"
           class="text-1.2rem cursor-pointer hover:color-primary-200"
-          @click="$router.replace('/user')"
+          @click="$router.replace({ name: 'user' })"
         />
       </template>
     </Header>

@@ -11,7 +11,7 @@ const { canBack, canForward, currentPathIndex, routeHistory } = useRouteState();
 
 function handleSelect(key: UserOptionsKey) {
   if (key === "settings") {
-    router.push("/user");
+    router.push({ name: "user" });
   }
   if (key === "signOut") {
     dialog.create({

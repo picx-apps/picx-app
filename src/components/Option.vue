@@ -12,8 +12,8 @@ defineSlots<{ optional: void }>();
 <template>
   <div class="menu-item color-#989898 p-8px rounded-8px flex items-center" :class="[isCurrent && 'current']">
     <div class="flex items-center flex-1">
-      <Icon :icon="icon" class="text-1.4rem" />
-      <span class="ml-16px font-bold">{{ text }}</span>
+      <Icon :icon="icon" class="text-1.5rem" />
+      <span class="ml-16px font-bold text-1.05rem">{{ text }}</span>
     </div>
     <div class="flex items-center">
       <slot name="optional" />

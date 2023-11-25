@@ -37,7 +37,7 @@ name: cdn_config
         <Icon
           icon="material-symbols:arrow-back-ios-rounded"
           class="text-1.2rem cursor-pointer hover:color-primary-200"
-          @click="$router.replace('/user')"
+          @click="$router.replace({ name: 'user' })"
         />
       </template>
       <template #optional>

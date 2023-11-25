@@ -12,6 +12,10 @@ const isUpdater = computed(() =>
 );
 </script>
 
+<route lang="yaml">
+name: watermark_manage
+</route>
+
 <template>
   <n-scrollbar style="height: 100vh">
     <Header :title="t('watermark.title')">
@@ -19,7 +23,7 @@ const isUpdater = computed(() =>
         <Icon
           icon="material-symbols:arrow-back-ios-rounded"
           class="text-1.2rem cursor-pointer hover:color-primary-200"
-          @click="$router.replace('/user')"
+          @click="$router.replace({ name: 'user' })"
         />
       </template>
     </Header>

@@ -18,6 +18,10 @@ const themeOptions = [
 ];
 </script>
 
+<route lang="yaml">
+name: theme_manage
+</route>
+
 <template>
   <n-scrollbar style="height: 100vh">
     <Header :title="t('theme.title')">
@@ -25,7 +29,7 @@ const themeOptions = [
         <Icon
           icon="material-symbols:arrow-back-ios-rounded"
           class="text-1.2rem cursor-pointer hover:color-primary-200"
-          @click="$router.replace('/user')"
+          @click="$router.replace({ name: 'user' })"
         />
       </template>
     </Header>

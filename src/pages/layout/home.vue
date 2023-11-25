@@ -157,10 +157,10 @@ name: home
       <div class="title">
         <div flex-1>{{ t("home.library") }}</div>
         <!-- <Icon
-            icon="material-symbols:arrow-drop-down-circle"
-            class="text-18px cursor-pointer select-none"
-            @click="showImages = !showImages"
-          /> -->
+              icon="material-symbols:arrow-drop-down-circle"
+              class="text-18px cursor-pointer select-none"
+              @click="showImages = !showImages"
+            /> -->
       </div>
 
       <n-collapse-transition>

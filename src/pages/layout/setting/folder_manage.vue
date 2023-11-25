@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { FolderDropDownOptions } from "../../constant";
-import { useSettingState } from "../../store/setting";
-import { useUploadState } from "../../store/upload";
-import { RepoContents } from "../../types";
 import { Icon } from "@iconify/vue";
+import { FolderDropDownOptions } from "~/constant";
+import { useSettingState } from "~/store/setting";
+import { useUploadState } from "~/store/upload";
+import { RepoContents } from "~/types";
 
 const { t } = useI18n();
 
@@ -49,6 +49,11 @@ function handleContextmenuFolder(event: MouseEvent, item: RepoContents[0]) {
   dropDownPosition.y = event.clientY;
 }
 </script>
+
+<route lang="yaml">
+name: folder_manage
+</route>
+
 <template>
   <n-scrollbar style="height: 100vh">
     <Header :title="t('folder_manage.title')">
@@ -56,7 +61,7 @@ function handleContextmenuFolder(event: MouseEvent, item: RepoContents[0]) {
         <Icon
           icon="material-symbols:arrow-back-ios-rounded"
           class="text-1.2rem cursor-pointer hover:color-primary-200"
-          @click="$router.replace('/user')"
+          @click="$router.replace({ name: 'user' })"
         />
       </template>
     </Header>

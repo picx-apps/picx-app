@@ -1,9 +1,13 @@
 <script lang="ts" setup>
-import { useSettingState } from "../../store/setting";
 import { Icon } from "@iconify/vue";
+import { useSettingState } from "~/store/setting";
 
 const { settings } = useSettingState();
 </script>
+
+<route lang="yaml">
+name: settings_config
+</route>
 
 <template>
   <n-scrollbar style="height: 100vh">
@@ -12,7 +16,7 @@ const { settings } = useSettingState();
         <Icon
           icon="material-symbols:arrow-back-ios-rounded"
           class="text-1.2rem cursor-pointer hover:color-primary-200"
-          @click="$router.replace('/user')"
+          @click="$router.replace({ name: 'user' })"
         />
       </template>
     </Header>

@@ -1,6 +1,6 @@
 <route lang="yaml">
 name: index
-redirect: /home
+redirect: /layout/home
 </route>
 
 <template></template>

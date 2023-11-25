@@ -8,6 +8,7 @@ import { Octokit } from "octokit";
 
 const props = defineProps<{
   modelValue: Repository;
+  to?: string | HTMLElement;
 }>();
 const emit = defineEmits(["update:modelValue"]);
 const modelValue = useVModel(props, "modelValue", emit);
@@ -126,6 +127,7 @@ onMounted(() => {
     placement="bottom"
     height="80%"
     :drawer-style="{ borderRadius: '18px 18px 0 0' }"
+    :to="to"
   >
     <n-drawer-content :native-scrollbar="false">
       <div class="px-10px text-1.5rem py-10px font-bold">
@@ -159,6 +161,7 @@ onMounted(() => {
     placement="bottom"
     height="80%"
     :drawer-style="{ borderRadius: '18px 18px 0 0' }"
+    :to="to"
   >
     <n-drawer-content :native-scrollbar="false">
       <div class="px-10px text-1.5rem py-10px font-bold">
