@@ -52,11 +52,11 @@ function handleNewFolder() {
 }
 function handleContextmenuLibrary(event: MouseEvent, item: RepoContents[0]) {
   event.preventDefault();
-  const el = event.currentTarget as HTMLDivElement;
+  // const el = event.currentTarget as HTMLDivElement;
   currentLibrary.value = item;
   showDropdown.value = true;
-  dropDownPosition.x = el.offsetLeft + 20;
-  dropDownPosition.y = el.offsetTop + 50;
+  dropDownPosition.x = event.clientX;
+  dropDownPosition.y = event.clientY;
 }
 async function handleLibraryDropDownSelect(key: string) {
   showDropdown.value = false;
@@ -90,7 +90,7 @@ function handleBackLibrary() {
 </script>
 
 <template>
-  <div>
+  <div class="h-full flex flex-col">
     <Option icon="ph:circles-four-fill" :text="t('home.library')" class="cursor-default">
       <template #optional>
         <n-tooltip placement="top" trigger="hover" v-if="imagePath.length">
@@ -112,31 +112,33 @@ function handleBackLibrary() {
       </template>
     </Option>
 
-    <DefineLibrary v-slot="{ $slots, text, icon }">
-      <div
-        class="flex items-center p-8px rounded-8px cursor-pointer group select-none hover:bg-#1d1d1d transition-all duration-50"
-      >
-        <Icon :icon="icon ? icon : 'ic:round-folder'" class="text-3rem color-blue-400" />
-        <template v-if="$slots.default">
-          <component :is="$slots.default" />
-        </template>
-        <div v-else class="ml-10px color-#989898 group-hover:color-white">{{ text }}</div>
-      </div>
-    </DefineLibrary>
+    <n-scrollbar class="flex-1">
+      <DefineLibrary v-slot="{ $slots, text, icon }">
+        <div
+          class="flex items-center p-8px rounded-8px cursor-pointer group select-none hover:bg-#1d1d1d transition-all duration-50"
+        >
+          <Icon :icon="icon ? icon : 'ic:round-folder'" class="text-3rem color-blue-400" />
+          <template v-if="$slots.default">
+            <component :is="$slots.default" />
+          </template>
+          <div v-else class="ml-10px color-#989898 group-hover:color-white">{{ text }}</div>
+        </div>
+      </DefineLibrary>
 
-    <template v-if="library.length">
-      <ReusableLibrary
-        v-for="item in library"
-        :key="item.sha"
-        :text="item.name"
-        @click="handleClickLibrary(item.path)"
-        @contextmenu="handleContextmenuLibrary($event, item)"
-      />
-    </template>
+      <template v-if="library.length">
+        <ReusableLibrary
+          v-for="item in library"
+          :key="item.sha"
+          :text="item.name"
+          @click="handleClickLibrary(item.path)"
+          @contextmenu="handleContextmenuLibrary($event, item)"
+        />
+      </template>
 
-    <template v-else>
-      <div class="p-8px color-gray text-center">{{ t("home.library_empty") }}</div>
-    </template>
+      <template v-else>
+        <div class="p-8px color-gray text-center">{{ t("home.library_empty") }}</div>
+      </template>
+    </n-scrollbar>
 
     <n-dropdown
       placement="bottom-start"
