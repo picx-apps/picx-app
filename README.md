@@ -41,6 +41,19 @@ git clone git@github.com:picx-dev/picx-app.git
 pnpm install
 ```
 
+#### 开始启动dev前请务必先执行构建，原因是因为授权是在第三方，授权完成需要使用Schemes打开应用，所以需要你现在本机安装此App,具体流程如下
+
+```shell
+//第一步,注意这里必须使用debug模式
+cargo tauri build --debug
+
+//第二步
+安装构建好的软件
+
+//第三步
+cargo tauri dev
+```
+
 #### 启动项目Dev
 with [cargo](https://doc.rust-lang.org/cargo/)
 ```shell
