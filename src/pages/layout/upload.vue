@@ -17,7 +17,7 @@ import { NButton } from "naive-ui";
 const dialog = useDialog();
 const tempContents = ref<UploadContent[]>([]);
 const waitContents = ref<UploadContent[]>([]);
-const { currentPath } = useUploadState();
+const currentPath = ref("");
 const { settings } = useSettingState();
 const { compress } = useGlobalState();
 const message = useMessage();
@@ -47,7 +47,13 @@ async function syncUpload() {
 async function openLibrary() {
   const d = dialog.create({
     title: t("node.select_upload_to_library"),
-    content: () => h(LibraryCard),
+    content: () =>
+      h(LibraryCard, {
+        modelValue: currentPath.value,
+        "onUpdate:modelValue": (value) => {
+          currentPath.value = value;
+        },
+      }),
     showIcon: false,
     closable: false,
     action: () =>

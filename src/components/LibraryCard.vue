@@ -6,6 +6,12 @@ import { RepoContents } from "~/types";
 import { isArray } from "lodash-es";
 import { NInput } from "naive-ui";
 
+const props = defineProps<{
+  modelValue: string;
+}>();
+const emit = defineEmits(["update:modelValue"]);
+const modelValue = useVModel(props, "modelValue", emit);
+
 const [DefineLibrary, ReusableLibrary] = createReusableTemplate<{
   icon?: string;
   text?: string;
@@ -23,6 +29,10 @@ const [newLibrary, resetNewLibrary] = useResetRef({
   enable: false,
   name: "",
   loading: false,
+});
+
+watch(currentPath, (value) => {
+  modelValue.value = value;
 });
 
 async function syncContents() {

@@ -6,7 +6,7 @@
 
 **基于 GitHub API 开发的图床神器。** 图片外链使用 jsDelivr 自动进行 CDN 加速。
 
-<img src="https://cdn.jsdelivr.net/gh/zhazhazhu/image-hosting@master/image_7XARhZ.png" style="height: 500px" />
+<img src="https://image.qzzhu.cn/Picx/image_yuVRTa.png" style="height: 500px" />
 
 ### Tauri + Vue3
 
