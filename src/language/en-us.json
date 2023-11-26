@@ -6,16 +6,23 @@
   "home": {
     "title": "Home",
     "latest": "LATEST",
-    "library": "LIBRARY"
+    "library": "LIBRARY",
+    "library_empty": "No more",
+    "new": "New",
+    "create_library": "Create Library",
+    "placeholder": "Please Input Name",
+    "delete_image_title": "Whether to delete"
   },
   "node": {
     "title": "Upload",
-    "info": "UPLOAD YOUR PHOTO",
+    "info": "Command + V / Drag / Click To Upload",
     "wait_upload_number": "Wait upload {number} draw",
+    "select_upload_to_library": "Select your upload to library",
     "button": {
-      "queue": "add queue",
-      "immediately": "immediately",
-      "upload": "upload"
+      "queue": "Add Queue",
+      "immediately": "Immediately",
+      "upload": "Upload",
+      "continue_to_add": "Continue to add"
     }
   },
   "user": {
@@ -55,7 +62,7 @@
   "yes": "Yes",
   "no": "No",
   "delete tip": "Are you sure you want to delete this photo?",
-  "confirm": "confirm",
+  "confirm": "Confirm",
   "cancel": "cancel",
   "path": "Path",
   "sign_out": "SIGN OUT",

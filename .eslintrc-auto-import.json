@@ -308,6 +308,8 @@
     "watchTriggerable": true,
     "watchWithFilter": true,
     "whenever": true,
-    "replacePlaceholder": true
+    "replacePlaceholder": true,
+    "isImage": true,
+    "imageFileToUint8Array": true
   }
 }

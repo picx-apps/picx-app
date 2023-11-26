@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-import { useGlobalState } from "../store";
 import { Icon } from "@iconify/vue";
+import { useGlobalState } from "~/store";
 
 const { user } = useGlobalState();
 
@@ -8,22 +8,8 @@ const [DefineTemplate, ReuseTemplate] = createReusableTemplate<{
   icon: string;
   text: string;
 }>();
-const dialog = useDialog();
 const router = useRouter();
 const { t } = useI18n();
-
-async function handleSignOut() {
-  dialog.warning({
-    title: "Sign Out",
-    content: "Are you sure you want to sign out?",
-    positiveText: "Yes",
-    negativeText: "No",
-    onPositiveClick: async () => {
-      localStorage.clear();
-      router.push("/login");
-    },
-  });
-}
 </script>
 
 <route lang="yaml">
@@ -31,13 +17,8 @@ name: user
 </route>
 
 <template>
-  <n-scrollbar style="height: 100vh">
-    <Header>
-      {{ t("user.name") }}
-      <template #optional>
-        <Icon icon="prime:inbox" class="text-26px ml-6px cursor-pointer" />
-      </template>
-    </Header>
+  <main class="px-16px">
+    <TopOperate />
 
     <div class="user-container mt-15px">
       <!-- 用户信息 -->
@@ -76,51 +57,45 @@ name: user
 
       <!-- 设置项 -->
       <div class="mt-30px mb-100px">
-        <ReuseTemplate icon="fluent-emoji:bread" :text="t('user.repo')" @click="router.push('/setting/repo')" />
-        <ReuseTemplate
+        <ReuseTemplate icon="fluent-emoji:bread" :text="t('user.repo')" @click="router.push({ name: 'repo_manage' })" />
+        <!-- <ReuseTemplate
           icon="fluent-emoji:bubbles"
           :text="t('user.folder_manage')"
-          @click="router.push('/setting/folder_manage')"
-        />
+          @click="router.push({ name: 'folder_manage' })"
+        /> -->
         <ReuseTemplate
           icon="fluent-emoji:globe-showing-europe-africa"
           :text="t('user.cdn_config')"
-          @click="router.push('/setting/cdn_config')"
+          @click="router.push({ name: 'cdn_config' })"
         />
         <ReuseTemplate
           icon="fluent-emoji:ghost"
           :text="t('user.watermark')"
-          @click="router.push('/setting/watermark')"
+          @click="router.push({ name: 'watermark_manage' })"
         />
         <ReuseTemplate
           icon="fluent-emoji:flexed-biceps"
           :text="t('user.compress')"
-          @click="router.push('/setting/compress')"
-        />
-        <ReuseTemplate
-          icon="fluent-emoji:first-quarter-moon"
-          :text="t('user.theme')"
-          @click="router.push('/setting/theme')"
+          @click="router.push({ name: 'compress_manage' })"
         />
         <!-- <ReuseTemplate
-          icon="fluent-emoji:face-with-peeking-eye"
-          :text="t('user.config')"
-          @click="router.push('/setting/config')"
+          icon="fluent-emoji:first-quarter-moon"
+          :text="t('user.theme')"
+          @click="router.push({ name: 'theme_manage' })"
         /> -->
+        <!-- <ReuseTemplate
+            icon="fluent-emoji:face-with-peeking-eye"
+            :text="t('user.config')"
+            @click="router.push('/setting/config')"
+          /> -->
         <ReuseTemplate
           icon="fluent-emoji:ab-button-blood-type"
           :text="t('user.language')"
-          @click="router.push('/setting/language')"
+          @click="router.push({ name: 'language_manage' })"
         />
-
-        <n-button class="w-full mt-10px" type="error" ghost @click="() => handleSignOut()">{{
-          t("sign_out")
-        }}</n-button>
       </div>
     </div>
-
-    <Tabbar />
-  </n-scrollbar>
+  </main>
 </template>
 
 <style lang="less" scoped>

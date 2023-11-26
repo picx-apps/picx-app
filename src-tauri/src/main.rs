@@ -8,7 +8,7 @@ mod utils;
 
 use auth::{get_access_token, login_uri, sign_jwt, sign_out};
 use dotenv::dotenv;
-use image::{compression_image, watermark_image};
+use image::{compression_image, compression_image_buf, watermark_image};
 use model::SchemePayload;
 use tauri::Manager;
 use utils::{binary_to_base64, rand_string};
@@ -18,14 +18,6 @@ fn main() {
     tauri_plugin_deep_link::prepare("picx-app");
 
     tauri::Builder::default()
-        .setup(|app| {
-            #[cfg(debug_assertions)] // only include this code on debug builds
-            {
-                let window = app.get_window("main").unwrap();
-                window.open_devtools();
-            }
-            Ok(())
-        })
         .setup(|app| {
             let handle = app.handle();
             tauri_plugin_deep_link::register("picx", move |request| {
@@ -52,7 +44,8 @@ fn main() {
             compression_image,
             rand_string,
             sign_jwt,
-            watermark_image
+            watermark_image,
+            compression_image_buf
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

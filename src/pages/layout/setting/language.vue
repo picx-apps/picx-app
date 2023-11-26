@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-import { language, messageOptions } from "../../language";
 import { Icon } from "@iconify/vue";
+import { language, messageOptions } from "~/language";
 
 const { t } = useI18n();
 const [DefineTemplate, ReuseTemplate] = createReusableTemplate<{
@@ -9,6 +9,10 @@ const [DefineTemplate, ReuseTemplate] = createReusableTemplate<{
 }>();
 </script>
 
+<route lang="yaml">
+name: language_manage
+</route>
+
 <template>
   <n-scrollbar style="height: 100vh">
     <Header :title="t('language.title')">
@@ -16,7 +20,7 @@ const [DefineTemplate, ReuseTemplate] = createReusableTemplate<{
         <Icon
           icon="material-symbols:arrow-back-ios-rounded"
           class="text-1.2rem cursor-pointer hover:color-primary-200"
-          @click="$router.replace('/user')"
+          @click="$router.replace({ name: 'user' })"
         />
       </template>
     </Header>

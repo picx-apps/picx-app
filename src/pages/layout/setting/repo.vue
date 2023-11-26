@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-import { useGlobalState } from "../../store";
 import { Icon } from "@iconify/vue";
+import { useGlobalState } from "~/store";
 
 const { t } = useI18n();
 const { repository } = useGlobalState();
@@ -13,20 +13,24 @@ const isUpdater = computed(() => {
 });
 </script>
 
+<route lang="yaml">
+name: repo_manage
+</route>
+
 <template>
-  <n-scrollbar style="height: 100vh">
+  <n-scrollbar style="height: 100vh" id="repo-container">
     <Header :title="t('repositories.title')">
       <template #default>
         <Icon
           icon="material-symbols:arrow-back-ios-rounded"
           class="text-1.2rem cursor-pointer hover:color-primary-200"
-          @click="$router.replace('/user')"
+          @click="$router.replace({ name: 'user' })"
         />
       </template>
     </Header>
 
     <div class="px-16px">
-      <RepoSetting v-model="tempRepository" />
+      <RepoSetting v-model="tempRepository" to="#repo-container" />
       <n-button
         v-show="isUpdater"
         type="primary"
@@ -35,7 +39,7 @@ const isUpdater = computed(() => {
         @click="
           () => {
             repository = { ...tempRepository };
-            $router.replace('/user');
+            $router.replace({ name: 'user' });
           }
         "
       >

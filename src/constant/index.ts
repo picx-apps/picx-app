@@ -1,5 +1,9 @@
 import { CDN } from "../store/setting";
+import { GithubLink } from "~/components/GithubLink";
+import PhShareNetworkFill from "~icons/ph/share-network-fill";
+import PhTrashSimpleFill from "~icons/ph/trash-simple-fill";
 import { DropdownOption } from "naive-ui";
+import { DropdownMixedOption } from "naive-ui/es/dropdown/src/interface";
 
 export const HomeImageDropDownOptions: DropdownOption[] = [
   {
@@ -18,8 +22,14 @@ export const HomeImageDropDownOptions: DropdownOption[] = [
 
 export const FolderDropDownOptions: DropdownOption[] = [
   {
-    label: "删除",
+    icon: () => h(PhTrashSimpleFill),
+    label: "Delete",
     key: "delete",
+  },
+  {
+    icon: () => h(PhShareNetworkFill),
+    label: "Share Library",
+    key: "Share",
   },
 ];
 
@@ -45,3 +55,29 @@ export const CDNDefaultOptions: CDN[] = [
     isDefault: true,
   },
 ];
+
+export const UserOptions: DropdownMixedOption[] = [
+  {
+    type: "render",
+    key: "userInfo",
+    render: () => h(GithubLink),
+  },
+  {
+    label: "设置",
+    key: "settings",
+  },
+  {
+    type: "divider",
+    key: "d1",
+  },
+  {
+    label: "检查更新",
+    key: "checkUpdate",
+  },
+  {
+    label: "退出登陆",
+    key: "signOut",
+  },
+];
+
+export type UserOptionsKey = "settings" | "checkUpdate" | "signOut";

@@ -1,7 +1,7 @@
 <script lang="ts" setup>
-import { CompressionQuality } from "../../enum";
-import { useGlobalState } from "../../store";
 import { Icon } from "@iconify/vue";
+import { CompressionQuality } from "~/enum";
+import { useGlobalState } from "~/store";
 import { useI18n } from "vue-i18n";
 
 const { t } = useI18n({
@@ -23,11 +23,11 @@ const [DefineTemplate, ReuseTemplate] = createReusableTemplate<{
   label: CompressionQuality;
   value: keyof typeof CompressionQuality;
 }>();
-
-watchEffect(() => {
-  console.log("compress", compress.value.enable);
-});
 </script>
+
+<route lang="yaml">
+name: compress_manage
+</route>
 
 <template>
   <n-scrollbar style="height: 100vh">
@@ -36,7 +36,7 @@ watchEffect(() => {
         <Icon
           icon="material-symbols:arrow-back-ios-rounded"
           class="text-1.2rem cursor-pointer hover:color-primary-200"
-          @click="$router.replace('/user')"
+          @click="$router.replace({ name: 'user' })"
         />
       </template>
     </Header>
@@ -53,7 +53,7 @@ watchEffect(() => {
     <div class="px-16px">
       <div class="option">
         <div class="flex flex-col">
-          <span class="text-.9rem color-gray-6 dark:color-white">{{ $t("compress.enable") }}</span>
+          <span class="text-1rem color-white font-bold mb-6px">{{ $t("compress.enable") }}</span>
           <span class="text-.8rem color-gray-4">{{ $t("compress.enable_info") }}</span>
         </div>
         <n-switch v-model:value="compress.enable"></n-switch>

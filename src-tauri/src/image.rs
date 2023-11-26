@@ -30,16 +30,24 @@ pub fn compression_image(
     compression_quality: Option<CompressionQuality>,
 ) -> CompressionImage {
     let image_data = read_image(path).expect("Failed to read image");
-    let image = image::load_from_memory(&image_data).expect("Failed to load image");
+    compression_image_buf(image_data, compression_quality)
+}
+
+#[tauri::command]
+pub fn compression_image_buf(
+    origin: Vec<u8>,
+    compression_quality: Option<CompressionQuality>,
+) -> CompressionImage {
+    let image = image::load_from_memory(&origin).expect("Failed to load image");
     // 创建一个空的字节数组作为输出缓冲区
     let mut compressed_image_data = Vec::new();
-    let format = image::guess_format(&image_data).expect("Failed to guess image format");
+    let format = image::guess_format(&origin).expect("Failed to guess image format");
     if compression_quality.is_none() {
         return CompressionImage {
-            buffer: image_data.clone(),
-            base64: binary_to_base64(image_data.clone()),
-            compression_buffer: image_data.clone(),
-            compression_base64: binary_to_base64(image_data),
+            buffer: origin.clone(),
+            base64: binary_to_base64(origin.clone()),
+            compression_buffer: origin.clone(),
+            compression_base64: binary_to_base64(origin),
         };
     };
 
@@ -62,8 +70,8 @@ pub fn compression_image(
                 .write_with_encoder(encoder)
                 .expect("Failed to compression image");
             CompressionImage {
-                buffer: image_data.clone(),
-                base64: binary_to_base64(image_data),
+                buffer: origin.clone(),
+                base64: binary_to_base64(origin),
                 compression_buffer: compressed_image_data.clone(),
                 compression_base64: binary_to_base64(compressed_image_data),
             }
@@ -78,17 +86,17 @@ pub fn compression_image(
                 .write_with_encoder(encoder)
                 .expect("Failed to compression image");
             CompressionImage {
-                buffer: image_data.clone(),
-                base64: binary_to_base64(image_data),
+                buffer: origin.clone(),
+                base64: binary_to_base64(origin),
                 compression_buffer: compressed_image_data.clone(),
                 compression_base64: binary_to_base64(compressed_image_data),
             }
         }
         _ => CompressionImage {
-            buffer: image_data.clone(),
-            base64: binary_to_base64(image_data.clone()),
-            compression_buffer: image_data.clone(),
-            compression_base64: binary_to_base64(image_data),
+            buffer: origin.clone(),
+            base64: binary_to_base64(origin.clone()),
+            compression_buffer: origin.clone(),
+            compression_base64: binary_to_base64(origin),
         },
     }
 }
