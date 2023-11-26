@@ -2,10 +2,11 @@
 
 [![License](https://img.shields.io/github/license/XPoet/picx.svg)](https://github.com/XPoet/picx/blob/master/LICENSE)
 
-
 官方网站 https://picx.xpoet.cn/
 
 **基于 GitHub API 开发的图床神器。** 图片外链使用 jsDelivr 自动进行 CDN 加速。
+
+<img src="https://cdn.jsdelivr.net/gh/zhazhazhu/image-hosting@master/image_7XARhZ.png" style="height: 500px" />
 
 ### Tauri + Vue3
 
