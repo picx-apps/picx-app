@@ -309,6 +309,7 @@
     "watchWithFilter": true,
     "whenever": true,
     "replacePlaceholder": true,
-    "isImage": true
+    "isImage": true,
+    "imageFileToUint8Array": true
   }
 }

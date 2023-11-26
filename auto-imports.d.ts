@@ -40,6 +40,7 @@ declare global {
   const getCurrentScope: typeof import('vue')['getCurrentScope']
   const h: typeof import('vue')['h']
   const ignorableWatch: typeof import('@vueuse/core')['ignorableWatch']
+  const imageFileToUint8Array: typeof import('./src/composables/imageFileToUint8Array')['imageFileToUint8Array']
   const inject: typeof import('vue')['inject']
   const injectLocal: typeof import('@vueuse/core')['injectLocal']
   const isDark: typeof import('./src/composables/dark')['isDark']
@@ -351,6 +352,7 @@ declare module 'vue' {
     readonly getCurrentScope: UnwrapRef<typeof import('vue')['getCurrentScope']>
     readonly h: UnwrapRef<typeof import('vue')['h']>
     readonly ignorableWatch: UnwrapRef<typeof import('@vueuse/core')['ignorableWatch']>
+    readonly imageFileToUint8Array: UnwrapRef<typeof import('./src/composables/imageFileToUint8Array')['imageFileToUint8Array']>
     readonly inject: UnwrapRef<typeof import('vue')['inject']>
     readonly injectLocal: UnwrapRef<typeof import('@vueuse/core')['injectLocal']>
     readonly isDark: UnwrapRef<typeof import('./src/composables/dark')['isDark']>
@@ -654,6 +656,7 @@ declare module '@vue/runtime-core' {
     readonly getCurrentScope: UnwrapRef<typeof import('vue')['getCurrentScope']>
     readonly h: UnwrapRef<typeof import('vue')['h']>
     readonly ignorableWatch: UnwrapRef<typeof import('@vueuse/core')['ignorableWatch']>
+    readonly imageFileToUint8Array: UnwrapRef<typeof import('./src/composables/imageFileToUint8Array')['imageFileToUint8Array']>
     readonly inject: UnwrapRef<typeof import('vue')['inject']>
     readonly injectLocal: UnwrapRef<typeof import('@vueuse/core')['injectLocal']>
     readonly isDark: UnwrapRef<typeof import('./src/composables/dark')['isDark']>

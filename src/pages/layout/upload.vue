@@ -2,7 +2,7 @@
 import { Icon } from "@iconify/vue";
 import { event, invoke } from "@tauri-apps/api";
 import { open } from "@tauri-apps/api/dialog";
-import { UnlistenFn } from "@tauri-apps/api/event";
+import { Fn } from "@vueuse/core";
 import LibraryCard from "~/components/LibraryCard.vue";
 import { useGlobalState } from "~/store";
 import { useSettingState } from "~/store/setting";
@@ -24,7 +24,7 @@ const message = useMessage();
 const { t } = useI18n();
 const uploading = ref(false);
 const selectedPath = ref<string[]>([]);
-const stop = ref<UnlistenFn>();
+const cleanups = ref<Array<Fn>>([]);
 
 async function handleClickUpload() {
   const selected = (await open({
@@ -42,6 +42,9 @@ async function handleClickUpload() {
 async function syncUpload() {
   if (!selectedPath.value.length) return;
   await handleImages(selectedPath.value);
+  await openLibrary();
+}
+async function openLibrary() {
   const d = dialog.create({
     title: t("node.select_upload_to_library"),
     content: () => h(LibraryCard),
@@ -78,11 +81,28 @@ async function syncUpload() {
           t("node.button.queue"),
         ),
       ]),
-    onAfterLeave: () => handleAfterLeave(),
+    onAfterLeave: () => (tempContents.value = []),
   });
 }
-async function handleImages(paths: string[]) {
+//处理水印
+async function handleWatermark(origin: Uint8Array) {
   const watermark_setting = settings.value.watermark;
+  if (watermark_setting.enable) {
+    const image: string = await invoke("watermark_image", {
+      image: origin,
+      options: {
+        text: watermark_setting.text,
+        top: watermark_setting.top,
+        left: watermark_setting.left,
+        size: watermark_setting.size,
+        font_color: watermark_setting.fontColor,
+      },
+    });
+    return image;
+  }
+}
+//处理图片，根据条件压缩和添加水印
+async function handleImages(paths: string[]) {
   for (const path of paths) {
     console.time("compress time");
     const {
@@ -99,38 +119,43 @@ async function handleImages(paths: string[]) {
       path,
       compressionQuality: compress.value.enable ? compress.value.compress_type : undefined,
     });
-    let watermark_image: string = "";
-    if (watermark_setting.enable) {
-      const image: string = await invoke("watermark_image", {
-        image: compression_buffer,
-        options: {
-          text: watermark_setting.text,
-          top: watermark_setting.top,
-          left: watermark_setting.left,
-          size: watermark_setting.size,
-          font_color: watermark_setting.fontColor,
-        },
-      });
-      watermark_image = image;
-    }
-
     console.timeEnd("compress time");
-    let filename = path.split("/").pop() as string;
-    const random: string = await invoke("rand_string");
-    const _filename = filename.split(".");
-    filename = _filename.length > 1 ? `${_filename[0]}_${random}.${_filename.pop()}` : `${filename}_${random}`;
 
-    tempContents.value.push({
-      path: filename,
-      content: base64,
-      size: buffer.length,
-      compression_size: compression_buffer.length,
-      compression_content: watermark_image ? watermark_image : compression_base64,
-    });
+    const watermark_image = await handleWatermark(compression_buffer);
+
+    let filename = path.split("/").pop() as string;
+    addTempContents(
+      {
+        origin: base64,
+        compress: watermark_image ? watermark_image : compression_base64,
+        origin_size: buffer.length,
+        compress_size: compression_buffer.length,
+      },
+      filename,
+    );
   }
 }
-async function handleAfterLeave() {
-  tempContents.value = [];
+//将原图片和压缩图片存在临时队列
+async function addTempContents(
+  data: {
+    origin: string;
+    compress: string;
+    origin_size: number;
+    compress_size: number;
+  },
+  filename: string,
+) {
+  const random: string = await invoke("rand_string");
+  const _filename = filename.split(".");
+  filename = _filename.length > 1 ? `${_filename[0]}_${random}.${_filename.pop()}` : `${filename}_${random}`;
+
+  tempContents.value.push({
+    path: filename,
+    content: data.origin,
+    size: data.origin_size,
+    compression_size: data.compress_size,
+    compression_content: data.compress,
+  });
 }
 //加入上传队列
 function handleQueue() {
@@ -168,9 +193,47 @@ async function handleBeginUpload() {
     })),
   );
 }
+//将剪贴板第一个如果是图片就处理存在临时队列
+async function handlePasteImage(e: ClipboardEvent) {
+  const items = e.clipboardData?.items;
+  if (!items?.length) return;
+  const firstItem = items[0];
+  if (firstItem.type.indexOf("image") === -1) return;
+  const file = firstItem.getAsFile();
+  if (!file) return;
+  const origin = await imageFileToUint8Array(file);
+  console.time("compress time");
+  const {
+    buffer,
+    base64,
+    compression_buffer,
+    compression_base64,
+  }: {
+    buffer: Uint8Array;
+    base64: string;
+    compression_buffer: Uint8Array;
+    compression_base64: string;
+  } = await invoke("compression_image_buf", {
+    origin: Array.from(origin),
+    compressionQuality: compress.value.enable ? compress.value.compress_type : undefined,
+  });
+  const watermark_image = await handleWatermark(compression_buffer);
+  addTempContents(
+    {
+      origin: base64,
+      compress: watermark_image ? watermark_image : compression_base64,
+      origin_size: buffer.length,
+      compress_size: compression_buffer.length,
+    },
+    file.name,
+  );
+  openLibrary();
+}
 
 onActivated(async () => {
-  stop.value = await event.listen("tauri://file-drop", (e) => {
+  cleanups.value[0] = useEventListener("paste", handlePasteImage);
+
+  cleanups.value[1] = await event.listen("tauri://file-drop", (e) => {
     const images = (e.payload as string[]).filter((item) => isImage(item));
     selectedPath.value = images;
     syncUpload();
@@ -178,7 +241,7 @@ onActivated(async () => {
 });
 
 onBeforeRouteLeave(() => {
-  stop.value && stop.value();
+  cleanups.value.forEach((fn) => fn && fn());
 });
 </script>
 
