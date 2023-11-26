@@ -1,7 +1,8 @@
 <script lang="ts" setup>
 import { Icon } from "@iconify/vue";
-import { invoke } from "@tauri-apps/api";
+import { event, invoke } from "@tauri-apps/api";
 import { open } from "@tauri-apps/api/dialog";
+import { UnlistenFn } from "@tauri-apps/api/event";
 import LibraryCard from "~/components/LibraryCard.vue";
 import { useGlobalState } from "~/store";
 import { useSettingState } from "~/store/setting";
@@ -22,6 +23,8 @@ const { compress } = useGlobalState();
 const message = useMessage();
 const { t } = useI18n();
 const uploading = ref(false);
+const selectedPath = ref<string[]>([]);
+const stop = ref<UnlistenFn>();
 
 async function handleClickUpload() {
   const selected = (await open({
@@ -33,8 +36,12 @@ async function handleClickUpload() {
       },
     ],
   })) as string[];
-  if (!selected) return;
-  await handleImages(selected);
+  selectedPath.value = selected;
+  syncUpload();
+}
+async function syncUpload() {
+  if (!selectedPath.value.length) return;
+  await handleImages(selectedPath.value);
   const d = dialog.create({
     title: t("node.select_upload_to_library"),
     content: () => h(LibraryCard),
@@ -161,6 +168,18 @@ async function handleBeginUpload() {
     })),
   );
 }
+
+onActivated(async () => {
+  stop.value = await event.listen("tauri://file-drop", (e) => {
+    const images = (e.payload as string[]).filter((item) => isImage(item));
+    selectedPath.value = images;
+    syncUpload();
+  });
+});
+
+onBeforeRouteLeave(() => {
+  stop.value && stop.value();
+});
 </script>
 
 <route lang="yaml">
