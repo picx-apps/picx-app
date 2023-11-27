@@ -141,25 +141,35 @@ name: home
           <div flex-1>{{ t("home.latest") }}</div>
         </div>
 
-        <n-carousel slides-per-view="auto" loop draggable autoplay :interval="5000">
-          <n-carousel-item
-            v-for="(item, index) in latestDebounced"
-            :key="item.sha"
-            class="image-container select-none"
-            style="width: 260px"
-            @click="handleLatestImage(index)"
-          >
-            <img :src="transformURL(item.path)" lazy class="rounded-lg w-full object-cover h-160px" />
-            <div class="text-overlay"></div>
-            <div class="absolute top-10px left-10px font-bold color-white text-11px flex items-center">
-              <Icon icon="material-symbols:highlighter-size-1" class="text-16px" />
-              {{ bytesToMB(item.size) }}mb
-            </div>
-            <div class="absolute bottom-10px left-10px color-white font-bold text-11px">
-              {{ item.name }}
-            </div>
-          </n-carousel-item>
-        </n-carousel>
+        <n-scrollbar x-scrollable>
+          <div class="scroll-content h-166px">
+            <n-image-group>
+              <div
+                v-for="(item, index) in latestDebounced"
+                :key="item.sha"
+                class="image-container"
+                @click="handleLatestImage(index)"
+              >
+                <n-image
+                  width="260"
+                  height="160"
+                  :src="transformURL(item.path)"
+                  lazy
+                  object-fit="cover"
+                  class="rounded-lg"
+                />
+                <div class="text-overlay"></div>
+                <div class="absolute top-10px left-10px font-bold color-white text-11px flex items-center">
+                  <Icon icon="material-symbols:highlighter-size-1" class="text-16px" />
+                  {{ bytesToMB(item.size) }}mb
+                </div>
+                <div class="absolute bottom-10px left-10px color-white font-bold text-11px">
+                  {{ item.name }}
+                </div>
+              </div>
+            </n-image-group>
+          </div>
+        </n-scrollbar>
       </div>
 
       <!-- 图库 -->
