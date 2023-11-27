@@ -33,6 +33,3 @@ dist-ssr
 # nuxt
 .nuxt
 .output
-
-# pem
-*.pem

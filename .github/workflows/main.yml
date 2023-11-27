@@ -1,8 +1,8 @@
 name: 'publish'
 on:
   push:
-    branches:
-      - release
+    tags:
+      - 'v*' # Push events to matching v*, i.e. v1.0, v20.15.10
 
 jobs:
   publish-tauri:
@@ -26,6 +26,12 @@ jobs:
         with:
           workspaces: './src-tauri -> target'
 
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8
+          run_install: false
+
       - name: Sync node version and setup cache
         uses: actions/setup-node@v3
         with:
@@ -40,12 +46,6 @@ jobs:
         uses: tauri-apps/tauri-action@v0
         env:
           GITHUB_TOKEN: ${{ secrets.ACTION_TOKEN }}
-          ENABLE_CODE_SIGNING: ${{ secrets.APPLE_CERTIFICATE }}
-          APPLE_CERTIFICATE: ${{ secrets.APPLE_CERTIFICATE }}
-          APPLE_CERTIFICATE_PASSWORD: ${{ secrets.APPLE_CERTIFICATE_PASSWORD }}
-          APPLE_SIGNING_IDENTITY: ${{ secrets.APPLE_SIGNING_IDENTITY }}
-          APPLE_ID: ${{ secrets.APPLE_ID }}
-          APPLE_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
           VITE_STATE: ${{ secrets.VITE_STATE }}
           VITE_SCOPE: ${{ secrets.VITE_SCOPE }}
           VITE_CLIENT_ID: ${{ secrets.VITE_CLIENT_ID }}
@@ -53,8 +53,8 @@ jobs:
           VITE_CLIENT_SECRET: ${{ secrets.VITE_CLIENT_SECRET }}
           VITE_INSTALL_URL: ${{ secrets.VITE_INSTALL_URL }}
         with:
-          tagName: Picx-v__VERSION__ # the action automatically replaces \_\_VERSION\_\_ with the app version
-          releaseName: 'Picx v__VERSION__'
+          tagName: v__VERSION__ # the action automatically replaces \_\_VERSION\_\_ with the app version
+          releaseName: 'v__VERSION__'
           releaseBody: 'See the assets to download this version and install.'
           releaseDraft: true
           prerelease: false
