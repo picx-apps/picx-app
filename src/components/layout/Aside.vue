@@ -4,7 +4,7 @@ const route = useRoute();
 const router = useRouter();
 const menuInstance = ref<HTMLDivElement>();
 const { height } = useElementSize(menuInstance);
-const menu = [
+const menu = computed(() => [
   {
     icon: "ph:house-fill",
     name: "home",
@@ -20,7 +20,7 @@ const menu = [
   //   name: "user",
   //   text: t("user.title"),
   // },
-] as const;
+]);
 </script>
 
 <template>
