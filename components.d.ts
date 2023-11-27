@@ -17,6 +17,8 @@ declare module 'vue' {
     LayoutLibrary: typeof import('./src/components/layout/Library.vue')['default']
     LibraryCard: typeof import('./src/components/LibraryCard.vue')['default']
     NButton: typeof import('naive-ui')['NButton']
+    NCarousel: typeof import('naive-ui')['NCarousel']
+    NCarouselItem: typeof import('naive-ui')['NCarouselItem']
     NCode: typeof import('naive-ui')['NCode']
     NCollapseTransition: typeof import('naive-ui')['NCollapseTransition']
     NColorPicker: typeof import('naive-ui')['NColorPicker']
