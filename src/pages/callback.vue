@@ -1,9 +1,8 @@
 <script lang="ts" setup>
 import { useGlobalState } from "../store";
 import { SchemePayload } from "../types";
-import type { UserToken } from "../types/auth";
 import { Icon } from "@iconify/vue";
-import { event, invoke } from "@tauri-apps/api";
+import { event } from "@tauri-apps/api";
 
 const router = useRouter();
 const { set_authorize, get_userinfo, checkUserInstallApps, access_token } = useGlobalState();
@@ -13,9 +12,14 @@ event.listen("scheme-request-received", async (event) => {
   const params = new URLSearchParams(payload.query);
   //身份认证
   if (payload.base === "authorization") {
-    const code = params.get("code");
-    const token: UserToken = await invoke("get_access_token", { code });
-    set_authorize(token);
+    const scope = params.get("scope")!;
+    const token_type = params.get("token_type")!;
+    const access_token = params.get("access_token")!;
+    set_authorize({
+      scope,
+      token_type,
+      access_token,
+    });
     handleSign();
   }
   //应用安装

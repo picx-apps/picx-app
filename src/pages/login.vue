@@ -7,13 +7,7 @@ const { t } = useI18n();
 const router = useRouter();
 
 async function handleLogin() {
-  const params = paramsSerializer({
-    client_id: import.meta.env.VITE_CLIENT_ID,
-    redirect_uri: import.meta.env.VITE_REDIRECT_URI,
-    state: import.meta.env.VITE_STATE,
-    scope: import.meta.env.VITE_SCOPE,
-  });
-  const uri = "https://github.com/login/oauth/authorize" + params;
+  const uri = "https://picx.qzzhu.cn/login";
   shell.open(uri);
   router.push("/callback");
 }
