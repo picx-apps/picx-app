@@ -29,6 +29,7 @@ export async function uploadFilesToGitHub(files: UploadContent[]) {
     owner,
     repo,
     branch,
+    t: Date.now(),
   });
   const treeResponse = await octokit.value.rest.git.createTree({
     owner,

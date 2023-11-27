@@ -6,7 +6,6 @@ import { Fn } from "@vueuse/core";
 import LibraryCard from "~/components/LibraryCard.vue";
 import { useGlobalState } from "~/store";
 import { useSettingState } from "~/store/setting";
-import { useUploadState } from "~/store/upload";
 import type { UploadContent } from "~/types/upload";
 import LineMdLoadingLoop from "~icons/line-md/loading-loop";
 import PhPlusBold from "~icons/ph/plus-bold";
