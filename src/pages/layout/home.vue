@@ -38,11 +38,10 @@ function transformURL(path: string) {
 }
 function handleClickImage(event: MouseEvent, item: (typeof images.value)[0]) {
   event.preventDefault();
-  const el = event.currentTarget as HTMLDivElement;
   currentImage.value = item;
   showDropdown.value = true;
-  dropDownPosition.x = el.offsetLeft + 20;
-  dropDownPosition.y = el.offsetTop + 132;
+  dropDownPosition.x = event.clientX;
+  dropDownPosition.y = event.clientY;
 }
 function handleImage(index: number) {
   if (!images.value.length) return;
