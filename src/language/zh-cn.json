@@ -1,6 +1,7 @@
 {
   "root": "根",
   "back": "返回",
+  "continue": "继续",
   "delete": "删除",
   "empty": "空",
   "home": {
@@ -37,7 +38,11 @@
     "language": "切换语言",
     "folder_manage": "文件夹管理",
     "config": "系统配置文件",
-    "cdn_config": "CDN 配置"
+    "cdn_config": "CDN 配置",
+    "user_info": "个人资料",
+    "setting": "设置",
+    "check_update": "检查更新",
+    "sign_out": "退出登陆"
   },
   "welcome": "欢迎来到 Picx",
   "login": {

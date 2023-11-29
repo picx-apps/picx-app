@@ -56,28 +56,31 @@ export const CDNDefaultOptions: CDN[] = [
   },
 ];
 
-export const UserOptions: DropdownMixedOption[] = [
-  {
-    type: "render",
-    key: "userInfo",
-    render: () => h(GithubLink),
-  },
-  {
-    label: "设置",
-    key: "settings",
-  },
-  {
-    type: "divider",
-    key: "d1",
-  },
-  {
-    label: "检查更新",
-    key: "checkUpdate",
-  },
-  {
-    label: "退出登陆",
-    key: "signOut",
-  },
-];
+export const UserOptions = computed<DropdownMixedOption[]>(() => {
+  const { t } = useI18n();
+  return [
+    {
+      type: "render",
+      key: "userInfo",
+      render: () => h(GithubLink),
+    },
+    {
+      label: t("user.setting"),
+      key: "settings",
+    },
+    {
+      type: "divider",
+      key: "d1",
+    },
+    {
+      label: t("user.check_update"),
+      key: "checkUpdate",
+    },
+    {
+      label: t("user.sign_out"),
+      key: "signOut",
+    },
+  ];
+});
 
 export type UserOptionsKey = "settings" | "checkUpdate" | "signOut";

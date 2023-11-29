@@ -1,6 +1,7 @@
 {
   "root": "ROOT",
   "back": "Back",
+  "continue": "Continue",
   "delete": "delete",
   "empty": "Empty",
   "home": {
@@ -37,7 +38,11 @@
     "language": "Change Language",
     "folder_manage": "Folder Manage",
     "config": "System Config",
-    "cdn_config": "CDN Config"
+    "cdn_config": "CDN Config",
+    "user_info": "User Info",
+    "setting": "Setting",
+    "check_update": "Check Updater",
+    "sign_out": "Sign Out"
   },
   "welcome": "Welcome Picx",
   "login": {
@@ -103,8 +108,8 @@
     "light": "Light",
     "dark": "Dark"
   },
-  "default": "默认",
-  "custom": "自定义",
+  "default": "Default",
+  "custom": "Custom",
   "cdn_config": {
     "title": "CDN Configure",
     "current": "Current Select",

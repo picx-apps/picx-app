@@ -103,11 +103,11 @@ name: lead
       </div>
 
       <div class="absolute bottom-40px left-50% translate-x--50% w-200px flex justify-center" v-show="step === 2">
-        <n-button type="primary" round ghost size="large" class="mx-10px" @click="handlePrev">
+        <n-button type="primary" round size="large" class="mx-10px w-80px" @click="handlePrev">
           {{ t("back") }}
         </n-button>
-        <n-button type="primary" round size="large" class="mx-10px" @click="handleNext">
-          {{ t("complete") }}
+        <n-button type="primary" round size="large" color="#3728b9" class="mx-10px w-80px" @click="handleNext">
+          {{ t("continue") }}
         </n-button>
       </div>
     </div>

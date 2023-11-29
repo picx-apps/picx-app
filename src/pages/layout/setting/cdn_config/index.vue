@@ -51,7 +51,7 @@ name: cdn_config
 
     <DefineOption v-slot="{ icon, title, label, isDefault }">
       <div
-        class="flex items-center cursor-pointer rounded-10px hover:bg-#fafafa dark:hover:bg-gray-7 px-10px py-12px mb-10px"
+        class="flex items-center cursor-pointer rounded-10px hover:bg-#1d1d1d transition-all duration-50 px-10px py-12px mb-10px"
       >
         <Icon :icon="icon" class="w-25px h-25px color-#aaaaaa" />
         <div class="flex-1 ml-10px truncate">

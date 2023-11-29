@@ -8,6 +8,7 @@ defineSlots<{
   operate: void;
 }>();
 
+const { t } = useI18n();
 const router = useRouter();
 const dialog = useDialog();
 const { user } = useGlobalState();
@@ -20,11 +21,11 @@ function handleSelect(key: UserOptionsKey) {
   if (key === "signOut") {
     dialog.create({
       title: "Warning",
-      content: "Are you sure you want to sign out?",
+      content: t("sign_out_content"),
       showIcon: false,
       closable: false,
-      positiveText: "Yes",
-      negativeText: "No",
+      positiveText: t("confirm"),
+      negativeText: t("cancel"),
       negativeButtonProps: {
         type: "primary",
         size: "large",
@@ -49,6 +50,17 @@ function handleForward() {
   router.replace(path);
 }
 </script>
+
+<i18n lang="json">
+{
+  "en-US": {
+    "sign_out_content": "Are you sure you want to sign out?"
+  },
+  "zh-CN": {
+    "sign_out_content": "你确定要退出吗?"
+  }
+}
+</i18n>
 
 <template>
   <div class="py-10px flex items-center">
