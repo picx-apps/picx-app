@@ -45,7 +45,7 @@ jobs:
       - name: Build the app
         uses: tauri-apps/tauri-action@v0
         env:
-          GITHUB_TOKEN: ${{ secrets.ACTION_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           VITE_STATE: ${{ secrets.VITE_STATE }}
           VITE_SCOPE: ${{ secrets.VITE_SCOPE }}
           VITE_CLIENT_ID: ${{ secrets.VITE_CLIENT_ID }}
