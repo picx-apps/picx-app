@@ -106,7 +106,7 @@ name: lead
         <n-button type="primary" round size="large" class="mx-10px w-80px" @click="handlePrev">
           {{ t("back") }}
         </n-button>
-        <n-button type="primary" round size="large" color="#3728b9" class="mx-10px w-80px" @click="handleNext">
+        <n-button type="primary" round size="large" color="#3728b9" class="mx-10px w-100px" @click="handleNext">
           {{ t("continue") }}
         </n-button>
       </div>
