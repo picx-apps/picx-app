@@ -46,6 +46,7 @@ jobs:
         uses: tauri-apps/tauri-action@v0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAURI_PRIVATE_KEY: ${{ secrets.TAURI_PRIVATE_KEY }}
           VITE_STATE: ${{ secrets.VITE_STATE }}
           VITE_SCOPE: ${{ secrets.VITE_SCOPE }}
           VITE_CLIENT_ID: ${{ secrets.VITE_CLIENT_ID }}
