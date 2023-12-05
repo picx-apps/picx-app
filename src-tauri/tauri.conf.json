@@ -57,7 +57,7 @@
       "active": true,
       "endpoints": ["https://github.com/picx-dev/picx-app/releases/download/{{target}}/{{arch}}/{{current_version}}"],
       "dialog": true,
-      "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IDVDQ0Q1QjM4ODYxODNCMjgKUldRb094aUdPRnZOWE5JQThoK21hSG5GRm9ueUhTajFkUUk5d0pLcThmZXRkdDZNVk9RZHhEYk0K"
+      "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IDY5RTc2QUFEOUEzM0ZEQUQKUldTdC9UT2FyV3JuYVhSOXZMUHg4NlVaSGNOdGlYWjN4S1hodzY3akJXVGR6ejNIc29XT2lBaGgK"
     },
     "windows": [
       {
