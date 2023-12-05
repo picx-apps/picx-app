@@ -7,8 +7,7 @@
     "withGlobalTauri": false
   },
   "package": {
-    "productName": "PicX",
-    "version": "0.0.1"
+    "productName": "PicX"
   },
   "tauri": {
     "allowlist": {
@@ -53,6 +52,12 @@
     },
     "security": {
       "csp": null
+    },
+    "updater": {
+      "active": true,
+      "endpoints": ["https://github.com/picx-dev/picx-app/releases/download/{{target}}/{{arch}}/{{current_version}}"],
+      "dialog": true,
+      "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IDVDQ0Q1QjM4ODYxODNCMjgKUldRb094aUdPRnZOWE5JQThoK21hSG5GRm9ueUhTajFkUUk5d0pLcThmZXRkdDZNVk9RZHhEYk0K"
     },
     "windows": [
       {

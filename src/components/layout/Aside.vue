@@ -11,7 +11,7 @@ const menu = computed(() => [
     text: t("home.title"),
   },
   {
-    icon: "ph:cloud-fill",
+    icon: "majesticons:cloud-upload",
     name: "upload",
     text: t("node.title"),
   },
