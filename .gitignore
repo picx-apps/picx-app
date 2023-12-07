@@ -25,10 +25,6 @@ dist-ssr
 .env
 .env.local
 .env.development
-./src/.env
-./src/.env.development
-./src-tauri/.env
-./src-tauri/.env.development
 
 # nuxt
 .nuxt
