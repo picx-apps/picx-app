@@ -9,20 +9,11 @@
       "request": "launch",
       "name": "Tauri Development Debug",
       "cargo": {
-        "args": [
-          "build",
-          "--manifest-path=./src-tauri/Cargo.toml",
-          "--no-default-features"
-        ]
+        "args": ["build", "--manifest-path=./src-tauri/Cargo.toml", "--no-default-features"]
       },
       // task for the `beforeDevCommand` if used, must be configured in `.vscode/tasks.json`
       "preLaunchTask": "ui:dev",
-      "env": {
-        "GITHUB_STATE": "",
-        "CLIENT_ID": "Iv1.274fe6f96551b91f",
-        "REDIRECT_URI": "https://picx.qzzhu.cn/authorization",
-        "CLIENT_SECRET": "760951d571e461d2cfb4f91689ae7e7bc54bbaf5"
-      }
+      "env": {}
     },
     {
       "type": "lldb",
