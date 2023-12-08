@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { Icon } from "@iconify/vue";
+import { checkUpdate } from "@tauri-apps/api/updater";
 import { UserOptions, type UserOptionsKey } from "~/constant";
 import { useGlobalState } from "~/store";
 import { useRouteState } from "~/store/route";
@@ -40,6 +41,9 @@ function handleSelect(key: UserOptionsKey) {
       },
     });
   }
+  if (key === "checkUpdate") {
+    handleUpdate();
+  }
 }
 function handleBack() {
   const path = routeHistory.value[currentPathIndex.value - 1];
@@ -48,6 +52,10 @@ function handleBack() {
 function handleForward() {
   const path = routeHistory.value[currentPathIndex.value + 1];
   router.replace(path);
+}
+async function handleUpdate() {
+  const { shouldUpdate, manifest } = await checkUpdate();
+  console.log(shouldUpdate, manifest);
 }
 </script>
 
