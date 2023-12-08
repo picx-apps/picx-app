@@ -30,8 +30,9 @@ onMounted(() => {
               <KeepAlive>
                 <Suspense>
                   <!-- 主要内容 -->
-                  <component :is="Component"></component>
-
+                  <div>
+                    <component :is="Component"></component>
+                  </div>
                   <!-- 加载中状态 -->
                   <template #fallback> 正在加载... </template>
                 </Suspense>
