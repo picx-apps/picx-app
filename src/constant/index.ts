@@ -57,7 +57,10 @@ export const CDNDefaultOptions: CDN[] = [
 ];
 
 export const UserOptions = computed<DropdownMixedOption[]>(() => {
-  const { t } = useI18n();
+  const { t } = useI18n({
+    inheritLocale: true,
+    useScope: "global",
+  });
   return [
     {
       type: "render",
