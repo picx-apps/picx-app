@@ -35,6 +35,9 @@ export default defineConfig(() => ({
         {
           "naive-ui": ["useDialog", "useMessage", "useNotification", "useLoadingBar"],
         },
+        {
+          "vue-i18n": ["useI18n"],
+        },
       ],
       eslintrc: {
         enabled: true, // Default `false`

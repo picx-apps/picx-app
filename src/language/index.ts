@@ -6,7 +6,7 @@ const messages = {
   "zh-CN": zhCN,
 };
 
-const language = useStorage<MessageKeys>("language", "en-US");
+const language = useStorage<MessageKeys>("language", "zh-CN");
 
 export const messageOptions = [
   {
