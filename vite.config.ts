@@ -46,11 +46,24 @@ export default defineConfig(() => ({
       },
     }),
     Components({
-      resolvers: [NaiveUiResolver()],
+      resolvers: [
+        NaiveUiResolver(),
+        (componentName) => {
+          if (componentName === "Icon") {
+            return { name: "Icon", from: "@iconify/vue" };
+          }
+        },
+      ],
       include: [
         /\.[tj]sx?$/, // .ts, .tsx, .js, .jsx
         /\.vue$/,
         /\.vue\?vue/, // .vue
+      ],
+      types: [
+        {
+          from: "@iconify/vue",
+          names: ["Icon"],
+        },
       ],
       directoryAsNamespace: true,
     }),

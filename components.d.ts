@@ -9,6 +9,7 @@ declare module 'vue' {
   export interface GlobalComponents {
     CreateRepo: typeof import('./src/components/CreateRepo.vue')['default']
     Header: typeof import('./src/components/Header.vue')['default']
+    Icon: typeof import('@iconify/vue')['Icon']
     ImageCard: typeof import('./src/components/image-card/index.vue')['default']
     InitRepo: typeof import('./src/components/InitRepo.vue')['default']
     Layout: typeof import('./src/components/layout/index.vue')['default']
