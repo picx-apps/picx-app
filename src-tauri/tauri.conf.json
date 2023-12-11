@@ -64,7 +64,7 @@
     },
     "updater": {
       "active": true,
-      "endpoints": ["https://github.com/picx-dev/picx-app/releases/download/v0.0.0/latest.json"],
+      "endpoints": ["https://github.com/picx-dev/picx-app/releases/download/{{current_version}}/latest.json"],
       "dialog": false,
       "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IDY5RTc2QUFEOUEzM0ZEQUQKUldTdC9UT2FyV3JuYVhSOXZMUHg4NlVaSGNOdGlYWjN4S1hodzY3akJXVGR6ejNIc29XT2lBaGgK"
     },

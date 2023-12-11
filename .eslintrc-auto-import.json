@@ -310,6 +310,7 @@
     "whenever": true,
     "replacePlaceholder": true,
     "isImage": true,
-    "imageFileToUint8Array": true
+    "imageFileToUint8Array": true,
+    "useClipboardItems": true
   }
 }

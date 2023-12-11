@@ -11,21 +11,33 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        platform: [macos-latest, ubuntu-latest, windows-latest]
-    runs-on: ${{ matrix.platform }}
+        settings:
+          - platform: 'macos-latest'
+            args: '--target universal-apple-darwin'
+          - platform: 'macos-latest'
+            args: '--target x86_64-apple-darwin'
+          - platform: 'macos-latest'
+            args: '--target aarch64-apple-darwin'
+          - platform: 'ubuntu-latest'
+            args: ''
+          - platform: 'windows-latest'
+            args: ''
+    runs-on: ${{ matrix.settings.platform }}
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
 
       - name: install webkit2gtk (ubuntu only)
-        if: matrix.platform == 'ubuntu-latest'
+        if: matrix.settings.platform == 'ubuntu-latest'
         run: |
           sudo apt-get update
           sudo apt-get install -y webkit2gtk-4.0
 
       - name: Rust setup
         uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: aarch64-apple-darwin
 
       - name: Rust cache
         uses: swatinem/rust-cache@v2
@@ -41,7 +53,8 @@ jobs:
       - name: Sync node version and setup cache
         uses: actions/setup-node@v3
         with:
-          node-version: 'lts/*'
+          node-version: '20.10.0'
+          node-version-file: '.node-version'
           cache: 'pnpm' # Set this to npm, yarn or pnpm.
 
       - name: Install frontend dependencies
@@ -50,7 +63,7 @@ jobs:
 
       - name: Build the app
         id: build_app
-        uses: tauri-apps/tauri-action@v0
+        uses: tauri-apps/tauri-action@v0.4.5
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           TAURI_PRIVATE_KEY: ${{ secrets.TAURI_PRIVATE_KEY }}
@@ -67,3 +80,4 @@ jobs:
           releaseBody: 'See the assets to download this version and install.'
           releaseDraft: true
           prerelease: false
+          args: ${{ matrix.settings.args }}
