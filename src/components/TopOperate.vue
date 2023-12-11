@@ -54,8 +54,8 @@ function handleForward() {
   router.replace(path);
 }
 async function handleUpdate() {
-  const { shouldUpdate, manifest } = await checkUpdate();
-  console.log(shouldUpdate, manifest);
+  const update = await checkUpdate();
+  console.log(update);
 }
 </script>
 
