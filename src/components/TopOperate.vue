@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { Icon } from "@iconify/vue";
-import { checkUpdate } from "@tauri-apps/api/updater";
+import { checkUpdate, UpdateResult } from "@tauri-apps/api/updater";
 import { UserOptions, type UserOptionsKey } from "~/constant";
 import { useGlobalState } from "~/store";
 import { useRouteState } from "~/store/route";
@@ -14,6 +14,11 @@ const router = useRouter();
 const dialog = useDialog();
 const { user } = useGlobalState();
 const { canBack, canForward, currentPathIndex, routeHistory } = useRouteState();
+const update = ref<UpdateResult | null>(null);
+
+onMounted(async () => {
+  update.value = await checkUpdate();
+});
 
 function handleSelect(key: UserOptionsKey) {
   if (key === "settings") {
@@ -41,9 +46,9 @@ function handleSelect(key: UserOptionsKey) {
       },
     });
   }
-  if (key === "checkUpdate") {
-    handleUpdate();
-  }
+  // if (key === "checkUpdate") {
+  //   handleUpdate();
+  // }
 }
 function handleBack() {
   const path = routeHistory.value[currentPathIndex.value - 1];
@@ -53,10 +58,20 @@ function handleForward() {
   const path = routeHistory.value[currentPathIndex.value + 1];
   router.replace(path);
 }
-async function handleUpdate() {
-  const update = await checkUpdate();
-  console.log(update);
-}
+// function handleUpdate() {
+//   if (!update.value) return;
+//   if (update.value.shouldUpdate === false) {
+//     message("It is already the latest version.", { type: "info", title: "Picx app" });
+//     // dialog.create({
+//     //   title: "Picx app",
+//     //   content: () => h("div", `It is already the latest version.`),
+//     //   showIcon: false,
+//     //   style: {
+//     //     width: "300px",
+//     //   },
+//     // });
+//   }
+// }
 </script>
 
 <i18n lang="json">

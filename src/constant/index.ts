@@ -75,10 +75,10 @@ export const UserOptions = computed<DropdownMixedOption[]>(() => {
       type: "divider",
       key: "d1",
     },
-    {
-      label: t("user.check_update"),
-      key: "checkUpdate",
-    },
+    // {
+    //   label: t("user.check_update"),
+    //   key: "checkUpdate",
+    // },
     {
       label: t("user.sign_out"),
       key: "signOut",
