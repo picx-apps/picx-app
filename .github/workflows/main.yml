@@ -64,13 +64,9 @@ jobs:
         uses: tauri-apps/tauri-action@v0.4.5
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PICX_PRIVATE_KEY: ${{ secrets.PICX_PRIVATE_KEY }}
           TAURI_PRIVATE_KEY: ${{ secrets.TAURI_PRIVATE_KEY }}
           TAURI_KEY_PASSWORD: ""
-          VITE_STATE: ${{ secrets.VITE_STATE }}
-          VITE_SCOPE: ${{ secrets.VITE_SCOPE }}
-          VITE_CLIENT_ID: ${{ secrets.VITE_CLIENT_ID }}
-          VITE_REDIRECT_URI: ${{ secrets.VITE_REDIRECT_URI }}
-          VITE_CLIENT_SECRET: ${{ secrets.VITE_CLIENT_SECRET }}
           VITE_INSTALL_URL: ${{ secrets.VITE_INSTALL_URL }}
         with:
           tagName: v__VERSION__ # the action automatically replaces \_\_VERSION\_\_ with the app version
