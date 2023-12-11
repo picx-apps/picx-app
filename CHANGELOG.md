@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.5](https://github.com/picx-dev/picx-app/compare/v0.0.4...v0.0.5) (2023-12-11)
+
+
+### Bug Fixes
+
+* action no use private key ([1cb297f](https://github.com/picx-dev/picx-app/commit/1cb297f026fdcc38c357886e660244b041f22ad1))
+* add layout header component ([7d12386](https://github.com/picx-dev/picx-app/commit/7d1238694e3e6c3dcd0b40758fbe66b99ecfb868))
+* change updater endpoints url ([6eb4e8a](https://github.com/picx-dev/picx-app/commit/6eb4e8ad0acc03fae92219bc935f2dcddd0247c3))
+
 ### [0.0.4](https://github.com/picx-dev/picx-app/compare/v0.0.3...v0.0.4) (2023-12-11)
 
 ## <small>0.0.3 (2023-12-11)</small>
