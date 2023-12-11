@@ -1,3 +1,9 @@
+# Changelog
+
+All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
+
+### [0.0.4](https://github.com/picx-dev/picx-app/compare/v0.0.3...v0.0.4) (2023-12-11)
+
 ## <small>0.0.3 (2023-12-11)</small>
 
 * 0.0.3 ([f7a00a1](https://github.com/picx-dev/picx-app/commit/f7a00a1))
@@ -171,6 +177,3 @@
 * delete: user page ([e2d36a9](https://github.com/picx-dev/picx-app/commit/e2d36a9))
 * version: vue-i18n ([f948eb0](https://github.com/picx-dev/picx-app/commit/f948eb0))
 * remove: auth module ([2e67a0d](https://github.com/picx-dev/picx-app/commit/2e67a0d))
-
-
-
