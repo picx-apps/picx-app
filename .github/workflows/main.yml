@@ -75,7 +75,7 @@ jobs:
         with:
           tagName: v__VERSION__ # the action automatically replaces \_\_VERSION\_\_ with the app version
           releaseName: 'v__VERSION__'
-          releaseBody: 'See the assets to download this version and install.'
+          releaseBody: 'Please refer to [CHANGELOG.md](https://github.com/picx-dev/picx-app/blob/main/CHANGELOG.md) for details.'
           releaseDraft: true
           prerelease: false
           args: ${{ matrix.settings.args }}

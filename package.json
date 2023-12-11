@@ -12,7 +12,9 @@
     "lint": "eslint . --ext .vue,.js,.ts,.jsx,.tsx",
     "lint:fix": "eslint . --ext .vue,.js,.ts,.jsx,.tsx --fix",
     "commitlint": "commitlint --edit",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "release": "standard-version",
+    "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0"
   },
   "dependencies": {
     "@iconify/vue": "^4.1.1",
@@ -43,6 +45,7 @@
     "@typescript-eslint/parser": "^6.12.0",
     "@vitejs/plugin-vue": "^4.2.3",
     "@vitejs/plugin-vue-jsx": "^3.0.2",
+    "conventional-changelog-cli": "^4.1.0",
     "eslint": "^8.54.0",
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-prettier": "^5.0.1",
@@ -52,6 +55,7 @@
     "lint-staged": "^15.1.0",
     "naive-ui": "^2.35.0",
     "prettier": "^3.1.0",
+    "standard-version": "^9.5.0",
     "typescript": "^5.0.2",
     "unocss": "^0.57.1",
     "unplugin-auto-import": "^0.16.7",
