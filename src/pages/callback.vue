@@ -49,6 +49,7 @@ meta:
 </route>
 
 <template>
+  <LayoutHeader />
   <div class="text-center pt-30px">
     <Icon icon="arcticons:kul-authenticator" class="text-3rem" />
     <h2 class="color-gray-7">Waiting for authorization to return</h2>

@@ -18,6 +18,7 @@ name: installations
 
 <template>
   <div h-100vh class="login-container">
+    <LayoutHeader />
     <div class="pt-100px text-center">
       <div class="mb-30px w-full flex flex-col items-center">
         <n-image :src="image" width="200" />

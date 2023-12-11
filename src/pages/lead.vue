@@ -78,6 +78,7 @@ name: lead
 
 <template>
   <div class="flex justify-center h-screen">
+    <LayoutHeader />
     <div class="px-16px max-w-500px min-w-350px">
       <div class="mt-100px w-full mb-50px">
         <div class="my-4px text-2rem font-bold lh-38px color-#545454 base-text-color">
