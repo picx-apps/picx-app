@@ -9,7 +9,7 @@ const router = useRouter();
 async function handleLogin() {
   const uri = "https://picx.qzzhu.cn/login";
   shell.open(uri);
-  router.push("/callback");
+  router.replace("/callback");
 }
 </script>
 

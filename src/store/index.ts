@@ -1,6 +1,7 @@
 import { CompressionQuality } from "../enum";
 import type { User, UserToken } from "../types";
 import { invoke } from "@tauri-apps/api";
+import router from "~/router";
 import { merge } from "lodash-es";
 import { Octokit } from "octokit";
 
@@ -60,8 +61,8 @@ export const useGlobalState = createGlobalState(() => {
   const user = computed(() => userinfo.value);
 
   watch(
-    [authorize, userinfo],
-    async ([auth, userinfo]) => {
+    [authorize, userinfo, repository],
+    async ([auth, userinfo, repository]) => {
       if (auth.access_token) {
         octokit.value = new Octokit({
           auth: auth.access_token,
@@ -72,6 +73,9 @@ export const useGlobalState = createGlobalState(() => {
         if (res.status === 200) {
           set_userinfo(res.data);
         }
+      }
+      if (auth.access_token && userinfo && (!repository.repo_name || !repository.branch_name)) {
+        router.replace({ name: "lead" });
       }
     },
     { immediate: true },
@@ -102,8 +106,16 @@ export const useGlobalState = createGlobalState(() => {
   function set_repository(value: Partial<Repository>) {
     repository.value = merge(repository.value, value);
   }
+  function logout() {
+    localStorage.clear();
+    router.push("/login");
+  }
   async function checkUserInstallApps(username: string) {
-    const token = await invoke("sign_jwt");
+    const token = await invoke("sign_jwt").catch((err) => {
+      logout();
+      throw new Error(err);
+    });
+
     const octokit = new Octokit({
       auth: token,
     });

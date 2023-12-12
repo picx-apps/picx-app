@@ -22,16 +22,25 @@ pub async fn sign_out(token: String) -> u16 {
 }
 
 #[tauri::command]
-pub fn sign_jwt() -> String {
+pub fn sign_jwt() -> Result<String, String> {
     let now = Local::now().timestamp();
     let claims = Claims {
         iat: now.clone() - 60,
         exp: now.clone() + 600,
         iss: String::from("416113"),
     };
-    let private_key_str =
-        env::var("PICX_PRIVATE_KEY").expect("Failed to read PICX_PRIVATE_KEY from environment");
-    let private_key = EncodingKey::from_rsa_pem(private_key_str.as_bytes()).unwrap();
-    let token = encode(&Header::new(Algorithm::RS256), &claims, &private_key).unwrap();
-    token
+    let private_key_str = env::var("PICX_PRIVATE_KEY");
+    match private_key_str {
+        Ok(v) => {
+            let private_key = EncodingKey::from_rsa_pem(v.as_bytes());
+            match private_key {
+                Ok(private) => {
+                    let token = encode(&Header::new(Algorithm::RS256), &claims, &private).unwrap();
+                    Ok(token)
+                }
+                Err(_) => Err("Parsing error with private key".into()),
+            }
+        }
+        Err(_) => Err("Failed to read PICX_PRIVATE_KEY from environment".into()),
+    }
 }
