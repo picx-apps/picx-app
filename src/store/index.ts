@@ -111,7 +111,7 @@ export const useGlobalState = createGlobalState(() => {
     router.push("/login");
   }
   async function checkUserInstallApps(username: string) {
-    const token = await invoke("sign_jwt").catch((err) => {
+    const token = await invoke("sign_jwt", { privateKey: import.meta.env.VITE_PRIVATE_KEY }).catch((err) => {
       logout();
       throw new Error(err);
     });

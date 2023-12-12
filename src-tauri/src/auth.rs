@@ -2,7 +2,7 @@ use crate::model::Claims;
 use chrono::prelude::*;
 use jsonwebtoken::{encode, Algorithm, EncodingKey, Header};
 use reqwest::Client;
-use std::{collections::HashMap, env};
+use std::collections::HashMap;
 
 #[tauri::command]
 pub async fn sign_out(token: String) -> u16 {
@@ -22,25 +22,19 @@ pub async fn sign_out(token: String) -> u16 {
 }
 
 #[tauri::command]
-pub fn sign_jwt() -> Result<String, String> {
+pub fn sign_jwt(private_key: String) -> Result<String, String> {
     let now = Local::now().timestamp();
     let claims = Claims {
         iat: now.clone() - 60,
         exp: now.clone() + 600,
         iss: String::from("416113"),
     };
-    let private_key_str = env::var("VITE_PRIVATE_KEY");
-    match private_key_str {
-        Ok(v) => {
-            let private_key = EncodingKey::from_rsa_pem(v.as_bytes());
-            match private_key {
-                Ok(private) => {
-                    let token = encode(&Header::new(Algorithm::RS256), &claims, &private).unwrap();
-                    Ok(token)
-                }
-                Err(_) => Err("Parsing error with private key".into()),
-            }
+    let private_key = EncodingKey::from_rsa_pem(private_key.as_bytes());
+    match private_key {
+        Ok(encoding_key) => {
+            let token = encode(&Header::new(Algorithm::RS256), &claims, &encoding_key).unwrap();
+            Ok(token)
         }
-        Err(_) => Err("Failed to read VITE_PRIVATE_KEY from environment".into()),
+        Err(_) => Err("Parsing error with private key".into()),
     }
 }

@@ -7,14 +7,12 @@ mod model;
 mod utils;
 
 use auth::{sign_jwt, sign_out};
-use dotenv::dotenv;
 use image::{compression_image, compression_image_buf, watermark_image};
 use model::SchemePayload;
 use tauri::Manager;
 use utils::{binary_to_base64, rand_string};
 
 fn main() {
-    dotenv().ok();
     tauri_plugin_deep_link::prepare("picx-app");
 
     tauri::Builder::default()

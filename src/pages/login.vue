@@ -7,8 +7,6 @@ const { t } = useI18n();
 const router = useRouter();
 
 async function handleLogin() {
-  console.log("VITE_PRIVATE_KEY", import.meta.env.VITE_PRIVATE_KEY);
-  console.log("VITE_INSTALL_URL", import.meta.env.VITE_INSTALL_URL);
   const uri = "https://picx.qzzhu.cn/login";
   shell.open(uri);
   router.replace("/callback");
