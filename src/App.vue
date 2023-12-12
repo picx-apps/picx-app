@@ -31,6 +31,7 @@ onMounted(() => {
                 <Suspense>
                   <!-- 主要内容 -->
                   <div>
+                    <LayoutHeader />
                     <component :is="Component"></component>
                   </div>
                   <!-- 加载中状态 -->

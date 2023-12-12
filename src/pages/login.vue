@@ -21,7 +21,6 @@ meta:
 
 <template>
   <div h-100vh class="login-container">
-    <LayoutHeader />
     <!-- <div class="flex-1 image max-sm:hidden"></div> -->
     <div class="pt-100px text-center">
       <div class="mb-30px w-full flex flex-col items-center">

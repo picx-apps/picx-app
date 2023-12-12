@@ -2,7 +2,6 @@
 
 <template>
   <div class="layout flex flex-col h-screen p-10px">
-    <LayoutHeader />
     <div class="flex h[calc(100%-30px)]">
       <div class="w-300px">
         <LayoutAside />
