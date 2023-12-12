@@ -2,7 +2,7 @@
 import { useGlobalState } from "../store";
 import { SchemePayload } from "../types";
 import { Icon } from "@iconify/vue";
-import { event } from "@tauri-apps/api";
+import { event, shell } from "@tauri-apps/api";
 
 const router = useRouter();
 const { set_authorize, get_userinfo, checkUserInstallApps, access_token } = useGlobalState();
@@ -36,6 +36,10 @@ async function handleSign() {
     router.push({ name: "installations" });
   }
 }
+function reLogin() {
+  const uri = "https://picx.qzzhu.cn/login";
+  shell.open(uri);
+}
 
 onMounted(() => {
   handleSign();
@@ -49,9 +53,15 @@ meta:
 </route>
 
 <template>
-  <div class="text-center pt-30px">
-    <Icon icon="arcticons:kul-authenticator" class="text-3rem" />
-    <h2 class="color-gray-7">Waiting for authorization to return</h2>
+  <div class="flex flex-col items-center justify-center h-90vh">
+    <div class="flex items-center justify-center">
+      <Icon icon="fluent-emoji:carrot" class="text-4rem" />
+      <h2 class="text-2.4rem ml-4px my-0">Picx</h2>
+    </div>
+    <h1 class="color-white text-2rem">前往浏览器以登陆</h1>
+    <h2 class="text-1rem color-gray-6">
+      没有看到浏览器选项卡？<span class="color-white cursor-pointer" @click="reLogin">再试一次</span>
+    </h2>
   </div>
 </template>
 
