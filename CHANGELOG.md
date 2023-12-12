@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.6](https://github.com/picx-dev/picx-app/compare/v0.0.5...v0.0.6) (2023-12-12)
+
+
+### Bug Fixes
+
+* catch private key error ([79c9ab4](https://github.com/picx-dev/picx-app/commit/79c9ab405ac3b23126981dfa738b15a4c925ef9f))
+* change env name with github private key ([2135ad5](https://github.com/picx-dev/picx-app/commit/2135ad5e6715f8b53c35677394952cd2d127d3f7))
+
 ### [0.0.5](https://github.com/picx-dev/picx-app/compare/v0.0.4...v0.0.5) (2023-12-11)
 
 
