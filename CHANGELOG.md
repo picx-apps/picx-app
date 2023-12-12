@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.7](https://github.com/picx-dev/picx-app/compare/v0.0.6...v0.0.7) (2023-12-12)
+
+
+### Bug Fixes
+
+* callback page style change ([534a3e0](https://github.com/picx-dev/picx-app/commit/534a3e0cc74cd524f57d25d6f270d120c4201d83))
+* failed to read VITE_PRIVATE_KEY from environment ([36cb352](https://github.com/picx-dev/picx-app/commit/36cb352d004855f803f8c6523cfbeab8d4f83571))
+
 ### [0.0.6](https://github.com/picx-dev/picx-app/compare/v0.0.5...v0.0.6) (2023-12-12)
 
 
