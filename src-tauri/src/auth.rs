@@ -29,7 +29,7 @@ pub fn sign_jwt() -> Result<String, String> {
         exp: now.clone() + 600,
         iss: String::from("416113"),
     };
-    let private_key_str = env::var("PICX_PRIVATE_KEY");
+    let private_key_str = env::var("VITE_PRIVATE_KEY");
     match private_key_str {
         Ok(v) => {
             let private_key = EncodingKey::from_rsa_pem(v.as_bytes());
@@ -41,6 +41,6 @@ pub fn sign_jwt() -> Result<String, String> {
                 Err(_) => Err("Parsing error with private key".into()),
             }
         }
-        Err(_) => Err("Failed to read PICX_PRIVATE_KEY from environment".into()),
+        Err(_) => Err("Failed to read VITE_PRIVATE_KEY from environment".into()),
     }
 }
