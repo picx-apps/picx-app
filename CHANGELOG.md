@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.2](https://github.com/picx-dev/picx-app/compare/v0.0.1...v0.0.2) (2023-12-13)
+
+
+### Bug Fixes
+
+* library click return root ([29559cf](https://github.com/picx-dev/picx-app/commit/29559cfbf7f090fa95fc9c27e038560b0c7253f2))
+
 ### 0.0.1 (2023-12-13)
 
 
