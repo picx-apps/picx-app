@@ -92,6 +92,9 @@ function handleBackLibrary() {
 <template>
   <div class="h-full flex flex-col">
     <Option icon="ph:circles-four-fill" :text="t('home.library')" class="cursor-default">
+      <template #text>
+        <span class="cursor-pointer hover:color-white" @click="imagePath = []">{{ t("home.library") }}</span>
+      </template>
       <template #optional>
         <n-tooltip placement="top" trigger="hover" v-if="imagePath.length">
           <template #trigger>
