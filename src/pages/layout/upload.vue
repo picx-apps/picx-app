@@ -265,7 +265,7 @@ name: upload
           b="3px dashed gray-8"
           @click="handleClickUpload"
         >
-          <Icon icon="fluent-emoji:astronaut-light" class="w-300px h-300px" />
+          <Icon icon="fluent-emoji:camping" class="w-300px h-300px color-gray-4" />
 
           <div class="text-1.2rem font-bold color-gray-7">
             {{ t("node.info") }}

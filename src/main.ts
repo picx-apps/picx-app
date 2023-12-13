@@ -25,4 +25,5 @@ loadIcons([
   "fluent-emoji:ghost",
   "fluent-emoji:flexed-biceps",
   "fluent-emoji:ab-button-blood-type",
+  "fluent-emoji:camping",
 ]);
