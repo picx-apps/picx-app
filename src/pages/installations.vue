@@ -2,13 +2,21 @@
 import image from "../assets/images/install.png?url";
 import { Icon } from "@iconify/vue";
 import { open } from "@tauri-apps/api/shell";
+import { useGlobalState } from "~/store";
 
 const { t } = useI18n();
 const router = useRouter();
+const { onInstallation } = useGlobalState();
 
 async function handleInstall() {
-  open(import.meta.env.VITE_INSTALL_URL + "/installations/new");
-  router.push("/callback");
+  onInstallation()
+    .then(() => {
+      router.replace({ name: "lead" });
+    })
+    .catch(() => {
+      open(import.meta.env.VITE_INSTALL_URL + "/installations/new");
+      router.replace("/installation_callback");
+    });
 }
 </script>
 

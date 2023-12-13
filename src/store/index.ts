@@ -1,7 +1,6 @@
 import { CompressionQuality } from "../enum";
 import type { User, UserToken } from "../types";
 import { invoke } from "@tauri-apps/api";
-import router from "~/router";
 import { merge } from "lodash-es";
 import { Octokit } from "octokit";
 
@@ -51,6 +50,7 @@ export const useGlobalState = createGlobalState(() => {
     },
     localStorage,
   );
+  const isInstalled = ref<boolean>(false);
 
   // getters
   const access_token = computed(() => authorize.value.access_token);
@@ -60,28 +60,17 @@ export const useGlobalState = createGlobalState(() => {
   const branch_name = computed(() => repository.value.branch_name);
   const user = computed(() => userinfo.value);
 
-  watch(
-    [authorize, userinfo, repository],
-    async ([auth, userinfo, repository]) => {
-      if (auth.access_token) {
-        octokit.value = new Octokit({
-          auth: auth.access_token,
-        });
-      }
-      if (auth.access_token && !userinfo) {
-        const res = await octokit.value!.request("GET /user");
-        if (res.status === 200) {
-          set_userinfo(res.data);
-        }
-      }
-      if (auth.access_token && userinfo && (!repository.repo_name || !repository.branch_name)) {
-        router.replace({ name: "lead" });
-      }
-    },
-    { immediate: true },
-  );
-
   // actions
+  async function initState() {
+    if (authorize.value.access_token) {
+      octokit.value = new Octokit({
+        auth: authorize.value.access_token,
+      });
+    }
+    if (authorize.value.access_token && !userinfo.value) {
+      await get_userinfo();
+    }
+  }
   function init_octokit() {
     if (authorize.value.access_token) {
       octokit.value = new Octokit({
@@ -96,6 +85,7 @@ export const useGlobalState = createGlobalState(() => {
   async function get_userinfo() {
     const res = await octokit.value!.request("GET /user");
     if (res.status === 200) {
+      await initUserInstallApp(res.data.login);
       set_userinfo(res.data);
     }
     return res.data;
@@ -106,13 +96,9 @@ export const useGlobalState = createGlobalState(() => {
   function set_repository(value: Partial<Repository>) {
     repository.value = merge(repository.value, value);
   }
-  function logout() {
-    localStorage.clear();
-    router.push("/login");
-  }
-  async function checkUserInstallApps(username: string) {
+  async function initUserInstallApp(username: string) {
+    if (isInstalled.value === true) return isInstalled.value;
     const token = await invoke("sign_jwt", { privateKey: import.meta.env.VITE_PRIVATE_KEY }).catch((err) => {
-      logout();
       throw new Error(err);
     });
 
@@ -120,17 +106,34 @@ export const useGlobalState = createGlobalState(() => {
       auth: token,
     });
     const installations = await octokit.request("GET /app/installations", {
-      headers: {
-        "X-GitHub-Api-Version": "2022-11-28",
-      },
+      t: Date.now(),
     });
     if (installations.status === 200) {
-      return installations.data.some((item) => item.account?.login === username);
+      isInstalled.value = installations.data.some((item) => item.account?.login === username);
+      return isInstalled.value;
     }
     return false;
   }
+  function onInstallation() {
+    // eslint-disable-next-line no-async-promise-executor
+    return new Promise(async (resolve, reject) => {
+      if (!user.value || !user.value.login) {
+        return reject("user not login");
+      }
+      if (isInstalled.value === false) {
+        await initUserInstallApp(user.value.login);
+      }
+      if (isInstalled.value) {
+        resolve(isInstalled.value);
+      } else {
+        reject("user not install");
+      }
+    });
+  }
 
   return {
+    authorize,
+    userinfo,
     access_token,
     scope,
     token_type,
@@ -140,10 +143,13 @@ export const useGlobalState = createGlobalState(() => {
     octokit,
     repository,
     compress,
+    isInstalled,
     set_authorize,
     get_userinfo,
     set_userinfo,
     set_repository,
-    checkUserInstallApps,
+    initUserInstallApp,
+    onInstallation,
+    initState,
   };
 });

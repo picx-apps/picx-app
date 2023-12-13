@@ -2,6 +2,7 @@
 import { useRouteState } from "./store/route";
 import { useSettingState } from "./store/setting";
 import { themeOverrides } from "./theme";
+import { useGlobalState } from "~/store";
 import hljs from "highlight.js/lib/core";
 import json from "highlight.js/lib/languages/json";
 import { darkTheme } from "naive-ui";
@@ -15,6 +16,7 @@ watch(route, (value) => {
 });
 
 onMounted(() => {
+  useGlobalState().initState();
   useSettingState().autoCreateOfSettings();
 });
 </script>

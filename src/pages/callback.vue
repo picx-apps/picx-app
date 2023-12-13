@@ -5,7 +5,7 @@ import { Icon } from "@iconify/vue";
 import { event, shell } from "@tauri-apps/api";
 
 const router = useRouter();
-const { set_authorize, get_userinfo, checkUserInstallApps, access_token } = useGlobalState();
+const { set_authorize, get_userinfo, access_token, onInstallation } = useGlobalState();
 
 event.listen("scheme-request-received", async (event) => {
   const payload = event.payload as SchemePayload;
@@ -22,19 +22,17 @@ event.listen("scheme-request-received", async (event) => {
     });
     handleSign();
   }
-  //应用安装
-  if (payload.base === "installations") {
-    router.push({ name: "lead" });
-  }
 });
 async function handleSign() {
   if (!access_token.value) return;
-  const userinfo = await get_userinfo();
-  if (await checkUserInstallApps(userinfo.login)) {
-    router.push({ name: "lead" });
-  } else {
-    router.push({ name: "installations" });
-  }
+  await get_userinfo();
+  onInstallation()
+    .then(() => {
+      router.push({ name: "lead" });
+    })
+    .catch(() => {
+      router.push({ name: "installations" });
+    });
 }
 function reLogin() {
   const uri = "https://picx.qzzhu.cn/login";

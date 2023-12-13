@@ -6,12 +6,14 @@ import { createRouter, createWebHistory } from "vue-router";
 const router = createRouter({ routes: routes, history: createWebHistory() });
 console.log(router.getRoutes());
 
-router.beforeEach((to, from, next) => {
-  const { access_token } = useGlobalState();
-  if (to.meta.public) {
-    next();
-  } else if (!access_token.value) {
-    next("/login");
+router.beforeEach(async (to, from, next) => {
+  const { userinfo, access_token, isInstalled, initUserInstallApp } = useGlobalState();
+  !isInstalled.value && userinfo.value?.login && (await initUserInstallApp(userinfo.value?.login));
+
+  if (!to.meta.public && !access_token.value) {
+    next({ name: "login" });
+  } else if (!to.meta.public && access_token.value && isInstalled.value === false && to.name !== "installations") {
+    next({ name: "installations" });
   } else {
     next();
   }
