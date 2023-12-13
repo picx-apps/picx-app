@@ -1,8 +1,8 @@
 <script lang="ts" setup></script>
 
 <template>
-  <div class="layout flex flex-col h-screen p-10px">
-    <div class="flex h[calc(100%-30px)]">
+  <div class="layout flex flex-col h[calc(100vh-30px)] p-10px">
+    <div class="flex h-full">
       <div class="w-300px">
         <LayoutAside />
       </div>

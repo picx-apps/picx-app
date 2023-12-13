@@ -20,8 +20,7 @@ meta:
 </route>
 
 <template>
-  <div h-100vh class="login-container">
-    <!-- <div class="flex-1 image max-sm:hidden"></div> -->
+  <div class="login-container">
     <div class="pt-100px text-center">
       <div class="mb-30px w-full flex flex-col items-center">
         <n-image :src="image" width="200" />
