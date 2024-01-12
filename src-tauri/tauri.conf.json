@@ -11,6 +11,9 @@
     "version": "../package.json"
   },
   "tauri": {
+    "security": {
+      "csp": "https://github.com"
+    },
     "allowlist": {
       "all": false,
       "shell": {
@@ -32,7 +35,7 @@
         "all": true
       },
       "window": {
-        "all": false,
+        "all": true,
         "close": true,
         "hide": true,
         "show": true,
@@ -53,9 +56,6 @@
           "type": "embedBootstrapper"
         }
       }
-    },
-    "security": {
-      "csp": "https://github.com"
     },
     "updater": {
       "active": true,

@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { useGlobalState } from "../store";
 import { UserToken } from "../types";
-import { Icon } from "@iconify/vue";
+// import { Icon } from "@iconify/vue";
 import { invoke } from "@tauri-apps/api";
 
 const route = useRoute();
@@ -59,8 +59,8 @@ meta:
 <template>
   <div class="flex flex-col items-center justify-center h-90vh">
     <div class="flex items-center justify-center">
-      <Icon icon="fluent-emoji:carrot" class="text-4rem" />
-      <h2 class="text-2.4rem ml-4px my-0">Picx</h2>
+      <!-- <Icon icon="fluent-emoji:carrot" class="text-4rem" /> -->
+      <h2 class="text-2.4rem ml-4px my-0">Picx App</h2>
     </div>
     <h1 class="color-white text-1.8rem" v-show="!isError">正在授权登陆中,请稍后...</h1>
     <h1 class="text-1.4rem color-gray-6 my-2xl" v-show="isError">

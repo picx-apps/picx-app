@@ -14,16 +14,9 @@ tauri-build = { version = "1.5", features = [] }
 
 [dependencies]
 tauri = { version = "1.5.2", features = [
+  "window-all",
   "dialog-all",
   "updater",
-  "window-close",
-  "window-start-dragging",
-  "window-unminimize",
-  "window-minimize",
-  "window-maximize",
-  "window-hide",
-  "window-show",
-  "window-unmaximize",
   "path-all",
   "fs-all",
   "clipboard-write-text",
@@ -44,7 +37,6 @@ chrono = "0.4.31"
 jsonwebtoken = "9.1.0"
 imageproc = "0.23.0"
 rusttype = "0.9.3"
-dotenv = "0.15"
 
 [features]
 # this feature is used for production builds or when `devPath` points to the filesystem
