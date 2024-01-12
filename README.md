@@ -1,12 +1,37 @@
 # PicX-APP
 
-[![License](https://img.shields.io/github/license/XPoet/picx.svg)](https://github.com/XPoet/picx/blob/master/LICENSE)
+[![Author](https://img.shields.io/badge/author-XPoet-violet.svg)](https://github.com/picx-apps)
+[![Release](https://img.shields.io/github/release/XPoet/picx.svg)](https://github.com/picx-apps/picx-app/releases)
+[![License](https://img.shields.io/github/license/XPoet/picx.svg)](https://github.com/picx-apps/picx-app/LICENSE)
+[![Stars](https://img.shields.io/github/stars/XPoet/picx)](https://github.com/picx-apps/picx-app)
+[![Issues](https://img.shields.io/github/issues/XPoet/picx)](https://github.com/picx-apps/picx-app/issues)
+[![Deploy](https://github.com/XPoet/picx/workflows/deploy/badge.svg)](https://github.com/picx-apps/picx-app/actions/workflows/main.yml)
+**[PicX](https://picx.xpoet.cn)** 是一款基于 GitHub API 开发的图床工具，提供图片上传托管、生成图片链接和常用图片工具箱服务。
 
-官方网站 https://picx.xpoet.cn/
+## 全平台
 
-**基于 GitHub API 开发的图床神器。** 图片外链使用 jsDelivr 自动进行 CDN 加速。
+- macos
+- macos_m1
+- linux
+- windows
+- web https://picx.xpoet.cn/
 
-<img src="https://image.qzzhu.cn/Picx/image_yuVRTa.png" style="height: 500px" />
+## 基本功能演示
+
+<div align="left">
+  <video controls height="500"><source src="./docs/use.mp4" type="video/mp4" /></video>
+</div>
+
+### 📱 安装：到 release 下载你系统对应版本的包文件
+
+如果你是 macos m1 系列，可以使用 PicX_version_aarch64.dmg 或者 PicX_version_x64.dmg 版本的安装包，安装时请务必打开 
+<br />
+❗️<em>设置 => 隐私与安全 => 安全性 => 打开允许任何来源</em>  
+🖱️开源软件买不起证书 ^_^
+
+<div align="left">
+  <video controls height="500"><source src="./docs/m1_install.mp4" type="video/mp4" /></video>
+</div>
 
 ### Tauri + Vue3
 
@@ -42,26 +67,13 @@ git clone git@github.com:picx-dev/picx-app.git
 pnpm install
 ```
 
-#### 开始启动dev前请务必先执行构建，原因是因为授权是在第三方，授权完成需要使用Schemes打开应用，所以需要你现在本机安装此App,具体流程如下
-
-```shell
-//第一步,注意这里必须使用debug模式
-cargo tauri build --debug
-
-//第二步
-安装构建好的软件
-
-//第三步
-cargo tauri dev
-```
-
 #### 启动项目Dev
 with [cargo](https://doc.rust-lang.org/cargo/)
 ```shell
 cargo tauri dev
 ```
 
-with node >= v18.17.0
+with node >= v20.10.0
 ```
 pnpm tauri dev
 ```
@@ -70,15 +82,14 @@ pnpm tauri dev
 在根目录下 添加 .env ,并添加以下内容
 
 ```ts
-VITE_STATE="picx-app" //随机字符
-VITE_SCOPE="user repo project" //授权范围
-VITE_CLIENT_ID="your github app client id"
-VITE_REDIRECT_URI="https://picx.qzzhu.cn/authorization" //授权回调地址
-VITE_CLIENT_SECRET="your github app client secret"
-VITE_INSTALL_URL="your github app install uri" // 例如 https://github.com/apps/picx-app
+VITE_GITHUB_INSTALL_URL="github app install uri"
+VITE_GITHUB_STATE="random string"
+VITE_GITHUB_SCOPE="github auth scope"
+VITE_GITHUB_CLIENT_ID="github client id"
+VITE_GITHUB_CLIENT_SECRET="github client secret"
+VITE_GITHUB_REDIRECT_URI="github app callback uri"
+VITE_GITHUB_PRIVATE_KEY="your github app private key"
 ```
-
-#### 添加 github [private-key.pem](https://docs.github.com/zh/apps/creating-github-apps/authenticating-with-a-github-app/about-authentication-with-a-github-app#generating-a-private-key) 然后把生成出来的文件放在 src-tauri/src/assets/private-key.pem
 
 #### git commit 规范遵循 [@commitlint/config-conventional](https://github.com/conventional-changelog/commitlint/tree/master/@commitlint/config-conventional)
 
