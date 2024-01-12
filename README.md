@@ -18,9 +18,7 @@
 
 ## 基本功能演示
 
-<div align="left">
-  <video controls height="500"><source src="./docs/use.mp4" type="video/mp4" /></video>
-</div>
+https://github.com/picx-apps/picx-app/assets/80683658/fd7b6513-5204-49d4-94a2-c0469218a4ec
 
 ### 📱 安装：到 release 下载你系统对应版本的包文件
 
@@ -29,9 +27,7 @@
 ❗️<em>设置 => 隐私与安全 => 安全性 => 打开允许任何来源</em>  
 🖱️开源软件买不起证书 ^_^
 
-<div align="left">
-  <video controls height="500"><source src="./docs/m1_install.mp4" type="video/mp4" /></video>
-</div>
+https://github.com/picx-apps/picx-app/assets/80683658/3659aef1-804c-49d5-bcfd-ba6cf6e5497b
 
 ### Tauri + Vue3
 
