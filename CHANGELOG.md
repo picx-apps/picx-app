@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.4](https://github.com/picx-apps/picx-app/compare/v0.0.3...v0.0.4) (2024-01-12)
+
+
+### Bug Fixes
+
+* delete redundant code ([c05d991](https://github.com/picx-apps/picx-app/commit/c05d991bcde15b5f8116c13b66be993aa463ab30))
+
 ### [0.0.3](https://github.com/picx-apps/picx-app/compare/v0.0.2...v0.0.3) (2024-01-12)
 
 
