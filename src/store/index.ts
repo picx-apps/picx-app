@@ -25,11 +25,11 @@ export const useGlobalState = createGlobalState(() => {
   const login_uri =
     "https://github.com/login/oauth/authorize" +
     paramsSerializer({
-      state: import.meta.env.VITE_GITHUB_STATE,
+      state: env.state,
       scope: import.meta.env.VITE_GITHUB_SCOPE,
-      client_id: import.meta.env.VITE_GITHUB_CLIENT_ID,
-      client_secret: import.meta.env.VITE_GITHUB_CLIENT_SECRET,
-      redirect_uri: import.meta.env.VITE_GITHUB_REDIRECT_URI,
+      client_id: env.client_id,
+      client_secret: env.client_secret,
+      redirect_uri: env.redirect_uri,
     });
   const authorize = useStorage<UserToken>(
     "picx-authorize",
