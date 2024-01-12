@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.3](https://github.com/picx-apps/picx-app/compare/v0.0.2...v0.0.3) (2024-01-12)
+
+
+### Features
+
+* change of authorization method ([52feeb8](https://github.com/picx-apps/picx-app/commit/52feeb805a6f9a181634824f5d7de818ad94fcb8))
+
 ### [0.0.2](https://github.com/picx-dev/picx-app/compare/v0.0.1...v0.0.2) (2023-12-13)
 
 
