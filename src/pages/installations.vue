@@ -1,7 +1,6 @@
 <script lang="ts" setup>
 import image from "../assets/images/install.png?url";
 import { Icon } from "@iconify/vue";
-import { open } from "@tauri-apps/api/shell";
 import { useGlobalState } from "~/store";
 
 const { t } = useI18n();
@@ -14,8 +13,7 @@ async function handleInstall() {
       router.replace({ name: "lead" });
     })
     .catch(() => {
-      open(import.meta.env.VITE_INSTALL_URL + "/installations/new");
-      router.replace("/installation_callback");
+      location.href = import.meta.env.VITE_GITHUB_INSTALL_URL + "/installations/new";
     });
 }
 </script>

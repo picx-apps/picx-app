@@ -1,15 +1,13 @@
 <script lang="ts" setup>
 import image from "../assets/images/login.png?url";
 import { Icon } from "@iconify/vue";
-import { shell } from "@tauri-apps/api";
+import { useGlobalState } from "~/store";
 
 const { t } = useI18n();
-const router = useRouter();
+const { login_uri } = useGlobalState();
 
 async function handleLogin() {
-  const uri = "https://picx.qzzhu.cn/login";
-  shell.open(uri);
-  router.replace("/callback");
+  location.href = login_uri;
 }
 </script>
 

@@ -55,7 +55,7 @@
       }
     },
     "security": {
-      "csp": null
+      "csp": "https://github.com"
     },
     "updater": {
       "active": true,

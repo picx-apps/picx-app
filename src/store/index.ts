@@ -16,6 +16,21 @@ export interface Compress {
 
 export const useGlobalState = createGlobalState(() => {
   // state
+  const env = {
+    state: import.meta.env.VITE_GITHUB_STATE,
+    client_id: import.meta.env.VITE_GITHUB_CLIENT_ID,
+    client_secret: import.meta.env.VITE_GITHUB_CLIENT_SECRET,
+    redirect_uri: import.meta.env.VITE_GITHUB_REDIRECT_URI,
+  };
+  const login_uri =
+    "https://github.com/login/oauth/authorize" +
+    paramsSerializer({
+      state: import.meta.env.VITE_GITHUB_STATE,
+      scope: import.meta.env.VITE_GITHUB_SCOPE,
+      client_id: import.meta.env.VITE_GITHUB_CLIENT_ID,
+      client_secret: import.meta.env.VITE_GITHUB_CLIENT_SECRET,
+      redirect_uri: import.meta.env.VITE_GITHUB_REDIRECT_URI,
+    });
   const authorize = useStorage<UserToken>(
     "picx-authorize",
     {
@@ -98,7 +113,7 @@ export const useGlobalState = createGlobalState(() => {
   }
   async function initUserInstallApp(username: string) {
     if (isInstalled.value === true) return isInstalled.value;
-    const token = await invoke("sign_jwt", { privateKey: import.meta.env.VITE_PRIVATE_KEY }).catch((err) => {
+    const token = await invoke("sign_jwt", { privateKey: import.meta.env.VITE_GITHUB_PRIVATE_KEY }).catch((err) => {
       throw new Error(err);
     });
 
@@ -132,6 +147,8 @@ export const useGlobalState = createGlobalState(() => {
   }
 
   return {
+    env,
+    login_uri,
     authorize,
     userinfo,
     access_token,
