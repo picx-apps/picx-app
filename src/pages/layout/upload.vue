@@ -277,7 +277,12 @@ name: upload
         <div class="text-1.1rem font-bold color-gray-8 dark:color-gray-4 mb-20px flex items-center">
           <Icon icon="ph:circle-notch-bold" />
           <span class="ml-10px">
-            {{ t("node.wait_upload_number", { number: waitContents.length }) }}
+            <i18n-t keypath="node.wait_upload_number">
+              <template #number>
+                {{ waitContents.length }}
+              </template>
+            </i18n-t>
+            <!-- {{ t("node.wait_upload_number", { number: waitContents.length }) }} -->
           </span>
         </div>
         <ImageCard
@@ -291,7 +296,6 @@ name: upload
 
     <div class="text-center h-80px lh-80px" v-show="waitContents.length">
       <n-button
-        type="primary"
         size="large"
         @click="handleClickUpload"
         :render-icon="() => h(PhPlusBold)"
@@ -300,12 +304,12 @@ name: upload
         >{{ t("node.button.continue_to_add") }}
       </n-button>
       <n-button
-        color="#3728b9"
+        color="#4328b9"
         size="large"
         @click="handleUpload()"
         :render-icon="() => h(uploading ? LineMdLoadingLoop : PhUploadSimpleBold)"
         :disabled="uploading"
-        >{{ t("node.button.upload") }}
+        >{{ t("node.button.immediately") }}
       </n-button>
     </div>
   </main>
