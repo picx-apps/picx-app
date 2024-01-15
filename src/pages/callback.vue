@@ -3,11 +3,14 @@ import { useGlobalState } from "../store";
 import { UserToken } from "../types";
 // import { Icon } from "@iconify/vue";
 import { invoke } from "@tauri-apps/api";
+import { emit } from "@tauri-apps/api/event";
+import { useWindowState } from "~/store/window";
 
 const route = useRoute();
 const router = useRouter();
 const { login_uri, env, set_authorize, get_userinfo, access_token, onInstallation } = useGlobalState();
 const isError = ref(false);
+const { authWindow } = useWindowState();
 
 async function handleSign() {
   if (!access_token.value) {
@@ -20,7 +23,8 @@ async function handleSign() {
   });
   onInstallation()
     .then(() => {
-      router.push({ name: "lead" });
+      emit("auth:success");
+      authWindow.value?.close();
     })
     .catch(() => {
       router.push({ name: "installations" });

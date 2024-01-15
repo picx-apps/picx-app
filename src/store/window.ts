@@ -12,27 +12,20 @@ export const useWindowState = createGlobalState(() => {
   const { login_uri } = useGlobalState();
 
   function createAuthWindow() {
-    authWindow.value = new WebviewWindow("auth", {
+    authWindow.value = new WebviewWindow(WindowLabel.AUTH, {
       url: login_uri,
-      title: "Authorize",
+      title: "Github Authorize",
       theme: "dark",
       width: 1235,
       height: 930,
       minWidth: 875,
       minHeight: 600,
     });
-    authWindow.value.onCloseRequested(() => {});
-  }
-  function closeAuthWindow() {
-    authWindow.value?.emit("auth://close");
-    authWindow.value?.close();
-    mainWindow.value?.show();
   }
 
   return {
     mainWindow,
     authWindow,
     createAuthWindow,
-    closeAuthWindow,
   };
 });

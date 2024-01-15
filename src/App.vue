@@ -18,7 +18,7 @@ watch(route, (value) => {
 onMounted(() => {
   useGlobalState().initState();
   useSettingState().autoCreateOfSettings();
-  useEventListener(document, "contextmenu", (e) => e.preventDefault());
+  // useEventListener(document, "contextmenu", (e) => e.preventDefault());
 });
 </script>
 

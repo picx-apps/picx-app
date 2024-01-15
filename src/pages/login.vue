@@ -1,14 +1,19 @@
 <script lang="ts" setup>
 import image from "../assets/images/login.png?url";
 import { Icon } from "@iconify/vue";
-import { useGlobalState } from "~/store";
+import { listen } from "@tauri-apps/api/event";
+import { useWindowState } from "~/store/window";
 
 const { t } = useI18n();
-const { login_uri } = useGlobalState();
+const router = useRouter();
+const { createAuthWindow } = useWindowState();
 
 async function handleLogin() {
-  location.href = login_uri;
+  await createAuthWindow();
 }
+listen("auth:success", () => {
+  router.push({ name: "lead" });
+});
 </script>
 
 <route lang="yaml">
