@@ -14,7 +14,7 @@ const emit = defineEmits(["update:modelValue"]);
 const modelValue = useVModel(props, "modelValue", emit);
 const { access_token, user } = useGlobalState();
 const repoOptions = ref<RepoInfo[]>([]);
-const branchOptions = ref<BranchInfo[]>([]);
+const branchOptions = useStorage<BranchInfo[]>("branch_options", []);
 const octokit = new Octokit({ auth: access_token.value });
 const repoVisible = ref(false);
 const branchVisible = ref(false);
@@ -45,6 +45,7 @@ async function initRepo() {
   loading.value = false;
   repoOptions.value = data.items;
 }
+watchDebounced(search_name, () => initRepo(), { debounce: 300 });
 async function initBranches() {
   if (modelValue.value.repo_name) {
     const { data } = await octokit.request("GET /repos/{owner}/{repo}/branches", {
@@ -138,7 +139,6 @@ onMounted(() => {
         v-model:value="search_name"
         :placeholder="t('init.select_repo')"
         :loading="loading"
-        @blur="initRepo"
         @change="initRepo"
         class="mb-10px"
       >

@@ -81,6 +81,7 @@ export const useLibraryState = createGlobalState(() => {
     currentPath,
     contents,
     createLibrary,
+    syncContents,
     removeFile,
     addImagePath,
     removeImagePath,
