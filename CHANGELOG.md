@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.6](https://github.com/picx-apps/picx-app/compare/v0.0.5...v0.0.6) (2024-01-15)
+
+
+### Bug Fixes
+
+* check whether the warehouse is set up ([ce9e576](https://github.com/picx-apps/picx-app/commit/ce9e576d8d4e381fb74cba44bdd59b89f54a10ff))
+
 ### [0.0.5](https://github.com/picx-apps/picx-app/compare/v0.0.4...v0.0.5) (2024-01-12)
 
 
