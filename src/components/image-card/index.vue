@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import { UploadContent } from "../../types/upload";
-import { Icon } from "@iconify/vue";
 
 const props = defineProps<UploadContent>();
 const emit = defineEmits<{
@@ -27,17 +26,17 @@ const compression_size = computed(() =>
       </div>
 
       <div class="text-10px color-#707070 dark:color-gray-4 truncate max-w-200px mb-3px flex items-center">
-        <Icon icon="material-symbols:attach-file-rounded" class="mr-4px text-16px" />
+        <div i-material-symbols-attach-file-rounded class="mr-4px text-16px"></div>
         <span>{{ dir ? dir : "root" }}</span>
       </div>
 
       <div>
         <div class="flex items-center">
-          <Icon icon="iconoir:compress" class="mr-4px text-16px" />
+          <div i-iconoir-compress class="mr-4px text-16px"></div>
           <span class="color-#5c5c5c text-10px dark:color-gray-4">
             {{ size }}
           </span>
-          <Icon icon="material-symbols:arrow-right-alt" class="mx-4px" />
+          <div i-material-symbols-arrow-right-alt-rounded class="mx-4px"></div>
           <span class="color-#5c5c5c text-10px dark:color-gray-4">
             {{ compression_size }}
           </span>
@@ -46,11 +45,11 @@ const compression_size = computed(() =>
     </div>
 
     <div>
-      <Icon
-        icon="material-symbols:delete"
+      <div
+        i-material-symbols-delete
         class="text-1.5rem color-#8c8c8c dark:color-white hover:color-#487aef cursor-pointer"
         @click="emit('delete')"
-      />
+      ></div>
     </div>
   </div>
 </template>

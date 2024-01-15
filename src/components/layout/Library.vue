@@ -41,7 +41,7 @@ function handleNewFolder() {
         onUpdateValue: (value) => {
           name.value = value;
         },
-        placeholder: "Please Input Name",
+        placeholder: t("home.placeholder"),
       }),
     onPositiveClick: async () => {
       d.loading = true;

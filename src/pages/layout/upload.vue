@@ -3,6 +3,7 @@ import { Icon } from "@iconify/vue";
 import { event, invoke } from "@tauri-apps/api";
 import { open } from "@tauri-apps/api/dialog";
 import { Fn } from "@vueuse/core";
+import upload from "~/assets/images/upload.png?url";
 import LibraryCard from "~/components/LibraryCard.vue";
 import { useGlobalState } from "~/store";
 import { useSettingState } from "~/store/setting";
@@ -183,7 +184,7 @@ async function handleUpload(contents?: UploadContent[]) {
   }));
   const res = await uploadFilesToGitHub(_contents);
   if (res?.status === 200) {
-    message.warning("上传成功");
+    message.success("上传成功");
     waitContents.value = [];
     updateNow();
   }
@@ -259,39 +260,43 @@ name: upload
     <TopOperate></TopOperate>
 
     <n-scrollbar class="px-16px pt-16px flex-1">
-      <div v-if="!waitContents.length">
-        <div
-          class="text-center mt-0px rounded-10px pb-20px cursor-pointer hover:b-#21214a select-none"
-          b="3px dashed gray-8"
-          @click="handleClickUpload"
-        >
-          <Icon icon="fluent-emoji:cloud" class="w-300px h-300px color-gray-4" />
+      <n-spin :show="uploading">
+        <div v-if="!waitContents.length">
+          <div
+            class="text-center mt-0px rounded-10px pb-20px cursor-pointer hover:b-#21214a select-none"
+            b="3px dashed gray-8"
+            @click="handleClickUpload"
+          >
+            <!-- <Icon icon="fluent-emoji:cloud" class="w-300px h-300px color-gray-4" /> -->
 
-          <div class="text-1.2rem font-bold color-gray-7">
-            {{ t("node.info") }}
+            <n-image :src="upload" width="300" />
+
+            <div class="text-1.2rem font-bold color-gray-7">
+              {{ t("node.info") }}
+            </div>
           </div>
         </div>
-      </div>
 
-      <template v-else>
-        <div class="text-1.1rem font-bold color-gray-8 dark:color-gray-4 mb-20px flex items-center">
-          <Icon icon="ph:circle-notch-bold" />
-          <span class="ml-10px">
-            <i18n-t keypath="node.wait_upload_number">
-              <template #number>
-                {{ waitContents.length }}
-              </template>
-            </i18n-t>
-            <!-- {{ t("node.wait_upload_number", { number: waitContents.length }) }} -->
-          </span>
-        </div>
-        <ImageCard
-          v-for="(item, index) in waitContents"
-          :key="item.path"
-          v-bind="item"
-          @delete="() => waitContents.splice(index, 1)"
-        />
-      </template>
+        <template v-else>
+          <div class="text-1.1rem font-bold color-gray-8 dark:color-gray-4 mb-20px flex items-center">
+            <Icon icon="ph:circle-notch-bold" />
+            <span class="ml-10px">
+              <i18n-t keypath="node.wait_upload_number">
+                <template #number>
+                  {{ waitContents.length }}
+                </template>
+              </i18n-t>
+              <!-- {{ t("node.wait_upload_number", { number: waitContents.length }) }} -->
+            </span>
+          </div>
+          <ImageCard
+            v-for="(item, index) in waitContents"
+            :key="item.path"
+            v-bind="item"
+            @delete="() => waitContents.splice(index, 1)"
+          />
+        </template>
+      </n-spin>
     </n-scrollbar>
 
     <div class="text-center h-80px lh-80px" v-show="waitContents.length">
