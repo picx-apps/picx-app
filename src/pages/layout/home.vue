@@ -26,6 +26,7 @@ const dropDownPosition = reactive({
   x: 0,
   y: 0,
 });
+const loading = ref(false);
 
 function transformURL(path: string) {
   const uri = replacePlaceholder(currentCDN.value?.value!, {
@@ -35,6 +36,13 @@ function transformURL(path: string) {
     path,
   });
   return uri;
+}
+function updater() {
+  loading.value = true;
+  updateNow();
+  setTimeout(() => {
+    loading.value = false;
+  }, 1000);
 }
 function handleClickImage(event: MouseEvent, item: (typeof images.value)[0]) {
   event.preventDefault();
@@ -123,12 +131,12 @@ name: home
 </route>
 
 <template>
-  <main ref="mainInstance" class="px-16px h-full flex flex-col">
+  <n-spin ref="mainInstance" class="px-16px h-full flex flex-col" :show="loading" style="--n-color: white">
     <TopOperate>
       <template #operate>
         <n-button tertiary circle class="w-30px h-30px mr-10px">
           <template #icon>
-            <Icon icon="ic:outline-refresh" class="text-1.1rem" @click="() => updateNow()" />
+            <Icon icon="ic:outline-refresh" class="text-1.1rem" @click="() => updater()" />
           </template>
         </n-button>
       </template>
@@ -222,7 +230,7 @@ name: home
       @select="handleImageDropDownSelect"
       @clickoutside="handleImageOutside"
     />
-  </main>
+  </n-spin>
 </template>
 
 <style lang="less" scoped>
