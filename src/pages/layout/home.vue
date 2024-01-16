@@ -131,7 +131,7 @@ name: home
 </route>
 
 <template>
-  <n-spin ref="mainInstance" class="px-16px h-full flex flex-col" :show="loading" style="--n-color: white">
+  <main ref="mainInstance" class="px-16px h-full flex flex-col" :show="loading" style="--n-color: white">
     <TopOperate>
       <template #operate>
         <n-button tertiary circle class="w-30px h-30px mr-10px">
@@ -143,81 +143,78 @@ name: home
     </TopOperate>
 
     <n-scrollbar class="flex-1">
-      <div class="latest">
-        <div class="title">
-          <div flex-1>{{ t("home.latest") }}</div>
+      <n-spin :show="loading">
+        <div class="latest">
+          <div class="title">
+            <div flex-1>{{ t("home.latest") }}</div>
+          </div>
+
+          <n-scrollbar x-scrollable>
+            <div class="scroll-content h-166px">
+              <n-image-group>
+                <div
+                  v-for="(item, index) in latestDebounced"
+                  :key="item.sha"
+                  class="image-container"
+                  @click="handleLatestImage(index)"
+                >
+                  <n-image
+                    width="260"
+                    height="160"
+                    :src="transformURL(item.path)"
+                    lazy
+                    object-fit="cover"
+                    class="rounded-lg"
+                  />
+                  <div class="text-overlay"></div>
+                  <div class="absolute top-10px left-10px font-bold color-white text-11px flex items-center">
+                    <Icon icon="material-symbols:highlighter-size-1" class="text-16px" />
+                    {{ bytesToMB(item.size) }}mb
+                  </div>
+                  <div class="absolute bottom-10px left-10px color-white font-bold text-11px">
+                    {{ item.name }}
+                  </div>
+                </div>
+              </n-image-group>
+            </div>
+          </n-scrollbar>
         </div>
 
-        <n-scrollbar x-scrollable>
-          <div class="scroll-content h-166px">
-            <n-image-group>
-              <div
-                v-for="(item, index) in latestDebounced"
-                :key="item.sha"
-                class="image-container"
-                @click="handleLatestImage(index)"
-              >
-                <n-image
-                  width="260"
-                  height="160"
-                  :src="transformURL(item.path)"
-                  lazy
-                  object-fit="cover"
-                  class="rounded-lg"
-                />
-                <div class="text-overlay"></div>
-                <div class="absolute top-10px left-10px font-bold color-white text-11px flex items-center">
-                  <Icon icon="material-symbols:highlighter-size-1" class="text-16px" />
-                  {{ bytesToMB(item.size) }}mb
-                </div>
-                <div class="absolute bottom-10px left-10px color-white font-bold text-11px">
-                  {{ item.name }}
-                </div>
-              </div>
-            </n-image-group>
+        <!-- 图库 -->
+        <div class="image-list mb-20px">
+          <div class="title">
+            <div flex-1>{{ t("home.library") }}</div>
           </div>
-        </n-scrollbar>
-      </div>
 
-      <!-- 图库 -->
-      <div class="image-list mb-20px">
-        <div class="title">
-          <div flex-1>{{ t("home.library") }}</div>
-          <!-- <Icon
-              icon="material-symbols:arrow-drop-down-circle"
-              class="text-18px cursor-pointer select-none"
-              @click="showImages = !showImages"
-            /> -->
+          <n-collapse-transition>
+            <div class="image-list-container">
+              <n-image-group>
+                <div
+                  class="w-110px h-130px relative"
+                  v-for="(item, index) in images"
+                  :key="item.sha"
+                  @contextmenu="handleClickImage($event, item)"
+                >
+                  <n-image
+                    :src="transformURL(item.path)"
+                    lazy
+                    object-fit="cover"
+                    preview-disabled
+                    class="rounded-lg w-100% h-100%"
+                    :intersection-observer-options="{
+                      root: '#app',
+                    }"
+                    @click="handleImage(index)"
+                  />
+                  <div class="image-list__filename">
+                    {{ item.name }}
+                  </div>
+                </div>
+              </n-image-group>
+            </div>
+          </n-collapse-transition>
         </div>
-
-        <n-collapse-transition>
-          <div class="image-list-container">
-            <n-image-group>
-              <div
-                class="w-110px h-130px relative"
-                v-for="(item, index) in images"
-                :key="item.sha"
-                @contextmenu="handleClickImage($event, item)"
-              >
-                <n-image
-                  :src="transformURL(item.path)"
-                  lazy
-                  object-fit="cover"
-                  preview-disabled
-                  class="rounded-lg w-100% h-100%"
-                  :intersection-observer-options="{
-                    root: '#app',
-                  }"
-                  @click="handleImage(index)"
-                />
-                <div class="image-list__filename">
-                  {{ item.name }}
-                </div>
-              </div>
-            </n-image-group>
-          </div>
-        </n-collapse-transition>
-      </div>
+      </n-spin>
     </n-scrollbar>
 
     <n-dropdown
@@ -230,7 +227,7 @@ name: home
       @select="handleImageDropDownSelect"
       @clickoutside="handleImageOutside"
     />
-  </n-spin>
+  </main>
 </template>
 
 <style lang="less" scoped>

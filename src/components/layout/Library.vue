@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import { showImagePreview } from "../image-preview";
 import { Icon } from "@iconify/vue";
 import { FolderDropDownOptions } from "~/constant";
 import { useLibraryState } from "~/store/library";
@@ -10,12 +11,17 @@ const [DefineLibrary, ReusableLibrary] = createReusableTemplate<{
   icon?: string;
   text?: string;
 }>();
+const [DefineImage, ReusableImage] = createReusableTemplate<{
+  icon?: string;
+  text?: string;
+  path: string;
+}>();
 
 const name = ref("");
 const { t } = useI18n();
 const router = useRouter();
 const dialog = useDialog();
-const { library, imagePath, currentPath, createLibrary } = useLibraryState();
+const { library, images, imagePath, currentPath, createLibrary } = useLibraryState();
 const { settings, updateSettingsFile } = useSettingState();
 const showDropdown = ref(false);
 const dropDownPosition = reactive({
@@ -87,6 +93,11 @@ function handleBackLibrary() {
   imagePath.value.pop();
   router.push({ name: "home", query: { path: currentPath.value } });
 }
+function handleImage(index: number) {
+  if (!images.value.length) return;
+  const result = images.value.map((item) => transformURL(item.path));
+  showImagePreview({ images: result, startPosition: index });
+}
 </script>
 
 <template>
@@ -128,13 +139,41 @@ function handleBackLibrary() {
         </div>
       </DefineLibrary>
 
-      <template v-if="library.length">
+      <DefineImage v-slot="{ text, path }">
+        <div
+          class="flex items-center p-8px rounded-8px cursor-pointer group select-none hover:bg-#1d1d1d transition-all duration-50"
+        >
+          <div class="rounded-lg w-48px h-42px px-3px py-4px">
+            <img
+              :src="transformURL(path)"
+              lazy
+              object-fit="cover"
+              preview-disabled
+              class="w-100% h-100% rounded-lg object-cover"
+              :intersection-observer-options="{
+                root: '#app',
+              }"
+            />
+          </div>
+
+          <div class="ml-10px color-#989898 w[calc(100%-80px)] truncate">{{ text }}</div>
+        </div>
+      </DefineImage>
+
+      <template v-if="library.length || images.length">
         <ReusableLibrary
           v-for="item in library"
           :key="item.sha"
           :text="item.name"
           @click="handleClickLibrary(item.path)"
           @contextmenu="handleContextmenuLibrary($event, item)"
+        />
+        <ReusableImage
+          v-for="(item, index) in images"
+          :key="item.sha"
+          :text="item.name"
+          :path="item.path"
+          @click="handleImage(index)"
         />
       </template>
 

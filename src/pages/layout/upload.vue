@@ -55,13 +55,13 @@ async function openLibrary() {
         },
       }),
     showIcon: false,
+    autoFocus: false,
     closable: false,
     action: () =>
       h("div", { style: { display: "flex", alignItems: "center" } }, [
         h(
           NButton,
           {
-            type: "default",
             size: "large",
             style: { marginRight: "10px" },
             loading: uploading.value,
@@ -77,6 +77,7 @@ async function openLibrary() {
         h(
           NButton,
           {
+            color: "#4328b9",
             type: "primary",
             size: "large",
             onClick: () => {
@@ -269,7 +270,7 @@ name: upload
           >
             <!-- <Icon icon="fluent-emoji:cloud" class="w-300px h-300px color-gray-4" /> -->
 
-            <n-image :src="upload" width="300" />
+            <n-image :src="upload" width="300" preview-disabled />
 
             <div class="text-1.2rem font-bold color-gray-7">
               {{ t("node.info") }}

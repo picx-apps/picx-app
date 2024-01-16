@@ -311,6 +311,7 @@
     "replacePlaceholder": true,
     "isImage": true,
     "imageFileToUint8Array": true,
-    "useClipboardItems": true
+    "useClipboardItems": true,
+    "transformURL": true
   }
 }
