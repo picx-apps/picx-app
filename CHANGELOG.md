@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.7](https://github.com/picx-apps/picx-app/compare/v0.0.6...v0.0.7) (2024-01-16)
+
+
+### Bug Fixes
+
+* failed to log in and jump ([a57c0e6](https://github.com/picx-apps/picx-app/commit/a57c0e64ab667b6ee3b6345c14f2851067beeb08))
+
 ### [0.0.6](https://github.com/picx-apps/picx-app/compare/v0.0.5...v0.0.6) (2024-01-15)
 
 
