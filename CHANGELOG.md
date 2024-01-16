@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.8](https://github.com/picx-apps/picx-app/compare/v0.0.7...v0.0.8) (2024-01-16)
+
+
+### Bug Fixes
+
+* auth change ([aee3d4f](https://github.com/picx-apps/picx-app/commit/aee3d4f0a4b0f3f7be852a41940638e1863ac0f6))
+* auth error ([f58aea5](https://github.com/picx-apps/picx-app/commit/f58aea5e8003a0173c468d9cf2f443bd22f899c5))
+
 ### [0.0.7](https://github.com/picx-apps/picx-app/compare/v0.0.6...v0.0.7) (2024-01-16)
 
 
