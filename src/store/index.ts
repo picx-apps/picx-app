@@ -16,21 +16,6 @@ export interface Compress {
 
 export const useGlobalState = createGlobalState(() => {
   // state
-  const env = {
-    state: import.meta.env.VITE_GITHUB_STATE,
-    client_id: import.meta.env.VITE_GITHUB_CLIENT_ID,
-    client_secret: import.meta.env.VITE_GITHUB_CLIENT_SECRET,
-    redirect_uri: import.meta.env.VITE_GITHUB_REDIRECT_URI,
-  };
-  const login_uri =
-    "https://redirect.zhazhazhu.me" +
-    paramsSerializer({
-      state: env.state,
-      scope: import.meta.env.VITE_GITHUB_SCOPE,
-      client_id: env.client_id,
-      client_secret: env.client_secret,
-      redirect_uri: env.redirect_uri,
-    });
   const authorize = useStorage<UserToken>(
     "picx-authorize",
     {
@@ -147,8 +132,6 @@ export const useGlobalState = createGlobalState(() => {
   }
 
   return {
-    env,
-    login_uri,
     authorize,
     userinfo,
     access_token,

@@ -2,13 +2,12 @@
 import { useGlobalState } from "../store";
 import { UserToken } from "../types";
 // import { Icon } from "@iconify/vue";
-import { invoke } from "@tauri-apps/api";
 import { emit } from "@tauri-apps/api/event";
 import { useWindowState } from "~/store/window";
 
 const route = useRoute();
 const router = useRouter();
-const { login_uri, env, set_authorize, get_userinfo, access_token, onInstallation } = useGlobalState();
+const { set_authorize, get_userinfo, access_token, onInstallation } = useGlobalState();
 const isError = ref(false);
 const { authWindow } = useWindowState();
 
@@ -25,28 +24,17 @@ async function handleSign() {
     .then(() => {
       emit("auth:success");
       authWindow.value?.close();
-      router.push("/lead");
     })
     .catch(() => {
       router.push({ name: "installations" });
     });
 }
 function reLogin() {
-  location.href = login_uri;
+  location.href = import.meta.env.VITE_APP_REDIRECT_URI;
 }
 async function login() {
-  const code = route.query.code as string;
-  if (!code) {
-    isError.value = true;
-    return;
-  }
-  const user_token = (await invoke("get_access_token", {
-    config: {
-      code,
-      ...env,
-    },
-  })) as UserToken;
-  set_authorize(user_token);
+  const payload = route.query as unknown as UserToken;
+  set_authorize(payload);
   handleSign();
 }
 

@@ -13,7 +13,7 @@ async function handleInstall() {
       router.replace({ name: "lead" });
     })
     .catch(() => {
-      location.href = import.meta.env.VITE_GITHUB_INSTALL_URL + "/installations/new";
+      location.href = import.meta.env.VITE_APP_REDIRECT_URI + "/callback?action=install";
     });
 }
 </script>

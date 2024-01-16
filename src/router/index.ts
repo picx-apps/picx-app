@@ -15,7 +15,7 @@ router.beforeEach(async (to, from, next) => {
   } else if (!to.meta.public && access_token.value) {
     if (isInstalled.value === false && to.name !== "installations") {
       next({ name: "installations" });
-    } else if (!repo_name.value && to.name !== "lead") {
+    } else if (!repo_name.value && to.name !== "lead" && to.name !== "installations") {
       next({ name: "lead" });
     } else {
       next();

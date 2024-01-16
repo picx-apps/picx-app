@@ -12,12 +12,12 @@
   },
   "tauri": {
     "security": {
-      "csp": null,
+      "dangerousUseHttpScheme": true,
       "dangerousRemoteDomainIpcAccess": [
         {
-          "domain": "https://redirect.zhazhazhu.me/",
+          "domain": "https://picx.zhazhazhu.me/",
           "enableTauriAPI": true,
-          "windows": ["auth"]
+          "windows": ["main", "auth"]
         }
       ]
     },
@@ -51,6 +51,10 @@
         "unmaximize": true,
         "unminimize": true,
         "startDragging": true
+      },
+      "http": {
+        "all": true,
+        "scope": ["https://*"]
       }
     },
     "bundle": {
