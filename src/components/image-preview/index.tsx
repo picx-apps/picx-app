@@ -42,8 +42,16 @@ const ImagePreview = defineComponent(
     }
 
     useEventListener("keydown", (event) => {
-      if (event.key === "Escape") {
-        state.show = false;
+      switch (event.key) {
+        case "Escape":
+          state.show = false;
+          break;
+        case "ArrowRight":
+          handleNext();
+          break;
+        case "ArrowLeft":
+          handleBack();
+          break;
       }
     });
 
@@ -83,7 +91,7 @@ const ImagePreview = defineComponent(
             icon="typcn:zoom-in"
             class="w-24px h-24px mr-10px cursor-pointer"
             onClick={() => {
-              if (zoom.value <= 3) zoom.value += 0.5;
+              if (zoom.value <= 4) zoom.value += 0.5;
             }}
           />
           <Icon

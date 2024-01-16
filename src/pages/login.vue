@@ -7,11 +7,15 @@ import { useWindowState } from "~/store/window";
 const { t } = useI18n();
 const router = useRouter();
 const { createAuthWindow } = useWindowState();
+const loading = ref(false);
 
 async function handleLogin() {
+  loading.value = true;
   await createAuthWindow();
 }
+
 listen("auth:success", () => {
+  loading.value = false;
   router.push({ name: "lead" });
 });
 </script>
@@ -23,7 +27,7 @@ meta:
 </route>
 
 <template>
-  <div class="login-container">
+  <n-spin class="login-container" :show="loading" style="--n-color: white">
     <div class="pt-100px text-center">
       <div class="mb-30px w-full flex flex-col items-center">
         <n-image :src="image" width="200" />
@@ -33,18 +37,6 @@ meta:
         <p class="my-0 color-gray">{{ t("login.detail") }}</p>
       </div>
 
-      <!-- <div class="my-4px text-.9rem font-500 color-#545454">Token</div>
-      <n-input
-        v-model="token"
-        type="password"
-        placeholder="Please enter"
-        class="mb-20px"
-      ></n-input> -->
-
-      <!-- <n-button type="primary" class="w-100% mb-20px" @click="handleSignToken">
-        Sign in
-      </n-button> -->
-
       <div>
         <n-button quaternary @click="handleLogin" class="w-300px h-45px login-button">
           <Icon icon="mdi:github" class="text-20px mr-10px" />
@@ -52,7 +44,7 @@ meta:
         </n-button>
       </div>
     </div>
-  </div>
+  </n-spin>
 </template>
 
 <style lang="less" scoped>
