@@ -13,7 +13,8 @@ edition = "2021"
 tauri-build = { version = "1.5", features = [] }
 
 [dependencies]
-tauri = { version = "1.5.4", features = [ "http-all",
+tauri = { version = "1.5.4", features = [
+  "http-all",
   "window-all",
   "dialog-all",
   "updater",
@@ -26,13 +27,11 @@ tauri = { version = "1.5.4", features = [ "http-all",
 ] }
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
-tokio = { version = "1", features = ["full"] }
 reqwest = { version = "0.11", features = ["json"] }
 url = { version = "2", features = ["serde"] }
 base64 = "0.21.5"
 image = "0.24.7"
 rand = "0.8.5"
-tauri-plugin-deep-link = "0.1.2"
 chrono = "0.4.31"
 jsonwebtoken = "9.1.0"
 imageproc = "0.23.0"
