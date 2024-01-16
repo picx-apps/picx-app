@@ -2,12 +2,15 @@
 import image from "../assets/images/login.png?url";
 import { Icon } from "@iconify/vue";
 import { listen } from "@tauri-apps/api/event";
+import { useGlobalState } from "~/store";
 import { useWindowState } from "~/store/window";
 
 const { t } = useI18n();
 const router = useRouter();
 const { createAuthWindow } = useWindowState();
+const { login_uri } = useGlobalState();
 const loading = ref(false);
+console.log(login_uri);
 
 async function handleLogin() {
   loading.value = true;

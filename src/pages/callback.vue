@@ -25,6 +25,7 @@ async function handleSign() {
     .then(() => {
       emit("auth:success");
       authWindow.value?.close();
+      router.push("/lead");
     })
     .catch(() => {
       router.push({ name: "installations" });

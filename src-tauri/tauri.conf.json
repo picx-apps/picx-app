@@ -12,7 +12,14 @@
   },
   "tauri": {
     "security": {
-      "csp": "https://github.com"
+      "csp": null,
+      "dangerousRemoteDomainIpcAccess": [
+        {
+          "domain": "https://redirect.zhazhazhu.me/",
+          "enableTauriAPI": true,
+          "windows": ["auth"]
+        }
+      ]
     },
     "allowlist": {
       "all": false,

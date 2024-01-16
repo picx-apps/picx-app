@@ -23,7 +23,7 @@ export const useGlobalState = createGlobalState(() => {
     redirect_uri: import.meta.env.VITE_GITHUB_REDIRECT_URI,
   };
   const login_uri =
-    "https://github.com/login/oauth/authorize" +
+    "https://redirect.zhazhazhu.me" +
     paramsSerializer({
       state: env.state,
       scope: import.meta.env.VITE_GITHUB_SCOPE,
