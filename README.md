@@ -25,6 +25,9 @@ https://github.com/picx-apps/picx-app/assets/80683658/fd7b6513-5204-49d4-94a2-c0
 如果你是 macos m1 系列，可以使用 PicX_version_aarch64.dmg 或者 PicX_version_x64.dmg 版本的安装包，安装时请务必打开 
 <br />
 ❗️<em>设置 => 隐私与安全 => 安全性 => 打开允许任何来源</em>  
+```bash
+sudo xattr -d com.apple.quarantine 安装路径
+```
 🖱️开源软件买不起证书 ^_^
 
 https://github.com/picx-apps/picx-app/assets/80683658/3659aef1-804c-49d5-bcfd-ba6cf6e5497b
