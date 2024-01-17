@@ -2,6 +2,7 @@ import { CompressionQuality } from "../enum";
 import type { User, UserToken } from "../types";
 import { invoke } from "@tauri-apps/api";
 import { message } from "@tauri-apps/api/dialog";
+import router from "~/router";
 import { merge } from "lodash-es";
 import { Octokit } from "octokit";
 
@@ -20,8 +21,13 @@ const $fetch: typeof fetch = function (url, options) {
 
   // 发送实际的请求
   return fetch(url, options)
-    .then((response) => {
+    .then(async (response) => {
       // 在接收到响应后，可以在这里对响应进行处理
+      if (response.status === 401) {
+        await message("The identity has expired, please log in again.", { title: "Auth", type: "error" });
+        localStorage.clear();
+        router.replace("/login");
+      }
       return response;
     })
     .catch(async (error) => {
