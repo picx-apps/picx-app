@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.10](https://github.com/picx-apps/picx-app/compare/v0.0.9...v0.0.10) (2024-01-17)
+
+
+### Bug Fixes
+
+* show library image ([ccb00c1](https://github.com/picx-apps/picx-app/commit/ccb00c1bf998048db5828f60afdd3d7804ce823f))
+
 ### [0.0.9](https://github.com/picx-apps/picx-app/compare/v0.0.8...v0.0.9) (2024-01-16)
 
 ### [0.0.8](https://github.com/picx-apps/picx-app/compare/v0.0.7...v0.0.8) (2024-01-16)
