@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.11](https://github.com/picx-apps/picx-app/compare/v0.0.10...v0.0.11) (2024-01-17)
+
+
+### Features
+
+* app window dblclick optional and github api Intercept response ([ca962f9](https://github.com/picx-apps/picx-app/commit/ca962f9c6f6eae48b4b72074e8481f78c273fde9))
+
 ### [0.0.10](https://github.com/picx-apps/picx-app/compare/v0.0.9...v0.0.10) (2024-01-17)
 
 
