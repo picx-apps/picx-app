@@ -12,13 +12,15 @@
     "new": "创建新图库",
     "create_library": "创建图库",
     "placeholder": "请输入名称",
-    "delete_image_title": "是否删除"
+    "delete_image_title": "是否删除",
+    "not_content": "暂无内容"
   },
   "node": {
     "title": "上传",
     "info": "Command + V / 拖拽 / 点击上传",
     "wait_upload_number": "待上传 {number} 张",
     "select_upload_to_library": "选择你的上传库",
+    "processing_in_progress": "正在处理中",
     "button": {
       "queue": "添加队列",
       "immediately": "立即上传",

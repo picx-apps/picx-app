@@ -1,6 +1,7 @@
 import { CompressionQuality } from "../enum";
 import type { User, UserToken } from "../types";
 import { invoke } from "@tauri-apps/api";
+import { message } from "@tauri-apps/api/dialog";
 import { merge } from "lodash-es";
 import { Octokit } from "octokit";
 
@@ -13,6 +14,22 @@ export interface Compress {
   enable: boolean;
   compress_type: keyof typeof CompressionQuality;
 }
+
+const $fetch: typeof fetch = function (url, options) {
+  // 在发送请求之前，可以在这里对请求进行处理
+
+  // 发送实际的请求
+  return fetch(url, options)
+    .then((response) => {
+      // 在接收到响应后，可以在这里对响应进行处理
+      return response;
+    })
+    .catch(async (error) => {
+      await message(error, { title: "fetch error", type: "error" });
+      // 在请求过程中发生错误时，可以在这里处理错误
+      return error;
+    });
+};
 
 export const useGlobalState = createGlobalState(() => {
   // state
@@ -62,11 +79,7 @@ export const useGlobalState = createGlobalState(() => {
 
   // actions
   async function initState() {
-    if (authorize.value.access_token) {
-      octokit.value = new Octokit({
-        auth: authorize.value.access_token,
-      });
-    }
+    init_octokit();
     if (authorize.value.access_token && !userinfo.value) {
       await get_userinfo();
     }
@@ -75,6 +88,10 @@ export const useGlobalState = createGlobalState(() => {
     if (authorize.value.access_token) {
       octokit.value = new Octokit({
         auth: authorize.value.access_token,
+        request: {
+          fetch: $fetch,
+        },
+        retry: { enabled: false },
       });
     }
   }

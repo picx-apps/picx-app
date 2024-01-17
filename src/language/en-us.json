@@ -12,13 +12,15 @@
     "new": "New",
     "create_library": "Create Library",
     "placeholder": "Please Library Name",
-    "delete_image_title": "Whether to delete"
+    "delete_image_title": "Whether to delete",
+    "not_content": "No content at the moment"
   },
   "node": {
     "title": "Upload",
     "info": "Command + V / Drag / Click To Upload",
     "wait_upload_number": "Wait upload {number} draw",
     "select_upload_to_library": "Select your upload to library",
+    "processing_in_progress": "Processing in progress",
     "button": {
       "queue": "Add Queue",
       "immediately": "Immediately",

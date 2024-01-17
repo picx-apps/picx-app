@@ -2,12 +2,8 @@
 import { useGlobalState } from "../store";
 import { CreateRepoContents } from "../types";
 import { Icon } from "@iconify/vue";
-import { Octokit } from "octokit";
 
-const { access_token } = useGlobalState();
-const octokit = new Octokit({
-  auth: access_token.value,
-});
+const { octokit } = useGlobalState();
 
 const form = reactive<CreateRepoContents>({
   name: "Picx-app",
@@ -15,7 +11,7 @@ const form = reactive<CreateRepoContents>({
 });
 
 async function createRepo() {
-  const data = await octokit.request("POST /user/repos", {
+  const data = await octokit.value.request("POST /user/repos", {
     name: form.name,
     description: form.description,
     headers: {

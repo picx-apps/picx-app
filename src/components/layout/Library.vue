@@ -32,6 +32,12 @@ const currentLibrary = ref<RepoContents[0] | null>(null);
 
 //TODO I18N
 function handleNewFolder() {
+  const create = async (value: string) => {
+    d.loading = true;
+    await createLibrary(value);
+    name.value = "";
+    dialog.destroyAll();
+  };
   const d = dialog.create({
     title: t("home.create_library"),
     showIcon: false,
@@ -47,12 +53,13 @@ function handleNewFolder() {
         onUpdateValue: (value) => {
           name.value = value;
         },
+        onChange: (value) => {
+          create(value);
+        },
         placeholder: t("home.placeholder"),
       }),
     onPositiveClick: async () => {
-      d.loading = true;
-      await createLibrary(name.value);
-      name.value = "";
+      create(name.value);
     },
   });
 }
@@ -104,7 +111,16 @@ function handleImage(index: number) {
   <div class="h-full flex flex-col">
     <Option icon="ph:circles-four-fill" :text="t('home.library')" class="cursor-default">
       <template #text>
-        <span class="cursor-pointer hover:color-white" @click="imagePath = []">{{ t("home.library") }}</span>
+        <span
+          class="cursor-pointer hover:color-white"
+          @click="
+            () => {
+              imagePath = [];
+              $router.replace({ name: 'home' });
+            }
+          "
+          >{{ t("home.library") }}</span
+        >
       </template>
       <template #optional>
         <n-tooltip placement="top" trigger="hover" v-if="imagePath.length">
@@ -147,12 +163,8 @@ function handleImage(index: number) {
             <img
               :src="transformURL(path)"
               lazy
-              object-fit="cover"
-              preview-disabled
-              class="w-100% h-100% rounded-lg object-cover"
-              :intersection-observer-options="{
-                root: '#app',
-              }"
+              class="w-100% h-100% rounded-lg object-cover box-border"
+              b="2px solid #a4a4a447"
             />
           </div>
 

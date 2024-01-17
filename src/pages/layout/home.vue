@@ -28,15 +28,6 @@ const dropDownPosition = reactive({
 });
 const loading = ref(false);
 
-function transformURL(path: string) {
-  const uri = replacePlaceholder(currentCDN.value?.value!, {
-    owner: user.value?.login!,
-    repo: repo_name.value,
-    branch: branch_name.value,
-    path,
-  });
-  return uri;
-}
 function updater() {
   loading.value = true;
   updateNow();
@@ -151,7 +142,7 @@ name: home
 
           <n-scrollbar x-scrollable>
             <div class="scroll-content h-166px">
-              <n-image-group>
+              <n-image-group v-if="latestDebounced.length">
                 <div
                   v-for="(item, index) in latestDebounced"
                   :key="item.sha"
@@ -176,6 +167,7 @@ name: home
                   </div>
                 </div>
               </n-image-group>
+              <div v-else class="mt-10px color-gray">{{ t("home.not_content") }}</div>
             </div>
           </n-scrollbar>
         </div>
@@ -188,7 +180,7 @@ name: home
 
           <n-collapse-transition>
             <div class="image-list-container">
-              <n-image-group>
+              <n-image-group v-if="images.length">
                 <div
                   class="w-110px h-130px relative"
                   v-for="(item, index) in images"
@@ -211,6 +203,7 @@ name: home
                   </div>
                 </div>
               </n-image-group>
+              <div v-else class="mt-10px color-gray">{{ t("home.not_content") }}</div>
             </div>
           </n-collapse-transition>
         </div>
@@ -282,7 +275,7 @@ name: home
 
 .scroll-content {
   white-space: nowrap;
-  display: inline-block;
+  display: inline-flex;
 }
 .latest .title,
 .image-list .title {

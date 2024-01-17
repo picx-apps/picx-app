@@ -110,8 +110,8 @@ async function handleWatermark(origin: Uint8Array) {
 }
 //处理图片，根据条件压缩和添加水印
 async function handleImages(paths: string[]) {
+  uploading.value = true;
   for (const path of paths) {
-    console.time("compress time");
     const {
       buffer,
       base64,
@@ -126,8 +126,6 @@ async function handleImages(paths: string[]) {
       path,
       compressionQuality: compress.value.enable ? compress.value.compress_type : undefined,
     });
-    console.timeEnd("compress time");
-
     const watermark_image = await handleWatermark(compression_buffer);
 
     let filename = path.split("/").pop() as string;
@@ -141,6 +139,7 @@ async function handleImages(paths: string[]) {
       filename,
     );
   }
+  uploading.value = false;
 }
 //将原图片和压缩图片存在临时队列
 async function addTempContents(
@@ -209,7 +208,6 @@ async function handlePasteImage(e: ClipboardEvent) {
   const file = firstItem.getAsFile();
   if (!file) return;
   const origin = await imageFileToUint8Array(file);
-  console.time("compress time");
   const {
     buffer,
     base64,
@@ -261,7 +259,11 @@ name: upload
     <TopOperate></TopOperate>
 
     <n-scrollbar class="px-16px pt-16px flex-1">
-      <n-spin :show="uploading">
+      <n-spin
+        :show="uploading"
+        :description="t('node.processing_in_progress')"
+        style="--n-color: white; --n-text-color: white"
+      >
         <div v-if="!waitContents.length">
           <div
             class="text-center mt-0px rounded-10px pb-20px cursor-pointer hover:b-#21214a select-none"
