@@ -25,12 +25,20 @@ pub enum CompressionQuality {
 }
 
 #[tauri::command]
-pub fn compression_image(
-    path: &str,
+pub async fn compression_image(
+    path: String,
     compression_quality: Option<CompressionQuality>,
-) -> CompressionImage {
-    let image_data = read_image(path).expect("Failed to read image");
-    compression_image_buf(image_data, compression_quality)
+) -> Result<CompressionImage, String> {
+    let result = tokio::task::spawn_blocking(move || {
+        let image_data = read_image(&path).expect("Failed to read image");
+        compression_image_buf(image_data, compression_quality)
+    })
+    .await;
+
+    match result {
+        Ok(image) => Ok(image),
+        Err(err) => Err(String::from(err.to_string())),
+    }
 }
 
 #[tauri::command]

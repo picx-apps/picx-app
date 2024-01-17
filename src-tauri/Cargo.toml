@@ -1,10 +1,10 @@
 [package]
 name = "picx-app"
 version = "0.0.0"
-description = "A Tauri App"
-authors = ["you"]
-license = ""
-repository = ""
+description = "基于 GitHub API 开发的图床工具，提供图片上传托管、生成图片链接和常用图片工具箱服务。"
+authors = ["fangyuan.leslie@gmail.com"]
+license = "MIT"
+repository = "https://github.com/picx-apps/picx-app"
 edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
@@ -36,6 +36,7 @@ chrono = "0.4.31"
 jsonwebtoken = "9.1.0"
 imageproc = "0.23.0"
 rusttype = "0.9.3"
+tokio = { version = "1.35.1", features = ["full"] }
 
 [features]
 # this feature is used for production builds or when `devPath` points to the filesystem
