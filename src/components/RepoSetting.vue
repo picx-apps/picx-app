@@ -45,7 +45,13 @@ async function initRepo() {
   loading.value = false;
   repoOptions.value = data.items;
 }
-watchDebounced(search_name, () => initRepo(), { debounce: 300 });
+watchDebounced(
+  search_name,
+  () => {
+    initRepo();
+  },
+  { debounce: 800 },
+);
 async function initBranches() {
   if (modelValue.value.repo_name) {
     const { data } = await octokit.request("GET /repos/{owner}/{repo}/branches", {

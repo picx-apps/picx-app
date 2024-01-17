@@ -29,13 +29,13 @@ name: user
             {{ user?.name || user?.login }}
           </h2>
           <div class="my-4px flex color-#8c8c8c text-14px">
-            <Icon icon="ic:baseline-supervisor-account" class="text-1.3rem mr-2px h-20px color-primary-300" />
+            <div i-ic-baseline-supervisor-account class="text-1.3rem mr-2px h-20px color-primary-300"></div>
             <span>{{ user?.followers }} followers</span>
             <span class="my-9px mx-6px h-3px w-3px rounded-full bg-#8c8c8c"></span>
             <span>{{ user?.following }} following</span>
           </div>
           <div class="my-4px flex color-#cccccc text-12px">
-            <Icon icon="material-symbols:details-rounded" class="text-1.1rem ml-2px mr-5px h-20px color-primary-300" />
+            <div i-material-symbols-camera class="text-1.1rem ml-2px mr-5px h-20px color-primary-300"></div>
             <div class="lh-23px">
               {{ user?.bio || "No bio" }}
             </div>

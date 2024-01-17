@@ -162,7 +162,7 @@ name: home
                     <Icon icon="material-symbols:highlighter-size-1" class="text-16px" />
                     {{ bytesToMB(item.size) }}mb
                   </div>
-                  <div class="absolute bottom-10px left-10px color-white font-bold text-11px">
+                  <div class="absolute bottom-10px left-10px color-white font-bold text-11px w-50% truncate">
                     {{ item.name }}
                   </div>
                 </div>
@@ -275,7 +275,7 @@ name: home
 
 .scroll-content {
   white-space: nowrap;
-  display: inline-flex;
+  display: inline-block;
 }
 .latest .title,
 .image-list .title {
