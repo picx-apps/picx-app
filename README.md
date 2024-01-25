@@ -6,6 +6,8 @@
 [![Stars](https://img.shields.io/github/stars/XPoet/picx)](https://github.com/picx-apps/picx-app)
 [![Issues](https://img.shields.io/github/issues/XPoet/picx)](https://github.com/picx-apps/picx-app/issues)
 [![Deploy](https://github.com/XPoet/picx/workflows/deploy/badge.svg)](https://github.com/picx-apps/picx-app/actions/workflows/main.yml)
+
+
 **[PicX](https://picx.xpoet.cn)** 是一款基于 GitHub API 开发的图床工具，提供图片上传托管、生成图片链接和常用图片工具箱服务。
 
 ## 全平台
@@ -46,7 +48,7 @@ https://github.com/picx-apps/picx-app/assets/80683658/3659aef1-804c-49d5-bcfd-ba
 ### Plugins
 
 - [Vue Router](https://github.com/vuejs/vue-router)
-  - [`unplugin-vue-router`](https://github.com/posva/unplugin-vue-router) - file system based routing
+- [`unplugin-vue-router`](https://github.com/posva/unplugin-vue-router) - file system based routing
 - [`unplugin-auto-import`](https://github.com/antfu/unplugin-auto-import) - Directly use Vue Composition API and others without importing
 - [`unplugin-vue-components`](https://github.com/antfu/unplugin-vue-components) - components auto import
 - [VueUse](https://github.com/antfu/vueuse) - collection of useful composition APIs
